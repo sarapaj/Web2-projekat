@@ -13,6 +13,15 @@ namespace WebApp.Persistence.UnitOfWork
         IProductRepository Products { get; set; }
 		IDepartureRepository Departures { get; set; }
 		ICoordinateRepository Coordinates { get; set; }
+		IDiscountRepository Discounts { get; set; }
+		ILineRepository Lines { get; set; }
+		ILineStationConnectionRepository LineStationConnections { get; set; }
+		IStationRepository Stations { get; set; }
+		ITicketRepository Tickets { get; set; }
+		ITicketTypeRepository TicketTypes { get; set; }
+		IVehicleRepository Vehicles { get; set; }
+		IApplicationUserRepository ApplicationUsers { get; set; }
+
 
 
 		int Complete();

@@ -25,7 +25,7 @@ namespace WebApp.Controllers
 
 
 		// GET: api/Departure
-		public IEnumerable<Departure> Get()
+		public IEnumerable<Departure> GetAll()
         {
 			return _unitOfWork.Departures.GetAll();
 		}
@@ -96,11 +96,22 @@ namespace WebApp.Controllers
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 
-	
+
 		// DELETE: api/Departure/5
-		public void Delete(int id)
-        {
-        }
+		[ResponseType(typeof(Departure))]
+		public IHttpActionResult DeleteDeparture(int id)
+		{
+			Departure departure = _unitOfWork.Departures.Get(id);
+			if (departure == null)
+			{
+				return NotFound();
+			}
+
+			_unitOfWork.Departures.Remove(departure);
+			_unitOfWork.Complete();
+
+			return Ok(departure);
+		}
 
 
 		private bool DepartureItemExists(int id)

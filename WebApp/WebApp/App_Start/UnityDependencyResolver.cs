@@ -74,12 +74,17 @@ namespace WebApp.App_Start
             container.RegisterType<IProductRepository, ProductRepository>();
 			container.RegisterType<IDepartureRepository, DepartureRepository>();
 			container.RegisterType<ICoordinateRepository, CoordinateRepository>();
-
+			container.RegisterType<IApplicationUserRepository, ApplicationUserRepository>();
+			container.RegisterType<IDiscountRepository, DiscountRepository>();
+			container.RegisterType<ILineRepository, LineRepository>();
+			container.RegisterType<ILineStationConnectionRepository, LineStationConnectionRepository>();
+			container.RegisterType<IStationRepository, StationRepository>();
+			container.RegisterType<ITicketRepository, TicketRepository>();
+			container.RegisterType<ITicketTypeRepository, TicketTypeRepository>();
+			container.RegisterType<IVehicleRepository, VehicleRepository>();
 			
-
-
+		
 			container.RegisterType<ApplicationUserManager>();
-			container.RegisterType<IUnitOfWork, DemoUnitOfWork>();
 			container.RegisterType<ISecureDataFormat<AuthenticationTicket>, CustomJwtFormat>(new InjectionConstructor("http://localhost:51680"));
 
 		}
