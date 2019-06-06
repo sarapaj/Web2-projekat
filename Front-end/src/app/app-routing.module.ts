@@ -7,6 +7,7 @@ import { RedVoznjeComponent } from './dashboard/red-voznje/red-voznje.component'
 import { MrezaLinijaComponent } from './dashboard/mreza-linija/mreza-linija.component';
 import { TrenutnaLokacijaComponent } from './dashboard/trenutna-lokacija/trenutna-lokacija.component';
 import { CenovnikComponent } from './dashboard/cenovnik/cenovnik.component';
+import { ProfilComponent } from './dashboard/profil/profil.component';
 
 const routes: Routes = [
     {
@@ -41,8 +42,22 @@ const routes: Routes = [
         {
           path: "cenovnik",
           component: CenovnikComponent
+        },
+        {
+          path: "profile",
+          component: ProfilComponent
         }
       ]
+    },
+    {
+      path: "dashboard/register",
+      redirectTo: "register",
+      pathMatch: "full"
+    },
+    {
+      path: "dashboard/login",
+      redirectTo: "login",
+      pathMatch: "full"
     }
 ];
 

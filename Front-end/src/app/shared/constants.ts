@@ -46,3 +46,25 @@ export const KontrolerSidebarElements = [
         route: "mreza-linija"
     }
 ];
+
+export const LogedUserHeaderElements = [
+    {
+        name: "Profil",
+        route: "profile"
+    },
+    {
+        name: "Log out",
+        route: "login"
+    }
+];
+
+export const NotLogedUserHeaderElements = [
+    {
+        name: "Sign up",
+        route: "register"
+    },
+    {
+        name: "Log in",
+        route: "login"
+    }
+];

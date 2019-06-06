@@ -14,6 +14,7 @@ import { CenovnikComponent } from './dashboard/cenovnik/cenovnik.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { TrenutnaLokacijaComponent } from './dashboard/trenutna-lokacija/trenutna-lokacija.component';
+import { ProfilComponent } from './dashboard/profil/profil.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { TrenutnaLokacijaComponent } from './dashboard/trenutna-lokacija/trenutn
     MrezaLinijaComponent,
     RedVoznjeComponent,
     CenovnikComponent,
-    TrenutnaLokacijaComponent  
+    TrenutnaLokacijaComponent,
+    ProfilComponent  
   ],
   imports: [
     BrowserModule,
