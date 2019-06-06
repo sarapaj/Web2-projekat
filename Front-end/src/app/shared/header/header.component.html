@@ -10,9 +10,15 @@
   <div class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
     <div class="input-group">
       <div class="input-group-append">
-        <a [routerLink] = "['/login']"><button class="btn btn-primary" type="button">
-          Log Out
-        </button></a>
+          <ul class="navbar-nav">
+              <li *ngFor="let element of elements" class="verticalLine" >
+                  <a [routerLink] = "element.route">
+                    <button class="btn btn-primary" type="button">
+                      {{element.name}}
+                    </button>
+                  </a>
+              </li>
+          </ul>
       </div>
     </div>
   </div>
