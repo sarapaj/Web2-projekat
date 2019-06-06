@@ -19,6 +19,31 @@ namespace WebApp.Persistence.UnitOfWork
 		[Dependency]
 		public ICoordinateRepository Coordinates { get; set; }
 
+		[Dependency]
+		public IDiscountRepository Discounts { get; set; }
+
+		[Dependency]
+		public ILineRepository Lines { get; set; }
+
+		[Dependency]
+		public ILineStationConnectionRepository LineStationConnections { get; set; }
+
+		[Dependency]
+		public IStationRepository Stations { get; set; }
+
+		[Dependency]
+		public ITicketRepository Tickets { get; set; }
+
+		[Dependency]
+		public ITicketTypeRepository TicketTypes { get; set; }
+
+		[Dependency]
+		public IVehicleRepository Vehicles { get; set; }
+
+		[Dependency]
+		public IApplicationUserRepository ApplicationUsers { get; set; }
+
+
 		public IProductRepository Products { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 
