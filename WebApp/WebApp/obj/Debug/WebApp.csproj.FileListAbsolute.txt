@@ -150,3 +150,6 @@ D:\WEB 2 projekat\web opet\products\WebApp\WebApp\WebApp\obj\Debug\WebApp.csproj
 D:\WEB 2 projekat\web opet\products\WebApp\WebApp\WebApp\obj\Debug\WebApp.Migrations.DepartureChange.resources
 D:\WEB 2 projekat\web opet\products\WebApp\WebApp\WebApp\obj\Debug\WebApp.Migrations.PriceAndDocumentAdded.resources
 D:\WEB 2 projekat\web opet\products\WebApp\WebApp\WebApp\obj\Debug\WebApp.Migrations.MinorChanges.resources
+D:\WEB2GIT\Web2-projekat\WebApp\WebApp\bin\Newtonsoft.Json.dll
+D:\WEB2GIT\Web2-projekat\WebApp\WebApp\bin\System.IdentityModel.Tokens.Jwt.dll
+D:\WEB2GIT\Web2-projekat\WebApp\WebApp\bin\System.Web.Http.xml

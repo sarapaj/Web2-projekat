@@ -4,6 +4,7 @@ using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Web.Http;
 using System.Web.Http.Dependencies;
 using Unity;
 using Unity.Injection;
@@ -71,9 +72,19 @@ namespace WebApp.App_Start
             container.RegisterType<DbContext, ApplicationDbContext>(new PerResolveLifetimeManager());
             container.RegisterType<IUnitOfWork, DemoUnitOfWork>();
             container.RegisterType<IProductRepository, ProductRepository>();
-        }
+			container.RegisterType<IDepartureRepository, DepartureRepository>();
+			container.RegisterType<ICoordinateRepository, CoordinateRepository>();
 
-        public void Dispose()
+			
+
+
+			container.RegisterType<ApplicationUserManager>();
+			container.RegisterType<IUnitOfWork, DemoUnitOfWork>();
+			container.RegisterType<ISecureDataFormat<AuthenticationTicket>, CustomJwtFormat>(new InjectionConstructor("http://localhost:51680"));
+
+		}
+
+		public void Dispose()
         {
             Dispose(true);
         }

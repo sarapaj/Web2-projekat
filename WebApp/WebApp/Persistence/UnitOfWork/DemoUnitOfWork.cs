@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using Unity;
+using WebApp.Models;
 using WebApp.Persistence.Repository;
 
 namespace WebApp.Persistence.UnitOfWork
@@ -12,22 +13,28 @@ namespace WebApp.Persistence.UnitOfWork
     {
         private readonly DbContext _context;
 
-        [Dependency]
-        public IProductRepository Products{ get; set; }
-      
-        public DemoUnitOfWork(DbContext context)
-        {
-            _context = context;
-        }
+		[Dependency]
+		public IDepartureRepository Departures { get; set; }
 
-        public int Complete()
-        {
-            return _context.SaveChanges();
-        }
+		[Dependency]
+		public ICoordinateRepository Coordinates { get; set; }
 
-        public void Dispose()
-        {
-            _context.Dispose();
-        }
-    }
+		public IProductRepository Products { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+
+		public DemoUnitOfWork(DbContext context)
+		{
+			_context = context;
+		}
+
+		public int Complete()
+		{
+			return _context.SaveChanges();
+		}
+
+		public void Dispose()
+		{
+			_context.Dispose();
+		}
+	}
 }

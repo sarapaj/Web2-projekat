@@ -21,7 +21,8 @@ namespace WebApp
             resolver.RegisterTypes();
             config.DependencyResolver = resolver;
 
-            GlobalHost.DependencyResolver = new SignalRUnityDependencyResolver(container);
+
+			GlobalHost.DependencyResolver = new SignalRUnityDependencyResolver(container);
 
             // Web API configuration and services
             // Configure Web API to use only bearer token authentication.
