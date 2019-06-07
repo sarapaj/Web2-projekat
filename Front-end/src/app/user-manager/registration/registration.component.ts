@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DropdownElement } from 'src/app/shared/classes';
+import { TipPutnika } from 'src/app/shared/constants';
 
 @Component({
   selector: 'app-registration',
@@ -8,9 +10,17 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class RegistrationComponent implements OnInit {
 
+  dropdownToPass: DropdownElement[];
+  
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.dropdownToPass = [
+      {
+        label: "Tip putnika",
+        value: TipPutnika
+      }
+    ];
   }
 
 }

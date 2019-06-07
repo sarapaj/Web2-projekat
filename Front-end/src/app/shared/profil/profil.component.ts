@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DropdownElement } from '../classes';
+import { TipPutnika } from '../constants';
 
 @Component({
   selector: 'app-profil',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfilComponent implements OnInit {
 
+  dropdownToPass: DropdownElement[];
+
   constructor() { }
 
   ngOnInit() {
+    this.dropdownToPass = [
+      {
+        label: "Tip putnika",
+        value: TipPutnika
+      }
+    ];
   }
 
 }

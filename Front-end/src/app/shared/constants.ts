@@ -1,3 +1,4 @@
+// SIDEBAR
 export const UserSidebarElements = [
     {
         label: "Red voznje",
@@ -28,25 +29,28 @@ export const AdminSidebarElements = [
     },
     {
         label: "Uredi linije",
-        route: "trenutna-lokacija"
+        route: "linije"
     },
     {
         label: "Uredi stanice",
-        route: "cenovnik"
+        route: "stanice"
     }
 ];
 
 export const KontrolerSidebarElements = [
     {
         label: "Validacija karata",
-        route: "red-voznje"
+        route: "validiraj-karte"
     },
     {
         label: "Verifikacija putnika",
-        route: "mreza-linija"
+        route: "verifikuj-putnike"
     }
 ];
 
+
+
+// HEADER
 export const LogedUserHeaderElements = [
     {
         name: "Profil",
@@ -68,3 +72,36 @@ export const NotLogedUserHeaderElements = [
         route: "login"
     }
 ];
+
+
+// tipovi
+export const TipPutnika = [ 
+    "djak",
+    "penzioner",
+    "regularni"
+];
+
+export const TipKarte = [ 
+    "vremenska",
+    "dnevna",
+    "mesecna",
+    "godisnja"
+];
+
+export const TipRedaVoznje = [ 
+    "gradski",
+    "prigradski"
+];
+
+export const TipDana = [ 
+    "radni dan",
+    "subota",
+    "nedelja"
+];
+
+export const LinijePrivremeno = [ 
+    "1",
+    "2",
+    "3"
+  ];
+  

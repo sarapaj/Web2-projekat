@@ -1,0 +1,67 @@
+<form>
+    <div class="form-group">
+      <div class="form-row">
+        <div class="col-md-6">
+          <div class="form-label-group">
+            <input type="text" id="firstName" class="form-control" placeholder="Ime" required="required" autofocus="autofocus">
+            <label for="firstName">Ime</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-label-group">
+            <input type="text" id="lastName" class="form-control" placeholder="Prezime" required="required">
+            <label for="lastName">Prezime</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-label-group">
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email adresa" required="required">
+        <label for="inputEmail">Email adresa</label>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-row">
+        <div class="col-md-6">
+          <div class="form-label-group">
+            <input type="password" id="inputPassword" class="form-control" placeholder="Lozinka" required="required">
+            <label for="inputPassword">Lozinka</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-label-group">
+            <input type="password" id="confirmPassword" class="form-control" placeholder="Potvrda lozinke" required="required">
+            <label for="confirmPassword">Potvrda lozinke</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+        <div class="form-label-group">
+          <input type="text" id="adresa" class="form-control" placeholder="Adresa" required="required">
+          <label for="adresa">Adresa</label>
+        </div>
+    </div>
+    <div class="form-group">
+      <div class="form-label-group">
+        <input data-format="yyyy-MM-dd" type="date" name="datum-rodjenja"/>
+        <label for="datum-rodjenja">Datum rodjenja</label>
+      </div>
+    </div>
+    <div class="form-group my-div">
+        <div class="form-label-group">
+          <app-my-dropdown [dropdownElement] = "dropdownToPass"></app-my-dropdown>
+        </div>
+    </div>
+
+    <div class="form-group my-div">
+      <div class="form-label-group">
+        <input type="file" size="60" class="form-control" name="dokaz"/>
+        <label for="dokaz">Fotografija kao dokaz</label>
+      </div>
+    </div>
+
+    <br/>
+    <button type="submit">Izmeni</button>
+  </form>

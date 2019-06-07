@@ -9,7 +9,11 @@
   },
   "files": [
     "src/test.ts",
-    "src/polyfills.ts"
+    "src/polyfills.ts",
+    "src/**/*.ts",
+    "**/*.d.ts",
+    "../node_modules/api-ai-javascript/index.ts",
+    "./main.ts"
   ],
   "include": [
     "src/**/*.spec.ts",

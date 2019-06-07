@@ -5,7 +5,11 @@
     "types": []
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "**/*.d.ts",
+    "../node_modules/api-ai-javascript/index.ts",
+    "./main.ts",
+    "./polyfills.ts"
   ],
   "exclude": [
     "src/test.ts",
