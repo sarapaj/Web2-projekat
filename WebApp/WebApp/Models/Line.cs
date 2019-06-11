@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebApp.Models
 {
-	public enum Regions { city, suburban }
+	public enum Regions { gradski, prigradski }
 	public class Line
 	{
 		public Line()

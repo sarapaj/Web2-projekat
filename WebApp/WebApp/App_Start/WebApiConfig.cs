@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
@@ -21,6 +22,7 @@ namespace WebApp
             resolver.RegisterTypes();
             config.DependencyResolver = resolver;
 
+			config.EnableCors(new EnableCorsAttribute("http://localhost:4200/", headers:"*", methods:"*"));
 
 			GlobalHost.DependencyResolver = new SignalRUnityDependencyResolver(container);
 

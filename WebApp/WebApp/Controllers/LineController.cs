@@ -12,7 +12,8 @@ using WebApp.Persistence.UnitOfWork;
 
 namespace WebApp.Controllers
 {
-    public class LineController : ApiController
+	[RoutePrefix("api/Line")]
+	public class LineController : ApiController
     {
 
 		IUnitOfWork _unitOfWork;
@@ -24,15 +25,62 @@ namespace WebApp.Controllers
 			_context = context;
 		}
 
+		[Route("GetAll")]
 		// GET: api/Line
 		public IEnumerable<Line> GetAllLines()
 		{
 			return _unitOfWork.Lines.GetAll();
 		}
 
+
+		[Route("GetLineNames")] 
+		[ResponseType(typeof(List<string>))]
+		// GET: api/Line
+		public IHttpActionResult GetLineNames()  //vraca imena svih linija kao string 
+		{
+			List<string> rez = new List<string>();
+
+			List<Line> temp = (List<Line>)_unitOfWork.Lines.GetAll();
+
+			if (temp != null)
+			{
+				foreach (var item in temp)
+				{
+					rez.Add(item.Name);
+				}
+
+				return Ok(rez);
+			}
+
+
+			return NotFound();
+		}
+
+
+		[ResponseType(typeof(string))]
+		[Route("GetDepartures")]
+		public IHttpActionResult GetDeparture(string day, string lineName)  //vraca polaske za konkretnu liniju
+		{
+
+			Days dayEnum = ParseEnum<Days>(day);
+
+			Line temp = (Line)_unitOfWork.Lines.Find(x => x.Name == lineName);
+
+			if (temp != null)
+			{
+				foreach (var item in temp.Departures)
+				{
+					if (item.Day == dayEnum)
+						return Ok(item.TimeOfDeparture);
+				}
+			}
+
+			return NotFound();
+		}
+
 		// GET: api/Line/5
 		[ResponseType(typeof(Line))]
-		public IHttpActionResult GetLine(int id)
+		public IHttpActionResult GetLineById(int id)
 		{
 			Line line = _unitOfWork.Lines.Get(id);
 			if (line == null)
@@ -42,6 +90,7 @@ namespace WebApp.Controllers
 
 			return Ok(line);
 		}
+
 
 		// POST: api/Line
 		[ResponseType(typeof(Line))]
@@ -111,6 +160,11 @@ namespace WebApp.Controllers
 		private bool LinesItemExists(int id)
 		{
 			return _unitOfWork.Lines.Get(id) != null;
+		}
+
+		public static T ParseEnum<T>(string value)
+		{
+			return (T)Enum.Parse(typeof(T), value, true);
 		}
 	}
 }

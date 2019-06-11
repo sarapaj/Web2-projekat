@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebApp.Models
 {
-	public enum Days { working, saturday, sunday, holiday};
+	public enum Days { radni, subota, nedelja, praznik};
 	public class Departure
 	{
 		public Departure()

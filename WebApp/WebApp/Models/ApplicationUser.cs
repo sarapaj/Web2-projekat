@@ -11,17 +11,19 @@ using System.Web;
 
 namespace WebApp.Models
 {
+
+	public enum PassengerType { djak, penzioner, regularni};
 	// You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
 	public class ApplicationUser : IdentityUser
 	{
 		
-
 		public ApplicationUser()
 		{
 			this.Tickets = new HashSet<Ticket>();
 		}
 		public virtual ICollection<Ticket> Tickets { get; set; }
 		public string Document { get; set; }
+		public PassengerType Type { get; set; }
 
 		public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
 		{

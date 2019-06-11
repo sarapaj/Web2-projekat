@@ -255,6 +255,8 @@
     <Compile Include="Controllers\LineController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\StationController.cs" />
+    <Compile Include="Controllers\TicketController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -274,6 +276,10 @@
     <Compile Include="Migrations\201906060723235_MinorChanges.cs" />
     <Compile Include="Migrations\201906060723235_MinorChanges.Designer.cs">
       <DependentUpon>201906060723235_MinorChanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906111050265_TipPutnika.cs" />
+    <Compile Include="Migrations\201906111050265_TipPutnika.Designer.cs">
+      <DependentUpon>201906111050265_TipPutnika.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -383,6 +389,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\ViewModels\" />
     <Folder Include="Views\Product\" />
   </ItemGroup>
   <ItemGroup>
@@ -426,6 +433,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906060723235_MinorChanges.resx">
       <DependentUpon>201906060723235_MinorChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906111050265_TipPutnika.resx">
+      <DependentUpon>201906111050265_TipPutnika.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
