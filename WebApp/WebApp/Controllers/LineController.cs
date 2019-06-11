@@ -32,10 +32,16 @@ namespace WebApp.Controllers
 			return _unitOfWork.Lines.GetAll();
 		}
 
+		//public IEnumerable<Line> EditLines()
+		//{
+		//	string combindedString = string.Join(",", myList.ToArray());
+
+
+
+		//}
 
 		[Route("GetLineNames")] 
 		[ResponseType(typeof(List<string>))]
-		// GET: api/Line
 		public IHttpActionResult GetLineNames()  //vraca imena svih linija kao string 
 		{
 			List<string> rez = new List<string>();
@@ -56,22 +62,28 @@ namespace WebApp.Controllers
 			return NotFound();
 		}
 
-
-		[ResponseType(typeof(string))]
 		[Route("GetDepartures")]
-		public IHttpActionResult GetDeparture(string day, string lineName)  //vraca polaske za konkretnu liniju
+		[ResponseType(typeof(List<string>))]
+		public IHttpActionResult GetDepartures(string day, string lineName)  //vraca polaske za konkretnu liniju
 		{
-
+			
 			Days dayEnum = ParseEnum<Days>(day);
 
-			Line temp = (Line)_unitOfWork.Lines.Find(x => x.Name == lineName);
+			var lines = _unitOfWork.Lines.Find(x => x.Name == lineName);
 
-			if (temp != null)
+			if (lines != null)
 			{
-				foreach (var item in temp.Departures)
+				foreach (var temp in lines)
 				{
-					if (item.Day == dayEnum)
-						return Ok(item.TimeOfDeparture);
+					foreach (var item in temp.Departures)
+					{
+						if (item.Day == dayEnum)
+						{
+							List<string> result = item.TimeOfDeparture.Split(new char[] { ',' }).ToList();
+
+							return Ok(result);
+						}
+					}
 				}
 			}
 

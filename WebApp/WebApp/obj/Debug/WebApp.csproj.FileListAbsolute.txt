@@ -292,7 +292,6 @@ D:\WEB2GIT\Web2-projekat\WebApp\WebApp\bin\Microsoft.Owin.Security.Twitter.xml
 D:\WEB2GIT\Web2-projekat\WebApp\WebApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\WEB2GIT\Web2-projekat\WebApp\WebApp\bin\System.Web.Http.Owin.xml
 D:\WEB2GIT\Web2-projekat\WebApp\WebApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\WEB2GIT\Web2-projekat\WebApp\WebApp\obj\Debug\WebApp.csprojAssemblyReference.cache
 D:\WEB2GIT\Web2-projekat\WebApp\WebApp\obj\Debug\WebApp.Migrations.InititalDataBase.resources
 D:\WEB2GIT\Web2-projekat\WebApp\WebApp\obj\Debug\WebApp.Migrations.DepartureChange.resources
 D:\WEB2GIT\Web2-projekat\WebApp\WebApp\obj\Debug\WebApp.Migrations.PriceAndDocumentAdded.resources
