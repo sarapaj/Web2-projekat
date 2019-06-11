@@ -17,6 +17,12 @@ namespace WebApp.Controllers
 		IUnitOfWork _unitOfWork;
 		private DbContext _context;
 
+		public TicketController(IUnitOfWork unitOfWork, DbContext context)
+		{
+			_unitOfWork = unitOfWork;
+			_context = context;
+		}
+
 		// GET: api/Ticket
 		public IEnumerable<string> Get()
         {

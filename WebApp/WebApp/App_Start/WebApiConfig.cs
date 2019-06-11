@@ -39,6 +39,15 @@ namespace WebApp
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-        }
+
+
+			//Customized ROute
+			config.Routes.MapHttpRoute(
+				name: "Lines",
+				routeTemplate: "api/{controller}/{day}/{lineName}/{newDepartures}",
+				defaults: new { day = RouteParameter.Optional, lineName = RouteParameter.Optional, newDepartures = RouteParameter.Optional }
+			);
+
+		}
     }
 }

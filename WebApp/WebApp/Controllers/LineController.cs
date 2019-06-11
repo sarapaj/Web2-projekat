@@ -26,7 +26,6 @@ namespace WebApp.Controllers
 		}
 
 		[Route("GetAll")]
-		// GET: api/Line
 		public IEnumerable<Line> GetAllLines()
 		{
 			return _unitOfWork.Lines.GetAll();
@@ -35,9 +34,6 @@ namespace WebApp.Controllers
 		//public IEnumerable<Line> EditLines()
 		//{
 		//	string combindedString = string.Join(",", myList.ToArray());
-
-
-
 		//}
 
 		[Route("GetLineNames")] 
@@ -61,6 +57,7 @@ namespace WebApp.Controllers
 
 			return NotFound();
 		}
+
 
 		[Route("GetDepartures")]
 		[ResponseType(typeof(List<string>))]
@@ -90,7 +87,39 @@ namespace WebApp.Controllers
 			return NotFound();
 		}
 
+
+		[Route("EditDepartures")]
+		[ResponseType(typeof(void))]
+		public IHttpActionResult EditDepartures(string day, string lineName, string newDepartures)  
+		{
+			Days dayEnum = ParseEnum<Days>(day);
+
+			var lines = _unitOfWork.Lines.Find(x => x.Name == lineName);
+
+
+			if (lines != null)
+			{
+				foreach (var temp in lines)
+				{
+					foreach (var item in temp.Departures)
+					{
+						if (item.Day == dayEnum)
+						{
+							item.TimeOfDeparture = newDepartures;
+							_unitOfWork.Lines.Update(temp);
+
+						}
+					}
+				}
+				_unitOfWork.Complete();
+				return Ok();
+			}
+
+			return NotFound();
+		}
+
 		// GET: api/Line/5
+		[Route("GetLineById")]
 		[ResponseType(typeof(Line))]
 		public IHttpActionResult GetLineById(int id)
 		{
@@ -105,6 +134,7 @@ namespace WebApp.Controllers
 
 
 		// POST: api/Line
+		[Route("PostLine")]
 		[ResponseType(typeof(Line))]
 		public IHttpActionResult PostItem(Line line)
 		{
@@ -118,8 +148,11 @@ namespace WebApp.Controllers
 
 			return CreatedAtRoute("DefaultApi", new { id = line.Id }, line);
 		}
+
+
 		// PUT: api/Line/5
 		[ResponseType(typeof(void))]
+		[Route("PutLine")]
 		public IHttpActionResult PutLineItem(int id, Line line)
 		{
 
@@ -154,6 +187,7 @@ namespace WebApp.Controllers
 		}
 
 		// DELETE: api/Line/5
+		[Route("DeleteLine")]
 		[ResponseType(typeof(Line))]
 		public IHttpActionResult DeleteLine(int id)
 		{

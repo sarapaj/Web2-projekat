@@ -302,3 +302,4 @@ D:\WEB2GIT\Web2-projekat\WebApp\WebApp\obj\Debug\WebApp.csproj.CopyComplete
 D:\WEB2GIT\Web2-projekat\WebApp\WebApp\obj\Debug\WebApp.dll
 D:\WEB2GIT\Web2-projekat\WebApp\WebApp\obj\Debug\WebApp.pdb
 D:\WEB2GIT\Web2-projekat\WebApp\WebApp\obj\Debug\WebApp.Migrations.TipPutnika.resources
+D:\WEB2GIT\Web2-projekat\WebApp\WebApp\obj\Debug\WebApp.csprojAssemblyReference.cache
