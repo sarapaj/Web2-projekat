@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -32,72 +33,138 @@ namespace WebApp.Controllers
 		[Route("GetTicketPrice")]
 		[ResponseType(typeof(double))]
 		// GET: api/Line
-		public IHttpActionResult GetTicketPrice(string TicketType, string PassengerType)  //vraca imena svih linija kao string 
+		public IHttpActionResult GetTicketPrice(string TicketType, string PassengerType) 
 		{
+
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+
 			double rez;
 
-			TicketType ticket = (TicketType)_unitOfWork.TicketTypes.Find(x => x.Name == TicketType);
-			List<Discount> discounts = (List<Discount>)_unitOfWork.Discounts.GetAll();
-
-			if (ticket != null)
+			try
 			{
-				foreach (var item in discounts)
-				{
-					if (item.Type == PassengerType)
-					{
-						rez = ticket.Price - ticket.Price * (item.Percent / 100);
+				var tickets = _unitOfWork.TicketTypes.Find(x => x.Name.ToString() == TicketType);
+				List<Discount> discounts = (List<Discount>)_unitOfWork.Discounts.GetAll();
 
-						return Ok(rez);
+				if (tickets != null)
+				{
+					foreach (var ticket in tickets)
+					{
+						foreach (var item in discounts)
+						{
+							if (item.Type.ToString() == PassengerType)
+							{
+								rez = ticket.Price - ticket.Price * (item.Percent / 100);
+
+								return Ok(rez);
+							}
+						}
 					}
 				}
 			}
+			catch (DbUpdateConcurrencyException)
+			{
+				return StatusCode(HttpStatusCode.InternalServerError);
+			}
 
-		
 			return NotFound();
 		}
 
 		[Route("GetTicketTypes")]
 		[ResponseType(typeof(List<string>))]
 		// GET: api/Line
-		public IHttpActionResult GetTicketTypes()  //vraca imena svih linija kao string 
+		public IHttpActionResult GetTicketTypes()  
 		{
 			List<string> rez = new List<string>();
 
-			List<TicketType> temp = (List<TicketType>)_unitOfWork.TicketTypes.GetAll();
-
-			if (temp != null)
+			try
 			{
-				foreach (var item in temp)
+				List<TicketType> temp = (List<TicketType>)_unitOfWork.TicketTypes.GetAll();
+
+				if (temp != null)
 				{
-					rez.Add(item.Name);
+					foreach (var item in temp)
+					{
+						rez.Add(item.Name);
+					}
+
+					return Ok(rez);
 				}
-
-				return Ok(rez);
 			}
-
+			catch (DbUpdateConcurrencyException)
+			{
+				return StatusCode(HttpStatusCode.InternalServerError);
+			}
 
 			return NotFound();
 		}
 
-		// GET: api/Ticket/5
-		public string Get(int id)
-        {
-            return "value";
-        }
 
-        // POST: api/Ticket
-        public void Post([FromBody]string value)
-        {
-        }
+		[Route("EditTicketPrice")]
+		[ResponseType(typeof(void))]
+		public IHttpActionResult EditTicketPrice(string type, double newPrice)   
+		{
 
-        // PUT: api/Ticket/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
 
-        // DELETE: api/Ticket/5
-        public void Delete(int id)
-        {
-        }
+			try
+			{
+				var t = _unitOfWork.TicketTypes.Find(x => x.Name.ToString() == type);
+
+				foreach (var ticket in t)
+				{
+					ticket.Price = newPrice;
+					_unitOfWork.TicketTypes.Update(ticket);
+				}
+				_unitOfWork.Complete();
+
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				return StatusCode(HttpStatusCode.InternalServerError);
+			}
+
+	
+			return StatusCode(HttpStatusCode.NoContent);
+		}
+
+
+		[Route("EditDiscount")]
+		[ResponseType(typeof(void))]
+		public IHttpActionResult EditDiscount(string type, int newValue)
+		{
+
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+
+			try
+			{
+				var d = _unitOfWork.Discounts.Find(x => x.Type.ToString() == type);
+
+				foreach (var discount in d)
+				{
+					discount.Percent = newValue;
+					_unitOfWork.Discounts.Update(discount);
+				}
+				_unitOfWork.Complete();
+
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				return StatusCode(HttpStatusCode.InternalServerError);
+			}
+
+
+			return StatusCode(HttpStatusCode.NoContent);
+		}
+
+
     }
 }

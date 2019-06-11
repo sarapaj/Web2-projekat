@@ -26,34 +26,43 @@ namespace WebApp.Controllers
 		}
 
 		[Route("GetAll")]
-		public IEnumerable<Line> GetAllLines()
+		[ResponseType(typeof(List<Line>))]
+		public IHttpActionResult GetAllLines()
 		{
-			return _unitOfWork.Lines.GetAll();
+			try
+			{
+				return Ok(_unitOfWork.Lines.GetAll());
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				return NotFound();
+			}
 		}
-
-		//public IEnumerable<Line> EditLines()
-		//{
-		//	string combindedString = string.Join(",", myList.ToArray());
-		//}
 
 		[Route("GetLineNames")] 
 		[ResponseType(typeof(List<string>))]
-		public IHttpActionResult GetLineNames()  //vraca imena svih linija kao string 
+		public IHttpActionResult GetLineNames()  //vraca imena svih linija za dropdown meni  
 		{
-			List<string> rez = new List<string>();
-
-			List<Line> temp = (List<Line>)_unitOfWork.Lines.GetAll();
-
-			if (temp != null)
+			try
 			{
-				foreach (var item in temp)
+				List<string> rez = new List<string>();
+				List<Line> temp = (List<Line>)_unitOfWork.Lines.GetAll();
+
+				if (temp != null)
 				{
-					rez.Add(item.Name);
+					foreach (var item in temp)
+					{
+						rez.Add(item.Name);
+					}
+
+					return Ok(rez);
 				}
 
-				return Ok(rez);
 			}
-
+			catch (DbUpdateConcurrencyException)
+			{
+				return NotFound();
+			}
 
 			return NotFound();
 		}
@@ -63,25 +72,35 @@ namespace WebApp.Controllers
 		[ResponseType(typeof(List<string>))]
 		public IHttpActionResult GetDepartures(string day, string lineName)  //vraca polaske za konkretnu liniju
 		{
-			
-			Days dayEnum = ParseEnum<Days>(day);
-
-			var lines = _unitOfWork.Lines.Find(x => x.Name == lineName);
-
-			if (lines != null)
+			if (!ModelState.IsValid)
 			{
-				foreach (var temp in lines)
-				{
-					foreach (var item in temp.Departures)
-					{
-						if (item.Day == dayEnum)
-						{
-							List<string> result = item.TimeOfDeparture.Split(new char[] { ',' }).ToList();
+				return BadRequest(ModelState);
+			}
 
-							return Ok(result);
+			try
+			{
+				Days dayEnum = ParseEnum<Days>(day);
+				var lines = _unitOfWork.Lines.Find(x => x.Name == lineName);
+
+				if (lines != null)
+				{
+					foreach (var temp in lines)
+					{
+						foreach (var item in temp.Departures)
+						{
+							if (item.Day == dayEnum)
+							{
+								List<string> result = item.TimeOfDeparture.Split(new char[] { ',' }).ToList();
+
+								return Ok(result);
+							}
 						}
 					}
 				}
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				return NotFound();
 			}
 
 			return NotFound();
@@ -90,29 +109,41 @@ namespace WebApp.Controllers
 
 		[Route("EditDepartures")]
 		[ResponseType(typeof(void))]
-		public IHttpActionResult EditDepartures(string day, string lineName, string newDepartures)  
+		public IHttpActionResult EditDepartures(string day, string lineName, string newDepartures)  //izmena polazaka za admina
 		{
-			Days dayEnum = ParseEnum<Days>(day);
 
-			var lines = _unitOfWork.Lines.Find(x => x.Name == lineName);
-
-
-			if (lines != null)
+			if (!ModelState.IsValid)
 			{
-				foreach (var temp in lines)
-				{
-					foreach (var item in temp.Departures)
-					{
-						if (item.Day == dayEnum)
-						{
-							item.TimeOfDeparture = newDepartures;
-							_unitOfWork.Lines.Update(temp);
+				return BadRequest(ModelState);
+			}
 
+			try
+			{
+				Days dayEnum = ParseEnum<Days>(day);
+				var lines = _unitOfWork.Lines.Find(x => x.Name == lineName);
+
+
+				if (lines != null)
+				{
+					foreach (var temp in lines)
+					{
+						foreach (var item in temp.Departures)
+						{
+							if (item.Day == dayEnum)
+							{
+								item.TimeOfDeparture = newDepartures;
+								_unitOfWork.Lines.Update(temp);
+
+							}
 						}
 					}
+					_unitOfWork.Complete();
+					return Ok();
 				}
-				_unitOfWork.Complete();
-				return Ok();
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				return NotFound();
 			}
 
 			return NotFound();
@@ -123,37 +154,57 @@ namespace WebApp.Controllers
 		[ResponseType(typeof(Line))]
 		public IHttpActionResult GetLineById(int id)
 		{
-			Line line = _unitOfWork.Lines.Get(id);
-			if (line == null)
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+
+			try
+			{
+				Line line = _unitOfWork.Lines.Get(id);
+				if (line != null)
+				{
+					return Ok(line);
+				}
+			}
+			catch (DbUpdateConcurrencyException)
 			{
 				return NotFound();
 			}
 
-			return Ok(line);
+			return NotFound();
 		}
 
 
 		// POST: api/Line
-		[Route("PostLine")]
+		[Route("AddLine")]
 		[ResponseType(typeof(Line))]
-		public IHttpActionResult PostItem(Line line)
+		public IHttpActionResult AddLine(Line line)
 		{
 			if (!ModelState.IsValid)
 			{
 				return BadRequest(ModelState);
 			}
 
-			_unitOfWork.Lines.Add(line);
-			_unitOfWork.Complete();
+			try
+			{
+				_unitOfWork.Lines.Add(line);
+				_unitOfWork.Complete();
+
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				return NotFound();
+			}
 
 			return CreatedAtRoute("DefaultApi", new { id = line.Id }, line);
 		}
 
 
-		// PUT: api/Line/5
+
 		[ResponseType(typeof(void))]
-		[Route("PutLine")]
-		public IHttpActionResult PutLineItem(int id, Line line)
+		[Route("EditLine")]
+		public IHttpActionResult EditLine(string name, Line line)
 		{
 
 			if (!ModelState.IsValid)
@@ -161,7 +212,7 @@ namespace WebApp.Controllers
 				return BadRequest(ModelState);
 			}
 
-			if (id != line.Id)
+			if (name != line.Name)
 			{
 				return BadRequest();
 			}
@@ -173,34 +224,44 @@ namespace WebApp.Controllers
 			}
 			catch (DbUpdateConcurrencyException)
 			{
-				if (!LinesItemExists(id))
-				{
-					return NotFound();
-				}
-				else
-				{
-					throw;
-				}
+				return NotFound();
 			}
 
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 
-		// DELETE: api/Line/5
+
 		[Route("DeleteLine")]
 		[ResponseType(typeof(Line))]
-		public IHttpActionResult DeleteLine(int id)
+		public IHttpActionResult DeleteLine(string name)
 		{
-			Line line = _unitOfWork.Lines.Get(id);
-			if (line == null)
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+
+			try
+			{
+				var line = _unitOfWork.Lines.Find(x => x.Name == name);
+
+				if (line != null)
+				{
+					foreach (var item in line)
+					{
+						_unitOfWork.Lines.Remove(item);
+					}
+					_unitOfWork.Complete();
+
+					return Ok(line);
+				}
+			}
+			catch (DbUpdateConcurrencyException)
 			{
 				return NotFound();
 			}
 
-			_unitOfWork.Lines.Remove(line);
-			_unitOfWork.Complete();
+			return NotFound();
 
-			return Ok(line);
 		}
 
 		private bool LinesItemExists(int id)

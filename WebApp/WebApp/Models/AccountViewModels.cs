@@ -30,6 +30,12 @@ namespace WebApp.Models
         public string Email { get; set; }
 
         public bool HasRegistered { get; set; }
+		public string Name { get; set; }
+		public string LastName { get; set; }
+		public string Address { get; set; }
+		public DateTime Birthday { get; set; }
+		public string PassengerType { get; set; }
+		public string Document { get; set; }
 
         public string LoginProvider { get; set; }
     }
