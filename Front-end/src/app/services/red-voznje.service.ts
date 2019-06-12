@@ -21,7 +21,7 @@ export class RedVoznjeService {
     return this._http.get(this._baseUrl + '/api/Line/GetDepartures?day=' +redVoznjeForma.day + '&lineName=' + redVoznjeForma.lineName);
   }
 
-  //TODO obavestiti milicu
+
   public editRedVoznje(dan: string, linija: string, noviPolazak: RedVoznje[]){
     return this._http.put(`${this._baseUrl}/api/Line/EditDepartures/${dan}/${linija}`, noviPolazak);
   }

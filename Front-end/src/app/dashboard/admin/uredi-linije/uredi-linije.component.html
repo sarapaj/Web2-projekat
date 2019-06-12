@@ -4,14 +4,14 @@
             <div class="my-div">
                 <label>Linija &nbsp;</label>
                 <select class="dropdown no-arrow dropdown-toggle" id="userDropdown" [(ngModel)] = "selectedLine">
-                    <option  *ngFor = "let item of this.dropdownToPassLine.value">{{item}}</option>
+                    <option  *ngFor = "let item of dropdownToPassLine.value">{{item}}</option>
                 </select>   
                 &nbsp;&nbsp;&nbsp;   
             </div>     
         </div>
     </div>
     &nbsp;&nbsp;
-    <button (click)="showLineDetails">Prikazi</button>
+    <button (click)="showLineDetails()">Prikazi</button>
 
 
 <hr>

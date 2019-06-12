@@ -30,7 +30,8 @@ export class LinijeService {
     return this._http.delete(`${this._baseUrl}/api/Line/DeleteLine/${nazivLinije}`);
   }
   
-  public getLineById(lineId: number){
-    return this._http.get(`${this._baseUrl}/api/Line/GetLineById/${lineId}`);
+  public getLineById(id: number){
+    id = 1;
+    return this._http.get(`${this._baseUrl}/api/Line/GetLineById?id=${id}`);
   }
 }

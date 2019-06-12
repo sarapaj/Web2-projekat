@@ -30,12 +30,12 @@ export class RedVoznjeComponent implements OnInit {
     this.dropdownToPassLine = {label:"Linije", value:LinijePrivremeno}
 
     this.tableHeader =["Polasci"];
-    this.tableBody = [["aa"], ["bb"]];
+    //this.tableBody = [["aa"], ["bb"]];
 
   }
 
   selectDayChangeHandler(event:any){
-    console.log(event.target.value);
+    // console.log(event.target.value);
     this.redVoznjeForma.day = event.target.value;
   }
 
@@ -45,7 +45,7 @@ export class RedVoznjeComponent implements OnInit {
 
 
   OnSubmit(form: NgForm) {
-    console.log(this.redVoznjeForma);
+    // console.log(this.redVoznjeForma);
 
     this._redVoznjeServis.getRedVoznje(this.redVoznjeForma).subscribe((res: any) => {
       this.tableBody = res.map(r => { return [r];})
