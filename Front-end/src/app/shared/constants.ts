@@ -102,6 +102,7 @@ export const TipDana = [
 export const LinijePrivremeno = [ 
     "15",
     "20",
-    "7a"
+    "7a",
+    "13"
   ];
   

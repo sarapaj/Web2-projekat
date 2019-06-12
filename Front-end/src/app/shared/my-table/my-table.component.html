@@ -12,8 +12,8 @@
           </thead>
           <tbody>
               <tr *ngFor='let item of tableBodyElement'>
-                  <td>
-                    {{item}}
+                  <td *ngFor="let cell of item">
+                    {{cell}}
                   </td>
               </tr>
           </tbody>

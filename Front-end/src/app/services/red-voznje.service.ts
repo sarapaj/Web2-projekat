@@ -18,7 +18,7 @@ export class RedVoznjeService {
   constructor(private _http: HttpClient) { }
 
   public getRedVoznje(redVoznjeForma:RedVoznjeForma) {
-    this._http.get(this._baseUrl + '/api/Line/GetDepartures?day=' +redVoznjeForma.day + '&lineName=' + redVoznjeForma.lineName).toPromise().then(res => this.list = res as string[]);
+    return this._http.get(this._baseUrl + '/api/Line/GetDepartures?day=' +redVoznjeForma.day + '&lineName=' + redVoznjeForma.lineName);
   }
 
   //TODO obavestiti milicu

@@ -1,13 +1,19 @@
-<form>
+
     <div class="form-group my-div">
         <div class="form-label-group">
-            <app-my-dropdown [dropdownElement] = "dropdownToPass"></app-my-dropdown>       
+            <div class="my-div">
+                <label>Linija &nbsp;</label>
+                <select class="dropdown no-arrow dropdown-toggle" id="userDropdown" [(ngModel)] = "selectedLine">
+                    <option  *ngFor = "let item of this.dropdownToPassLine.value">{{item}}</option>
+                </select>   
+                &nbsp;&nbsp;&nbsp;   
+            </div>     
         </div>
     </div>
     &nbsp;&nbsp;
-    <button type="submit">Prikazi</button>
-</form>
+    <button (click)="showLineDetails">Prikazi</button>
+
 
 <hr>
 
-<app-my-table [tableHeaderElement] = "tableHeader"></app-my-table>
+<app-my-table [tableHeaderElement] = "tableHeader" [tableBodyElement] = "tableBody"></app-my-table>

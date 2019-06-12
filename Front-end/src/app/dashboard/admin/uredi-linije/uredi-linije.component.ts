@@ -9,20 +9,34 @@ import { LinijePrivremeno } from 'src/app/shared/constants';
 })
 export class UrediLinijeComponent implements OnInit {
   
-  dropdownToPass: DropdownElement[];
+  dropdownToPassLine: DropdownElement;
   tableHeader: string[];
+  tableBody;
+  selectedLine = 13;
 
   constructor() { }
 
   ngOnInit() {
-    this.dropdownToPass = [
+    this.dropdownToPassLine = 
       {
         label: "Linije",
         value: LinijePrivremeno
-      }
-    ];
+      };
 
     this.tableHeader = ["Redni broj", "Naziv", " "];
+    this.tableBody = [
+      ["1", "13", ""],
+      ["2", "7a", ""],
+      ["3", "20", ""],
+    ]
+
+  }
+
+  onLineSelected(item) {
+    this.selectedLine = item;
+  }
+
+  showLineDetails() {
 
   }
 
