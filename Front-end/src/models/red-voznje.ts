@@ -1,4 +1,4 @@
 export class RedVoznje{
-    smerA: string[];
-    smerB: string[];
+    sat: number;
+	minuti: number[];
 }
