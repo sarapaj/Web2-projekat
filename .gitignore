@@ -1,0 +1,45 @@
+Front-end/.DS_STORE
+
+Front-end/dist/
+Front-end/bazel-out
+Front-end/integration/bazel/bazel-*
+Front-end/e2e_test.*
+Front-end/node_modules
+Front-end/tools/gulp-tasks/cldr/cldr-data/
+
+# Include when developing application packages.
+Front-end/pubspec.lock
+Front-end/.c9
+Front-end/.idea/
+Front-end/.devcontainer/*
+Front-end/!.devcontainer/recommended-devcontainer.json
+Front-end/!.devcontainer/recommended-Dockerfile
+Front-end/.settings/
+Front-end/.vscode/launch.json
+Front-end/.vscode/settings.json
+Front-end/*.swo
+Front-end/modules/.settings
+Front-end/modules/.vscode
+
+# Don't check in secret files
+Front-end/*secret.js
+
+# Ignore npm/yarn debug log
+Front-end/npm-debug.log
+Front-end/yarn-error.log
+
+# build-analytics
+Front-end/.build-analytics
+
+# rollup-test output
+Front-end/modules/rollup-test/dist/
+
+# User specific bazel settings
+Front-end/.bazelrc.user
+
+
+
+WebApp/WebApp/Migrations/
+WebApp/WebApp/bin/
+WebApp/WebApp/obj/
+WebApp/.vs/
