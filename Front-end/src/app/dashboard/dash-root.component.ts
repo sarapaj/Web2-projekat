@@ -10,7 +10,7 @@ import { UserSidebarElements, AdminSidebarElements, KontrolerSidebarElements, No
 export class DashRootComponent implements OnInit {
 
   // 1 - korisnik, 2 - admin, 3 - kontroler, ostalo - neregistrovani korisnik
-  userRole: number = 2; 
+  userRole: number = 1; 
   sidebarElements = [];
   headerElements = [];
   

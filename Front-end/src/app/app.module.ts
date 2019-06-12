@@ -21,6 +21,8 @@ import { UrediStaniceComponent } from './dashboard/admin/uredi-stanice/uredi-sta
 import { MyDropdownComponent } from './shared/my-dropdown/my-dropdown.component';
 import { KarteComponent } from './dashboard/kontrolor/karte/karte.component';
 import { PutniciComponent } from './dashboard/kontrolor/putnici/putnici.component';
+import { UserService } from './services/user.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -46,9 +48,10 @@ import { PutniciComponent } from './dashboard/kontrolor/putnici/putnici.componen
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    HttpClientModule,
     RouterModule.forRoot([])
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
