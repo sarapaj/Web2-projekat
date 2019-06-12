@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { DropdownElement } from 'src/app/shared/classes';
 import { TipRedaVoznje, TipDana, LinijePrivremeno } from 'src/app/shared/constants';
 import { RedVoznjeService } from 'src/app/services/red-voznje.service';
+import { RedVoznjeForma } from 'src/models/red-voznje-forma';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-red-voznje',
@@ -11,34 +13,46 @@ import { RedVoznjeService } from 'src/app/services/red-voznje.service';
 })
 export class RedVoznjeComponent implements OnInit {
 
-  dropdownToPass: DropdownElement[];
+  dropdownToPassDay: DropdownElement;
+  dropdownToPassLine: DropdownElement;
   tableHeader: string[];
+  redVoznjeForma: RedVoznjeForma;
+  tableBody: string[];
+  
   
   constructor(
-    private route: ActivatedRoute,
-    private _redVoznjeServis: RedVoznjeService
-    ) { }
+    private route: ActivatedRoute,private _redVoznjeServis: RedVoznjeService) {}
 
   ngOnInit() {
-    this.dropdownToPass = [
-      {
-        label: "Red voznje",
-        value: TipRedaVoznje
-      },
-      {
-        label: "Dan",
-        value: TipDana
-      },
-      {
-        label: "Linije",
-        value: LinijePrivremeno
-      }
-    ];
+    this.resetForm();
 
-    this.tableHeader = ["Smer A", "Smer B"];
+    this.dropdownToPassDay = {label:"Dan", value: TipDana};
+    this.dropdownToPassLine = {label:"Linije", value:LinijePrivremeno}
 
-    // this._redVoznjeServis.getRedVoznje("radni", "1a").subscribe((res) => {
-    //   console.log(res);
-    // });
+    this.tableHeader =["Polasci"];
+    this.tableBody = ["aa", "bb"];
+  }
+
+  selectDayChangeHandler(event:any){
+    this.redVoznjeForma.day = event.target.value;
+  }
+
+  selectLineChangeHandler(event:any){
+    this.redVoznjeForma.lineName =  event.target.value;
+  }
+
+
+  OnSubmit(form: NgForm) {
+    this._redVoznjeServis.getRedVoznje(this.redVoznjeForma);
+    this.tableBody = this._redVoznjeServis.list;
+  }
+
+  resetForm(form?: NgForm) {
+    if (form != null)
+      form.reset();
+    this.redVoznjeForma = {
+      day: '',
+      lineName: '',
+    }
   }
 }

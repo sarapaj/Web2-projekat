@@ -23,6 +23,7 @@ import { KarteComponent } from './dashboard/kontrolor/karte/karte.component';
 import { PutniciComponent } from './dashboard/kontrolor/putnici/putnici.component';
 import { UserService } from './services/user.service';
 import { HttpClientModule } from '@angular/common/http';
+import { RedVoznjeService } from './services/red-voznje.service';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,7 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     RouterModule.forRoot([])
   ],
-  providers: [UserService],
+  providers: [UserService, RedVoznjeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

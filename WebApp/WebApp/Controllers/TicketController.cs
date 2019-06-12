@@ -125,6 +125,40 @@ namespace WebApp.Controllers
 			return NotFound();
 		}
 
+		[Route("ValidateTicket")]
+		[ResponseType(typeof(bool))]
+		[HttpGet]
+		public IHttpActionResult ValidateTicket(int ticketID)
+		{
+			try
+			{
+				var ticket = _unitOfWork.Tickets.Get(ticketID);
+
+				if (ticket.TicketType.ToString() == "vremenska")
+				{
+					
+				}
+				else if (ticket.TicketType.ToString() == "dnevna")
+				{
+
+				}
+				else if (ticket.TicketType.ToString() == "mesecna")
+				{
+
+				}
+				else if (ticket.TicketType.ToString() == "godisnja")
+				{
+
+				}
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				return StatusCode(HttpStatusCode.InternalServerError);
+			}
+
+			return NotFound();
+		}
+
 
 		[Route("EditTicketPrice")]
 		[ResponseType(typeof(void))]

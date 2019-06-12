@@ -22,7 +22,8 @@ namespace WebApp
             resolver.RegisterTypes();
             config.DependencyResolver = resolver;
 
-			config.EnableCors(new EnableCorsAttribute("http://localhost:4200/", headers:"*", methods:"*"));
+			//config.EnableCors(new EnableCorsAttribute("http://localhost:4200", headers:"*", methods:"*"));
+			config.EnableCors();
 
 			GlobalHost.DependencyResolver = new SignalRUnityDependencyResolver(container);
 

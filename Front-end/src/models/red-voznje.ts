@@ -1,4 +1,4 @@
 export class RedVoznje{
-    sat: number;
+    sat: string[];
 	minuti: number[];
 }

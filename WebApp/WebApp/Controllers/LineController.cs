@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using WebApp.Models;
 using WebApp.Persistence.UnitOfWork;
@@ -71,14 +72,16 @@ namespace WebApp.Controllers
 
 
 		[Route("GetDepartures")]
-		[ResponseType(typeof(List<string>))]
+		[ResponseType(typeof(IEnumerable<string>))]
 		[HttpGet]
+		//[EnableCors("*", "*", "*")]
 		public IHttpActionResult GetDepartures(string day, string lineName)  //vraca polaske za konkretnu liniju
 		{
 			if (!ModelState.IsValid)
 			{
 				return BadRequest(ModelState);
 			}
+			List<string> result = new List<string>();
 
 			try
 			{
@@ -93,20 +96,25 @@ namespace WebApp.Controllers
 						{
 							if (item.Day == dayEnum)
 							{
-								List<string> result = item.TimeOfDeparture.Split(new char[] { ',' }).ToList();
+								var tempList = item.TimeOfDeparture.Split(new char[] { ',' }).ToList();
+								foreach (var dep in tempList)
+								{
+									result.Add(dep);
+								}
 
-								return Ok(result);
 							}
 						}
 					}
 				}
+
+				return Ok(result);
+
 			}
 			catch (DbUpdateConcurrencyException)
 			{
 				return NotFound();
 			}
 
-			return NotFound();
 		}
 
 

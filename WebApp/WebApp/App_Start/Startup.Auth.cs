@@ -15,6 +15,7 @@ using Microsoft.Owin.Security.DataHandler.Encoder;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Jwt;
 using WebApp.Persistence;
+using Microsoft.Owin.Cors;
 
 namespace WebApp
 {
@@ -37,8 +38,9 @@ namespace WebApp
             // Configure the db context and user manager to use a single instance per request
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
+			//app.UseCors(CorsOptions.AllowAll);
 
-            OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
+			OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
             {
                 //For Dev enviroment only (on production should be AllowInsecureHttp = false)
                 AllowInsecureHttp = true,
