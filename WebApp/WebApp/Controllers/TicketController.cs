@@ -26,7 +26,7 @@ namespace WebApp.Controllers
 
 
 		[Route("GetTicketPrice")]
-		[ResponseType(typeof(double))]
+		[ResponseType(typeof(string))]
 		[HttpGet]
 		public IHttpActionResult GetTicketPrice(string TicketType, string PassengerType) 
 		{
@@ -36,12 +36,12 @@ namespace WebApp.Controllers
 				return BadRequest(ModelState);
 			}
 
-			double rez;
+			double rez=0;
 
 			try
 			{
 				var tickets = _unitOfWork.TicketTypes.Find(x => x.Name.ToString() == TicketType);
-				List<Discount> discounts = (List<Discount>)_unitOfWork.Discounts.GetAll();
+				var discounts = _unitOfWork.Discounts.Find(x => x.Type.ToString() == PassengerType);
 
 				if (tickets != null)
 				{
@@ -49,14 +49,14 @@ namespace WebApp.Controllers
 					{
 						foreach (var item in discounts)
 						{
-							if (item.Type.ToString() == PassengerType)
-							{
-								rez = ticket.Price - ticket.Price * (item.Percent / 100);
+							
+							rez = ticket.Price - ((ticket.Price * item.Percent )/ 100);
 
-								return Ok(rez);
-							}
+							
 						}
 					}
+					return Ok(rez.ToString());
+
 				}
 			}
 			catch (DbUpdateConcurrencyException)
