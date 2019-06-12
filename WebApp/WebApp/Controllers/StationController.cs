@@ -27,7 +27,8 @@ namespace WebApp.Controllers
 
 
 		[Route("GetAll")]
-		[ResponseType(typeof(List<Line>))]
+		[ResponseType(typeof(List<Station>))]
+		[HttpGet]
 		public IHttpActionResult GetAll()
 		{
 			try
@@ -43,7 +44,8 @@ namespace WebApp.Controllers
 
 		[ResponseType(typeof(void))]
 		[Route("EditStation")]
-		public IHttpActionResult EditStation(string name, Station station)
+		[HttpPut]
+		public IHttpActionResult EditStation(string name, string newName, string newAddress)
 		{
 
 			if (!ModelState.IsValid)
@@ -51,15 +53,21 @@ namespace WebApp.Controllers
 				return BadRequest(ModelState);
 			}
 
-			if (name != station.Name)
-			{
-				return BadRequest();
-			}
+			//if (name != station.Name)
+			//{
+			//	return BadRequest();
+			//}
 
 			try
 			{
-				_unitOfWork.Stations.Update(station);
-				_unitOfWork.Complete();
+				var temp = _unitOfWork.Stations.Find(x => x.Name == name);
+				foreach (var item in temp)
+				{
+					item.Name = newName;
+					item.Address = newAddress;
+					_unitOfWork.Stations.Update(item);
+					_unitOfWork.Complete();
+				}
 			}
 			catch (DbUpdateConcurrencyException)
 			{
@@ -70,7 +78,8 @@ namespace WebApp.Controllers
 		}
 
 		[Route("DeleteStation")]
-		[ResponseType(typeof(Line))]
+		[ResponseType(typeof(Station))]
+		[HttpDelete]
 		public IHttpActionResult DeleteStation(string name)
 		{
 			if (!ModelState.IsValid)
@@ -100,25 +109,37 @@ namespace WebApp.Controllers
 
 
 		[Route("AddStationToLine")]
-		[ResponseType(typeof(void))]
-		public IHttpActionResult AddExistingStationToLine(Line line, Station station, int redniBroj)
+		[ResponseType(typeof(LineStationConnection))]
+		[HttpPost]
+		public IHttpActionResult AddExistingStationToLine(string lineName, string stationName, int redniBroj)
 		{
 			if (!ModelState.IsValid)
 			{
 				return BadRequest(ModelState);
 			}
 
+			LineStationConnection conn = new LineStationConnection();
+
 			try
 			{
-				Line l = (Line)_unitOfWork.Lines.Find(x => x.Name == line.Name);
-				Station s = (Station)_unitOfWork.Stations.Find(x => x.Name == station.Name);
+				var lines = _unitOfWork.Lines.Find(x => x.Name.ToString() == lineName);
+				var stations = _unitOfWork.Stations.Find(x => x.Name.ToString() == stationName);
 
-				LineStationConnection conn = new LineStationConnection();
-				conn.Line = l;
-				conn.Line_Id = l.Id;
-				conn.Station = s;
-				conn.Station_Id = s.Id;
 
+				foreach (var line in lines)
+				{
+					conn.Line = line;
+					conn.Line_Id = line.Id;
+
+				}
+
+				foreach (var station in stations)
+				{
+					conn.Station = station;
+					conn.Station_Id = station.Id;
+				}
+
+				conn.RedniBroj = redniBroj;
 
 				_unitOfWork.LineStationConnections.Add(conn);
 				_unitOfWork.Complete();
@@ -129,7 +150,7 @@ namespace WebApp.Controllers
 				return NotFound();
 			}
 
-			return CreatedAtRoute("DefaultApi", new { id = line.Id }, line);
+			return Ok(conn);
 		}
 
 		

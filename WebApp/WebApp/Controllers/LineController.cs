@@ -27,6 +27,7 @@ namespace WebApp.Controllers
 
 		[Route("GetAll")]
 		[ResponseType(typeof(List<Line>))]
+		[HttpGet]
 		public IHttpActionResult GetAllLines()
 		{
 			try
@@ -41,6 +42,7 @@ namespace WebApp.Controllers
 
 		[Route("GetLineNames")] 
 		[ResponseType(typeof(List<string>))]
+		[HttpGet]
 		public IHttpActionResult GetLineNames()  //vraca imena svih linija za dropdown meni  
 		{
 			try
@@ -70,6 +72,7 @@ namespace WebApp.Controllers
 
 		[Route("GetDepartures")]
 		[ResponseType(typeof(List<string>))]
+		[HttpGet]
 		public IHttpActionResult GetDepartures(string day, string lineName)  //vraca polaske za konkretnu liniju
 		{
 			if (!ModelState.IsValid)
@@ -109,6 +112,7 @@ namespace WebApp.Controllers
 
 		[Route("EditDepartures")]
 		[ResponseType(typeof(void))]
+		[HttpPut]
 		public IHttpActionResult EditDepartures(string day, string lineName, string newDepartures)  //izmena polazaka za admina
 		{
 
@@ -152,6 +156,7 @@ namespace WebApp.Controllers
 		// GET: api/Line/5
 		[Route("GetLineById")]
 		[ResponseType(typeof(Line))]
+		[HttpGet]
 		public IHttpActionResult GetLineById(int id)
 		{
 			if (!ModelState.IsValid)
@@ -179,6 +184,7 @@ namespace WebApp.Controllers
 		// POST: api/Line
 		[Route("AddLine")]
 		[ResponseType(typeof(Line))]
+		[HttpPost]
 		public IHttpActionResult AddLine(Line line)
 		{
 			if (!ModelState.IsValid)
@@ -197,13 +203,14 @@ namespace WebApp.Controllers
 				return NotFound();
 			}
 
-			return CreatedAtRoute("DefaultApi", new { id = line.Id }, line);
+			return Ok(line);
 		}
 
 
 
 		[ResponseType(typeof(void))]
 		[Route("EditLine")]
+		[HttpPut]
 		public IHttpActionResult EditLine(string name, Line line)
 		{
 
@@ -233,6 +240,7 @@ namespace WebApp.Controllers
 
 		[Route("DeleteLine")]
 		[ResponseType(typeof(Line))]
+		[HttpDelete]
 		public IHttpActionResult DeleteLine(string name)
 		{
 			if (!ModelState.IsValid)

@@ -24,15 +24,10 @@ namespace WebApp.Controllers
 			_context = context;
 		}
 
-		// GET: api/Ticket
-		public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
 		[Route("GetTicketPrice")]
 		[ResponseType(typeof(double))]
-		// GET: api/Line
+		[HttpGet]
 		public IHttpActionResult GetTicketPrice(string TicketType, string PassengerType) 
 		{
 
@@ -74,7 +69,7 @@ namespace WebApp.Controllers
 
 		[Route("GetTicketTypes")]
 		[ResponseType(typeof(List<string>))]
-		// GET: api/Line
+		[HttpGet]
 		public IHttpActionResult GetTicketTypes()  
 		{
 			List<string> rez = new List<string>();
@@ -101,9 +96,39 @@ namespace WebApp.Controllers
 			return NotFound();
 		}
 
+		[Route("GetPassengerTypes")]
+		[ResponseType(typeof(List<string>))]
+		[HttpGet]
+		public IHttpActionResult GetPassengerTypes()
+		{
+			List<string> rez = new List<string>();
+
+			try
+			{
+				List<Discount> temp = (List<Discount>)_unitOfWork.Discounts.GetAll();
+
+				if (temp != null)
+				{
+					foreach (var item in temp)
+					{
+						rez.Add(item.Type);
+					}
+
+					return Ok(rez);
+				}
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				return StatusCode(HttpStatusCode.InternalServerError);
+			}
+
+			return NotFound();
+		}
+
 
 		[Route("EditTicketPrice")]
 		[ResponseType(typeof(void))]
+		[HttpPut]
 		public IHttpActionResult EditTicketPrice(string type, double newPrice)   
 		{
 
@@ -134,8 +159,37 @@ namespace WebApp.Controllers
 		}
 
 
+		[Route("AddTicket")]
+		[ResponseType(typeof(Ticket))]
+		[HttpPost]
+		public IHttpActionResult AddTicket(Ticket ticket)
+		{
+
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+
+			try
+			{
+				_unitOfWork.Tickets.Add(ticket);
+				_unitOfWork.Complete();
+
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				return StatusCode(HttpStatusCode.InternalServerError);
+			}
+
+
+			return Ok(ticket);
+		}
+
+
+
 		[Route("EditDiscount")]
 		[ResponseType(typeof(void))]
+		[HttpPut]
 		public IHttpActionResult EditDiscount(string type, int newValue)
 		{
 
