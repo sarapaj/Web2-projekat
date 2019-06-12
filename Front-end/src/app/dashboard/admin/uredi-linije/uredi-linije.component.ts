@@ -26,7 +26,7 @@ export class UrediLinijeComponent implements OnInit {
 
       this.showLineNames();
 
-    this.tableHeader = ["Redni broj", "Naziv", " "];
+    this.tableHeader = ["Redni broj", "Naziv", "DUGME HMNJ"];
 
 
   }
@@ -34,7 +34,7 @@ export class UrediLinijeComponent implements OnInit {
   showLineDetails() {
     this._http.getLineById(this.selectedLine).subscribe((res: any) =>
     {
-      this.tableBody = [[String(res.Id), res.Name, ""]];
+      this.tableBody = [[String(res.Id), res.Name]];
     })
   }
 
@@ -46,6 +46,10 @@ export class UrediLinijeComponent implements OnInit {
         value: [res]
       }
     })
+  }
+
+  onClick(rbr) {
+    console.log('Obrisi metoda', rbr);
   }
 
 }
