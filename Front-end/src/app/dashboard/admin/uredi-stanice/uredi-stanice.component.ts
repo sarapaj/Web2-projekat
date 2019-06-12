@@ -10,17 +10,21 @@ import { StaniceService } from 'src/app/services/stanice.service';
 export class UrediStaniceComponent implements OnInit {
 
   tableHeader: string[];
+  tableBody;
 
   constructor(private _http: StaniceService) { }
 
   ngOnInit() {
     this.tableHeader = ["Naziv", "Adresa", "Koordinate", " "];
+    this.showAllStations();
   }
 
-  showStationDetails() {
-    // this._http.getLineById(this.selectedLine).subscribe((res: any) =>
-    // {
-    //   this.tableBody = [[String(res.Id), res.Name, ""]];
-    // })
+  showAllStations() { 
+    this._http.getAllStations().subscribe((res: any) =>
+    {
+      this.tableBody = res.map((stanica) => {
+        return [ stanica.Name, stanica.Address, stanica.Coordinate.x + "; " + stanica.Coordinate.y, "" ];
+      })
+    })
   }
 }

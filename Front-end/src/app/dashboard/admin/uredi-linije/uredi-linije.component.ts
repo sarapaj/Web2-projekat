@@ -27,17 +27,9 @@ export class UrediLinijeComponent implements OnInit {
       this.showLineNames();
 
     this.tableHeader = ["Redni broj", "Naziv", " "];
-    // this.tableBody = [
-    //   ["1", "13", ""],
-    //   ["2", "7a", ""],
-    //   ["3", "20", ""],
-    // ]
+
 
   }
-
-  // onLineSelected(item) {
-  //   this.selectedLine = item;
-  // }
 
   showLineDetails() {
     this._http.getLineById(this.selectedLine).subscribe((res: any) =>
