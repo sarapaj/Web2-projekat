@@ -31,8 +31,10 @@ export class UserService {
 
     this.getUserClaims().subscribe((data : any) => {
       this.userClaims = data; 
-    });
+    console.log(this.userClaims.Email + "iz subscribe-a");
 
+    });
+    console.log(this.userClaims.Email);
     return this._http.get(this._baseUrl + '/api/Ticket/GetUserRole?Email=' +this.userClaims.Email);
   }
 

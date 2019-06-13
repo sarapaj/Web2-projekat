@@ -11,7 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class DashRootComponent implements OnInit {
 
-  userRole=4;
+  userRole;
  
   sidebarElements = [];
   headerElements = [];
@@ -21,15 +21,15 @@ export class DashRootComponent implements OnInit {
   ngOnInit() {
     
     // this.userRole = this._userService.getUserRole();
-    // this._userService.getUserRole().subscribe((data : any) => {
-    //   this.userRole = data; 
-    // },
-    // (err: HttpErrorResponse) => {
-    //   this.userRole = 4;
-    // }
-    // );
+    this._userService.getUserRole().subscribe((data : any) => {
+      this.userRole = data; 
+    },
+    (err: HttpErrorResponse) => {
+      this.userRole = 4;
+    }
+    );
 
-    this.userRole = 2;
+    //this.userRole = 2;
 
     if(this.userRole == 1){
       this.sidebarElements = UserSidebarElements;
