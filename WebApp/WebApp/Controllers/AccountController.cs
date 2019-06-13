@@ -54,6 +54,7 @@ namespace WebApp.Controllers
         // GET api/Account/UserInfo
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("UserInfo")]
+		[HttpGet]
         public UserInfoViewModel GetUserInfo()  //profil info
         {
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);

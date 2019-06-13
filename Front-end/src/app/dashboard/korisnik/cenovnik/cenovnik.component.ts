@@ -20,6 +20,7 @@ export class CenovnikComponent implements OnInit {
 
   cenovnikForma:CenovnikForma;
   tableHeader: string[];
+  cena:string;
   tableBody: string[];
   tableBody2: string[];
 
@@ -45,8 +46,12 @@ export class CenovnikComponent implements OnInit {
 
   }
   OnSubmit(form: NgForm) {
-    this.cenovnikServis.getTicketPrice(this.cenovnikForma);
-    this.tableBody = [this.cenovnikServis.cena];
+    // this.cenovnikServis.getTicketPrice(this.cenovnikForma);
+    // this.tableBody = [this.cenovnikServis.cena];
+    this.cenovnikServis.getTicketPrice(this.cenovnikForma).subscribe((res: any) => {
+       this.cena = res;
+
+    })
   }
 
   selectTicketTypeChangeHandler(event:any){

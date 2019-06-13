@@ -2,16 +2,16 @@
   <div class="card card-login mx-auto mt-5">
     <div class="card-header">Prijava</div>
     <div class="card-body">
-      <form>
+      <form #loginForm="ngForm" (ngSubmit)="OnSubmit(Email.value, Passwod.value)">
         <div class="form-group">
           <div class="form-label-group">
-            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="required" autofocus="autofocus">
+            <input type="email" #Email ngModel name="Email" id="inputEmail" class="form-control" placeholder="Email address" required="required" autofocus="autofocus">
             <label for="inputEmail">Email adresa</label>
           </div>
         </div>
         <div class="form-group">
           <div class="form-label-group">
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="required">
+            <input type="password" #Password ngModel name="Passwod" id="inputPassword" class="form-control" placeholder="Password" required="required">
             <label for="inputPassword">Lozinka</label>
           </div>
         </div>
