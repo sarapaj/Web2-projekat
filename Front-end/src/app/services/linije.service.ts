@@ -21,8 +21,13 @@ export class LinijeService {
     return this._http.get(`${this._baseUrl}/api/Line/GetAll`);
   }
 
-  public addNewLine(linija: Linija){
-    return this._http.post(`${this._baseUrl}/api/Line/AddLine`, linija);
+  public addNewLine(naziv: string, oblast: number){
+    const data: any = {
+      name: naziv,
+      region: oblast      
+    }
+    console.log(data);
+    return this._http.post(`${this._baseUrl}/api/Line/AddLine`, data);
   }
 
   public editLine(linija: Linija, nazivLinije: string){
