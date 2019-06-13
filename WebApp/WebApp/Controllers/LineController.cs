@@ -162,10 +162,10 @@ namespace WebApp.Controllers
 		}
 
 		// GET: api/Line/5
-		[Route("GetLineById")]
+		[Route("GetLineByName")]
 		[ResponseType(typeof(Line))]
 		[HttpGet]
-		public IHttpActionResult GetLineById(int id)
+		public IHttpActionResult GetLineByName(string name)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -174,11 +174,17 @@ namespace WebApp.Controllers
 
 			try
 			{
-				Line line = _unitOfWork.Lines.Get(id);
-				if (line != null)
-				{
-					return Ok(line);
-				}
+				var lines = _unitOfWork.Lines.Find(x => x.Name.ToString() == name);
+
+
+                foreach(var line in lines)
+                {
+                    if (line != null)
+                    {
+                        return Ok(line);
+                    }
+                }
+
 			}
 			catch (DbUpdateConcurrencyException)
 			{

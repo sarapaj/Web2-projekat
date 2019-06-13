@@ -89,14 +89,22 @@ namespace WebApp.Controllers
 
 			try
 			{
-				Station station = (Station)_unitOfWork.Stations.Find(x => x.Name == name);
-				if (station != null)
-				{
-					_unitOfWork.Stations.Remove(station);
-					_unitOfWork.Complete();
+				var stations = _unitOfWork.Stations.Find(x => x.Name == name);
 
-					return Ok(station);
-				}
+                
+                if (stations != null)
+                {
+                    foreach (var station in stations)
+                    {
+                        _unitOfWork.Stations.Remove(station);
+                        
+                    }
+
+                    _unitOfWork.Complete();
+                    return Ok(stations);
+                }
+
+                
 			}
 			catch (DbUpdateConcurrencyException)
 			{
