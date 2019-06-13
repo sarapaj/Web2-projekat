@@ -201,6 +201,10 @@ namespace WebApp.Controllers
 		[HttpPost]
 		public IHttpActionResult AddLine(Line line)
 		{
+            //Line line = new Line();
+            //line.Name = name;
+            //line.Region = (Regions)region;
+
 			if (!ModelState.IsValid)
 			{
 				return BadRequest(ModelState);

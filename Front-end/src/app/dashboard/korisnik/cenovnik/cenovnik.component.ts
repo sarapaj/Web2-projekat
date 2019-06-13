@@ -66,8 +66,6 @@ export class CenovnikComponent implements OnInit {
   }
 
   OnSubmit(form: NgForm) {
-    // this.cenovnikServis.getTicketPrice(this.cenovnikForma);
-    // this.tableBody = [this.cenovnikServis.cena];
     this.cenovnikServis.getTicketPrice(this.cenovnikForma).subscribe((res: any) => {
        this.cena = res;
 
@@ -91,13 +89,4 @@ export class CenovnikComponent implements OnInit {
     }
   }
   
-  // showSelectedTable(){
-  //   if(this.selectedTable == "1") {
-
-  //   }
-  //   else if(this.selectedTable == "2") {
-
-  //   }
-  // }
-
 }

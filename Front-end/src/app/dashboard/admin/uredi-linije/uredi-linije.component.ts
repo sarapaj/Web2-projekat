@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DropdownElement } from 'src/app/shared/classes';
 import { LinijePrivremeno } from 'src/app/shared/constants';
 import { LinijeService } from 'src/app/services/linije.service';
+import { Linija } from 'src/models/linija';
 
 @Component({
   selector: 'app-uredi-linije',
@@ -14,6 +15,10 @@ export class UrediLinijeComponent implements OnInit {
   tableHeader: string[];
   tableBody;
   selectedLine = 13;
+  showForm = false;
+  newLineRegion = 2;
+  newLineName = "";
+  newLine: Linija;
 
   constructor( private _http: LinijeService ) { }
 
@@ -60,4 +65,22 @@ export class UrediLinijeComponent implements OnInit {
     window.location.reload();
   }
 
+  toggleForm() {
+    this.showForm = !this.showForm;
+  }
+
+  addNewLine(){
+
+    // console.log("Od forme:");
+    // console.log(`naziv linije: ${this.newLineName}`);
+    // console.log(`broj regiona: ${this.newLineRegion}`);
+
+    
+    this._http.addNewLine(this.newLineName, this.newLineRegion).subscribe((res) =>
+    {
+      return res;
+    });
+
+    this.refreshPage();
+  }
 }

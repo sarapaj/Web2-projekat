@@ -1,3 +1,32 @@
+<div>
+  <button type="button" class="btn btn-primary"
+    (click) = "toggleForm()">
+    {{showForm ? "Odustani" : "Dodaj liniju"}}
+  </button>
+  <br/><br/>
+  <div *ngIf="showForm"> 
+
+    <div class="form-group">
+      <div class="form-label-group">
+        <input type="text" id="LineName" class="form-control" placeholder="Naziv Linije" required="required" 
+        [(ngModel)] = "newLineName">
+        <label for="LineName">Naziv linije</label>  
+      </div>
+    </div>
+    <div class="form-group">
+        <label>Region</label>
+        <div class="form-label-group">
+            <select class="dropdown no-arrow dropdown-toggle" id="userDropdown"  [(ngModel)] = "newLineRegion">
+              <option value="0">gradski</option>
+              <option value="1">prigradski</option>
+            </select>
+        </div>
+    </div>
+    &nbsp;
+    <button (click)="addNewLine()">OK</button>
+  </div>
+  <hr>
+</div>
 
 <div class="form-group my-div">
     <div class="form-label-group">
