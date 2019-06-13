@@ -9,6 +9,7 @@ import { User } from 'src/models/korisnik';
 export class UserService {
   
   private _baseUrl = environment.baseUrl;
+  userRole;
   constructor(private _http: HttpClient) { }
 
   registerUser(user:User)
@@ -22,5 +23,9 @@ export class UserService {
     return this._http.post(this._baseUrl + '/api/Account/Register', body);
   }
 
-  
+  getUserRole(){
+    // 1 - korisnik, 2 - admin, 3 - kontroler, ostalo - neregistrovani korisnik
+    this.userRole = 2;
+    return this.userRole;
+  }
 }

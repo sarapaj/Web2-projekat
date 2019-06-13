@@ -1,25 +1,54 @@
-<form #cenovnikForm="ngForm" (ngSubmit)="OnSubmit(cenovnikForm)">
-    <div class="form-group my-div">
-        <div class="form-label-group">
-            <div class="my-div">
-            <app-my-dropdown [dropdownElement] = "dropdownToPass"></app-my-dropdown>    
-            <label>Tip karte &nbsp;</label>
-            <select (change)="selectTicketTypeChangeHandler($event)"  class="dropdown no-arrow dropdown-toggle" id="userDropdown">
-                <option  *ngFor = "let item of this.dropdownToPassTicket.value">{{item}}</option>
-            </select>    
-            &nbsp;&nbsp;&nbsp;
-            <label>Tip putnika &nbsp;</label>
-            <select (change)="selectPassengerChangeHandler($event)"  class="dropdown no-arrow dropdown-toggle" id="userDropdown">
-                <option  *ngFor = "let item of this.dropDownToPassPassenger.value">{{item}}</option>
-            </select>    
-            </div> 
+<div *ngIf="userRole == 1"> <!-- izgled za korisnika -->
+    <form #cenovnikForm="ngForm" (ngSubmit)="OnSubmit(cenovnikForm)">
+        <div class="form-group my-div">
+            <div class="form-label-group">
+                <div class="my-div">
+                <app-my-dropdown [dropdownElement] = "dropdownToPass"></app-my-dropdown>    
+                <label>Tip karte &nbsp;</label>
+                <select (change)="selectTicketTypeChangeHandler($event)"  class="dropdown no-arrow dropdown-toggle" id="userDropdown">
+                    <option  *ngFor = "let item of this.dropdownToPassTicket.value">{{item}}</option>
+                </select>    
+                &nbsp;&nbsp;&nbsp;
+                <label>Tip putnika &nbsp;</label>
+                <select (change)="selectPassengerChangeHandler($event)"  class="dropdown no-arrow dropdown-toggle" id="userDropdown">
+                    <option  *ngFor = "let item of this.dropDownToPassPassenger.value">{{item}}</option>
+                </select>    
+                </div> 
+            </div>
+            
         </div>
-        
+        &nbsp;&nbsp;
+        <button type="submit">Prikazi</button>
+    </form>
+    
+    <hr>
+    
+    <app-my-table [tableHeaderElement] = "tableHeader" [tableBodyElement]="tableBody"></app-my-table>
+</div>
+
+<div *ngIf="userRole == 2"> <!-- izgled za admina -->
+    <div class="card mb-3">
+        <div class="card-header">
+          Data Table Example</div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Tip putnika</th>
+                  <th>Popust (u procentima)</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor='let item of tableBody'>
+                      <td *ngFor="let cell of item">
+                        {{cell}}
+                      </td>
+                  </tr>
+              </tbody>
+            </table>
+            </div>
+          </div>
     </div>
-    &nbsp;&nbsp;
-    <button type="submit">Prikazi</button>
-</form>
-
-<hr>
-
-<app-my-table [tableHeaderElement] = "tableHeader" [tableBodyElement]="tableBody"></app-my-table>
+</div>

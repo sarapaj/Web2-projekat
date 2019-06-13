@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserSidebarElements, AdminSidebarElements, KontrolerSidebarElements, NotLogedUserHeaderElements, LogedUserHeaderElements } from '../shared/constants';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-dash-root',
@@ -9,16 +10,16 @@ import { UserSidebarElements, AdminSidebarElements, KontrolerSidebarElements, No
 })
 export class DashRootComponent implements OnInit {
 
-  // 1 - korisnik, 2 - admin, 3 - kontroler, ostalo - neregistrovani korisnik
-  userRole: number = 2; 
+  userRole;
   sidebarElements = [];
   headerElements = [];
   
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private _userService: UserService) { }
 
   ngOnInit() {
+    
+    this.userRole = this._userService.getUserRole();
 
-    //dobaviti rolu usera
     if(this.userRole == 1){
       this.sidebarElements = UserSidebarElements;
       this.headerElements = LogedUserHeaderElements;
