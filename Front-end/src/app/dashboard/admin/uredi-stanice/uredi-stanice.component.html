@@ -12,9 +12,12 @@
           </thead>
           <tbody>
               <tr *ngFor='let item of tableBody'>
-                  <td *ngFor="let cell of item">
-                    {{cell}}
-                  </td>
+                <td *ngFor="let cell of item">
+                  {{cell}}
+                </td>
+                <td>
+                  <button (click)="onClick(item[0])">Obrisi</button>
+                </td>
               </tr>
           </tbody>
         </table>

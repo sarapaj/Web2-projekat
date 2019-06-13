@@ -23,8 +23,20 @@ export class UrediStaniceComponent implements OnInit {
     this._http.getAllStations().subscribe((res: any) =>
     {
       this.tableBody = res.map((stanica) => {
-        return [ stanica.Name, stanica.Address, stanica.Coordinate.x + "; " + stanica.Coordinate.y, "" ];
+        return [ stanica.Name, stanica.Address, stanica.Coordinate.x + "; " + stanica.Coordinate.y];
       })
     })
+  }
+
+  onClick(name) {
+    this._http.deleteStation(name).subscribe(res =>
+      {
+        this.refreshPage();
+      })
+  }
+
+  refreshPage(){
+    // refresh stranice
+    window.location.reload();
   }
 }

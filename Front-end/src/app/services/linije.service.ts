@@ -2,11 +2,14 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Linija } from 'src/models/linija';
+import { stringify } from 'querystring';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LinijeService {
+  
+  nameToPass: string;
   private _baseUrl = environment.baseUrl;
   constructor(private _http: HttpClient) { }
 
@@ -26,12 +29,12 @@ export class LinijeService {
     return this._http.put(`${this._baseUrl}/api/Line/EditLine/${nazivLinije}`, linija);
   }
 
-  public deleteLine(linija: Linija, nazivLinije: string){
-    return this._http.delete(`${this._baseUrl}/api/Line/DeleteLine/${nazivLinije}`);
+  public deleteLine(nazivLinije: string){
+    return this._http.delete(`${this._baseUrl}/api/Line/DeleteLine?name=${nazivLinije}`);
   }
   
-  public getLineById(id: number){
-    id = 1;
-    return this._http.get(`${this._baseUrl}/api/Line/GetLineById?id=${id}`);
+  public getLineByName(name: number){
+    this.nameToPass = String(name);
+    return this._http.get(`${this._baseUrl}/api/Line/GetLineByName?name=${this.nameToPass}`);
   }
 }

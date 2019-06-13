@@ -17,11 +17,11 @@ export class StaniceService {
   }
 
   public editStation(nazivStanice: string, stanica: Stanica){
-    return this._http.put(`${this._baseUrl}/api/Stations/EditStation/${nazivStanice}`, stanica);
+    return this._http.put(`${this._baseUrl}/api/Station/EditStation/${nazivStanice}`, stanica);
   }
 
   public deleteStation(nazivStanice: string){
-    return this._http.delete(`${this._baseUrl}/api/Stations/DeleteStation/${nazivStanice}`);
+    return this._http.delete(`${this._baseUrl}/api/Station/DeleteStation?name=${nazivStanice}`);
   }
 
   public addStationToLine(stanica: LinijinaStanica, linija: Linija){
@@ -30,6 +30,6 @@ export class StaniceService {
       stanica: stanica.stanica,
       rbr: stanica.rbr
     }
-    return this._http.post(`${this._baseUrl}/api/Stations/AddStationToLine`, data);
+    return this._http.post(`${this._baseUrl}/api/Station/AddStationToLine`, data);
   }
 }

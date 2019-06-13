@@ -1,18 +1,17 @@
 
-    <div class="form-group my-div">
-        <div class="form-label-group">
-            <div class="my-div">
-                <label>Linija &nbsp;</label>
-                <select class="dropdown no-arrow dropdown-toggle" id="userDropdown" [(ngModel)] = "selectedLine">
-                    <option  *ngFor = "let item of dropdownToPassLine.value">{{item}}</option>
-                </select>   
-                &nbsp;&nbsp;&nbsp;   
-            </div>     
-        </div>
+<div class="form-group my-div">
+    <div class="form-label-group">
+        <div class="my-div">
+            <label>Linija &nbsp;</label>
+            <select class="dropdown no-arrow dropdown-toggle" id="userDropdown" [(ngModel)] = "selectedLine">
+                <option  *ngFor = "let item of dropdownToPassLine.value">{{item}}</option>
+            </select>   
+            &nbsp;&nbsp;&nbsp;   
+        </div>     
     </div>
-    &nbsp;&nbsp;
-    <button (click)="showLineDetails()">Prikazi</button>
-
+</div>
+&nbsp;&nbsp;
+<button (click)="showLineDetails()">Prikazi</button>
 
 <hr>
 
@@ -34,7 +33,7 @@
                     {{cell}}
                   </td>
                   <td>
-                      <button (click)="onClick(item[0])">Obrisi</button>
+                      <button (click)="onClick(item[1])">Obrisi</button>
                   </td>
               </tr>
           </tbody>

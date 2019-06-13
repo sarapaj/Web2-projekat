@@ -26,13 +26,13 @@ export class UrediLinijeComponent implements OnInit {
 
       this.showLineNames();
 
-    this.tableHeader = ["Redni broj", "Naziv", "DUGME HMNJ"];
+    this.tableHeader = ["Redni broj", "Naziv", " "];
 
 
   }
 
   showLineDetails() {
-    this._http.getLineById(this.selectedLine).subscribe((res: any) =>
+    this._http.getLineByName(this.selectedLine).subscribe((res: any) =>
     {
       this.tableBody = [[String(res.Id), res.Name]];
     })
@@ -43,13 +43,21 @@ export class UrediLinijeComponent implements OnInit {
     {
       this.dropdownToPassLine = {
         label: "Linije",
-        value: [res]
+        value: res
       }
     })
   }
 
-  onClick(rbr) {
-    console.log('Obrisi metoda', rbr);
+  onClick(name) {
+    this._http.deleteLine(name).subscribe(res =>
+      {
+        this.refreshPage();
+      })
+  }
+
+  refreshPage(){
+    // refresh stranice
+    window.location.reload();
   }
 
 }
