@@ -12,7 +12,22 @@ export class UserService {
   private _baseUrl = environment.baseUrl;
   userRole;
   userClaims: UserClaims = new UserClaims();
-  constructor(private _http: HttpClient) { }
+  
+  constructor(private _http: HttpClient) {
+    this.setUserRole();
+  }
+
+  setUserRole() {
+    this.getUserClaims().subscribe(claim => {
+      this._http.get(this._baseUrl + '/api/Ticket/GetUserRole?Email=' + (claim as any).Email).subscribe(role => {
+        this.userRole = role;
+      })
+    });
+  }
+
+  getUserRole() {
+    return this.userRole;
+  }
 
   registerUser(user:User)
   {
@@ -23,20 +38,7 @@ export class UserService {
     }
 
     return this._http.post(this._baseUrl + '/api/Account/Register', body);
-  }
-
-  getUserRole(){
-    // 1 - korisnik, 2 - admin, 3 - kontroler, ostalo - neregistrovani korisnik
-    this.userRole = 2;
-
-    this.getUserClaims().subscribe((data : any) => {
-      this.userClaims = data; 
-    console.log(this.userClaims.Email + "iz subscribe-a");
-
-    });
-    console.log(this.userClaims.Email);
-    return this._http.get(this._baseUrl + '/api/Ticket/GetUserRole?Email=' +this.userClaims.Email);
-  }
+  }  
 
   userAuthentication(Email, Password){
     var data = "UserName=" + Email + "&Password=" + Password + "&grant_type=password";
@@ -45,6 +47,6 @@ export class UserService {
   }
 
   getUserClaims(){
-    return  this._http.get(this._baseUrl+'/api/Account/UserInfo', {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});
+    return this._http.get(this._baseUrl+'/api/Account/UserInfo', {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});
    }
 }

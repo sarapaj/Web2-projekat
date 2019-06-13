@@ -262,10 +262,6 @@
     <Compile Include="Migrations\201906051726386_InititalDataBase.Designer.cs">
       <DependentUpon>201906051726386_InititalDataBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201906131636417_ubacena uloga.cs" />
-    <Compile Include="Migrations\201906131636417_ubacena uloga.Designer.cs">
-      <DependentUpon>201906131636417_ubacena uloga.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -409,9 +405,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201906051726386_InititalDataBase.resx">
       <DependentUpon>201906051726386_InititalDataBase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906131636417_ubacena uloga.resx">
-      <DependentUpon>201906131636417_ubacena uloga.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

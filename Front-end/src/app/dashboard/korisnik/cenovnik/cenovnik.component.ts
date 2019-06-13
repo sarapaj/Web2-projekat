@@ -30,7 +30,8 @@ export class CenovnikComponent implements OnInit {
     private _userService: UserService) { }
 
   ngOnInit() {
-    this.userRole = this._userService.getUserRole();
+    //this.userRole = this._userService.getUserRole();
+
 
     if(this.userRole != 2) { // korisnik
       this.resetForm();
