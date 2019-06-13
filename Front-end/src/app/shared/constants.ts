@@ -56,10 +56,6 @@ export const LogedUserHeaderElements = [
         name: "Profil",
         route: "profile"
     },
-    {
-        name: "Log out",
-        route: "login"
-    }
 ];
 
 export const NotLogedUserHeaderElements = [
