@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from 'src/models/korisnik';
 
 @Injectable({
@@ -27,5 +27,11 @@ export class UserService {
     // 1 - korisnik, 2 - admin, 3 - kontroler, ostalo - neregistrovani korisnik
     this.userRole = 2;
     return this.userRole;
+  }
+
+  userAuthentication(Email, Password){
+    var data = "UserName=" + Email + "&Password=" + Password + "&grant_type=password";
+    var reqHeader = new HttpHeaders({ 'Content-Type': 'application/x-www-urlencoded','No-Auth':'True' });
+    return this._http.post(this._baseUrl + '/oauth/token', data, { headers: reqHeader });
   }
 }
