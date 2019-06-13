@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebApp.Models;
+using WebApp.Models.ViewModels;
 using WebApp.Persistence.UnitOfWork;
 
 namespace WebApp.Controllers
@@ -24,8 +25,46 @@ namespace WebApp.Controllers
 			_context = context;
 		}
 
+        [Route("GetAllDiscounts")]
+        [ResponseType(typeof(List<Discount>))]
+        [HttpGet]
+        public IHttpActionResult GetAllDiscounts()
+        {
+            try
+            {
+                return Ok(_unitOfWork.Discounts.GetAll());
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound();
+            }
+        }
 
-		[Route("GetTicketPrice")]
+        [Route("GetAllTicketTypes")]
+        [ResponseType(typeof(IEnumerable<TicketTypeViewModel>))]
+        [HttpGet]
+        public IHttpActionResult GetAllTicketTypes()
+        {
+            var rez = new List<TicketTypeViewModel>();
+
+            try
+            {
+                var ret = _unitOfWork.TicketTypes.GetAll();
+                
+                foreach(var item in ret)
+                {
+                    rez.Add(new TicketTypeViewModel() { Id = item.Id, Name = item.Name, Price = item.Price });
+                }
+
+                return Ok(rez);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound();
+            }
+        }
+
+        [Route("GetTicketPrice")]
 		[ResponseType(typeof(string))]
 		[HttpGet]
 		public IHttpActionResult GetTicketPrice(string TicketType, string PassengerType) 

@@ -21,9 +21,9 @@ export class CenovnikComponent implements OnInit {
   cenovnikForma:CenovnikForma;
   tableHeader: string[];
   cena:string;
-  tableBody: string[];
-  tableBody2: string[];
-
+  tableBody;
+  tableBody2;
+  selectedTable;
   userRole;
 
   constructor(private route: ActivatedRoute, private cenovnikServis: CenovnikService,
@@ -32,7 +32,7 @@ export class CenovnikComponent implements OnInit {
   ngOnInit() {
     this.userRole = this._userService.getUserRole();
 
-    if(this.userRole == 1) { // korisnik
+    if(this.userRole != 2) { // korisnik
       this.resetForm();
       this.dropDownToPassPassenger = {label: "Tip putnika",value: TipPutnika};
       this.dropdownToPassTicket = {label:"Tip karte", value: TipKarte};
@@ -40,11 +40,31 @@ export class CenovnikComponent implements OnInit {
       this.tableHeader = ["Cena"];
       this.tableBody = [""];
     }
-    else if( this.userRole == 2) { // admin
-      
+    else { // admin
+      this.getDiscounts();
+      this.getTicketTypes();
     }
 
   }
+
+  getDiscounts() {
+    this.cenovnikServis.getAllDiscounts().subscribe((res: any) =>
+    {
+      this.tableBody = res.map((discount) => {
+        return [ discount.Type, discount.Percent];
+      })
+    })
+  }
+
+  getTicketTypes() {
+    this.cenovnikServis.getAllTicketTypes().subscribe((res: any) =>
+    {
+      this.tableBody2 = res.map((tp) => {
+        return [ tp.Name, tp.Price];
+      });
+    })
+  }
+
   OnSubmit(form: NgForm) {
     // this.cenovnikServis.getTicketPrice(this.cenovnikForma);
     // this.tableBody = [this.cenovnikServis.cena];
@@ -66,10 +86,18 @@ export class CenovnikComponent implements OnInit {
     if (form != null)
       form.reset();
     this.cenovnikForma = {
-      tipKarte: '',
-      tipPutnika: '',
+      tipKarte: TipKarte[0],
+      tipPutnika: TipPutnika[0]
     }
   }
   
+  // showSelectedTable(){
+  //   if(this.selectedTable == "1") {
+
+  //   }
+  //   else if(this.selectedTable == "2") {
+
+  //   }
+  // }
 
 }

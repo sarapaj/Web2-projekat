@@ -5,6 +5,7 @@ import { TipRedaVoznje, TipDana, LinijePrivremeno } from 'src/app/shared/constan
 import { RedVoznjeService } from 'src/app/services/red-voznje.service';
 import { RedVoznjeForma } from 'src/models/red-voznje-forma';
 import { NgForm } from '@angular/forms';
+import { LinijeService } from 'src/app/services/linije.service';
 
 @Component({
   selector: 'app-red-voznje',
@@ -21,13 +22,21 @@ export class RedVoznjeComponent implements OnInit {
   
   
   constructor(
-    private route: ActivatedRoute,private _redVoznjeServis: RedVoznjeService) {}
+    private route: ActivatedRoute,private _redVoznjeServis: RedVoznjeService, private _linijeServis: LinijeService) {}
 
   ngOnInit() {
     this.resetForm();
 
-    this.dropdownToPassDay = {label:"Dan", value: TipDana};
-    this.dropdownToPassLine = {label:"Linije", value:LinijePrivremeno}
+    this.dropdownToPassDay = {label:"Dani", value: TipDana};
+    // this.dropdownToPassLine = {label:"Linije", value:LinijePrivremeno}
+
+    this.dropdownToPassLine = 
+      {
+        label: "",
+        value: []
+      };
+
+      this.showLineNames();
 
     this.tableHeader =["Polasci"];
     //this.tableBody = [["aa"], ["bb"]];
@@ -59,7 +68,17 @@ export class RedVoznjeComponent implements OnInit {
       form.reset();
     this.redVoznjeForma = {
       day: TipDana[0],
-      lineName: LinijePrivremeno[0],
+      lineName: LinijePrivremeno[0]
     }
+  }
+
+  showLineNames(){
+    this._linijeServis.getLineNames().subscribe((res: any) =>
+    {
+      this.dropdownToPassLine = {
+        label: "Linije",
+        value: res
+      }
+    })
   }
 }

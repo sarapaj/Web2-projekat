@@ -96,7 +96,8 @@ export const TipRedaVoznje = [
 export const TipDana = [ 
     "radni",
     "subota",
-    "nedelja"
+    "nedelja",
+    "praznik"
 ];
 
 export const LinijePrivremeno = [ 
