@@ -36,6 +36,7 @@ namespace WebApp.Models
 		public DateTime Birthday { get; set; }
 		public string PassengerType { get; set; }
 		public string Document { get; set; }
+		public UserRole Role { get; set; }
 
         public string LoginProvider { get; set; }
     }

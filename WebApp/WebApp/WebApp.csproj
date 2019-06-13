@@ -278,6 +278,10 @@
     <Compile Include="Migrations\201906111050265_TipPutnika.Designer.cs">
       <DependentUpon>201906111050265_TipPutnika.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906131521355_Ubacena uloga.cs" />
+    <Compile Include="Migrations\201906131521355_Ubacena uloga.Designer.cs">
+      <DependentUpon>201906131521355_Ubacena uloga.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -433,6 +437,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906111050265_TipPutnika.resx">
       <DependentUpon>201906111050265_TipPutnika.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906131521355_Ubacena uloga.resx">
+      <DependentUpon>201906131521355_Ubacena uloga.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

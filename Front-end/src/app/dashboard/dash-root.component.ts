@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserSidebarElements, AdminSidebarElements, KontrolerSidebarElements, NotLogedUserHeaderElements, LogedUserHeaderElements } from '../shared/constants';
 import { UserService } from '../services/user.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-dash-root',
@@ -10,7 +11,7 @@ import { UserService } from '../services/user.service';
 })
 export class DashRootComponent implements OnInit {
 
-  userRole;
+  userRole=4;
  
   sidebarElements = [];
   headerElements = [];
@@ -19,7 +20,16 @@ export class DashRootComponent implements OnInit {
 
   ngOnInit() {
     
-    this.userRole = this._userService.getUserRole();
+    // this.userRole = this._userService.getUserRole();
+    // this._userService.getUserRole().subscribe((data : any) => {
+    //   this.userRole = data; 
+    // },
+    // (err: HttpErrorResponse) => {
+    //   this.userRole = 4;
+    // }
+    // );
+
+    this.userRole = 2;
 
     if(this.userRole == 1){
       this.sidebarElements = UserSidebarElements;

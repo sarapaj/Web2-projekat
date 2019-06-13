@@ -12,6 +12,7 @@ import { UrediLinijeComponent } from './dashboard/admin/uredi-linije/uredi-linij
 import { UrediStaniceComponent } from './dashboard/admin/uredi-stanice/uredi-stanice.component';
 import { KarteComponent } from './dashboard/kontrolor/karte/karte.component';
 import { PutniciComponent } from './dashboard/kontrolor/putnici/putnici.component';
+import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
     {
@@ -49,7 +50,8 @@ const routes: Routes = [
         },
         {
           path: "profile",
-          component: ProfilComponent
+          component: ProfilComponent,
+          canActivate:[AuthGuard]
         },
         {
           path: "linije",
@@ -61,11 +63,13 @@ const routes: Routes = [
         },
         {
           path: "validiraj-karte",
-          component: KarteComponent
+          component: KarteComponent,
+          canActivate:[AuthGuard]
         },
         {
           path: "verifikuj-putnike",
-          component: PutniciComponent
+          component: PutniciComponent,
+          canActivate:[AuthGuard]
         }
       ]
     },

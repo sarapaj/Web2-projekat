@@ -24,6 +24,7 @@ import { PutniciComponent } from './dashboard/kontrolor/putnici/putnici.componen
 import { UserService } from './services/user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { RedVoznjeService } from './services/red-voznje.service';
+import { AuthGuard } from './auth/auth.guard';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,7 @@ import { RedVoznjeService } from './services/red-voznje.service';
     HttpClientModule,
     RouterModule.forRoot([])
   ],
-  providers: [UserService, RedVoznjeService],
+  providers: [UserService, RedVoznjeService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

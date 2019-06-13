@@ -64,7 +64,48 @@ namespace WebApp.Controllers
             }
         }
 
-        [Route("GetTicketPrice")]
+
+		[Route("GetUserRole")]
+		[ResponseType(typeof(int))]
+		[HttpGet]
+		public IHttpActionResult GetUserRole(string Email)
+		{
+
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+
+			try
+			{
+				var users = _unitOfWork.ApplicationUsers.Find(x => x.Email.ToString() == Email);
+
+				if (users != null)
+				{
+					foreach (var user in users)
+					{
+						if (user.Role.ToString() == "admin")
+							return Ok(2);
+						else if (user.Role.ToString() == "korisnik")
+							return Ok(1);
+						else if (user.Role.ToString() == "kontrolor")
+							return Ok(3);
+						
+					}
+				}
+
+
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				return StatusCode(HttpStatusCode.InternalServerError);
+			}
+
+			return NotFound();
+
+		}
+
+		[Route("GetTicketPrice")]
 		[ResponseType(typeof(string))]
 		[HttpGet]
 		public IHttpActionResult GetTicketPrice(string TicketType, string PassengerType) 

@@ -59,6 +59,7 @@ namespace WebApp.Controllers
         {
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
 
+
 			return new UserInfoViewModel
 			{
 				Email = User.Identity.GetUserName(),
@@ -67,8 +68,9 @@ namespace WebApp.Controllers
             };
         }
 
-        // POST api/Account/Logout
-        [Route("Logout")]
+
+		// POST api/Account/Logout
+		[Route("Logout")]
         public IHttpActionResult Logout()
         {
             Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
@@ -191,6 +193,7 @@ namespace WebApp.Controllers
 
             return Ok();
         }
+
 
         // POST api/Account/RemoveLogin
         [Route("RemoveLogin")]
@@ -322,6 +325,7 @@ namespace WebApp.Controllers
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
+		[HttpPost]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
 			if (!ModelState.IsValid)
@@ -329,11 +333,12 @@ namespace WebApp.Controllers
 				return BadRequest(ModelState);
 			}
 
-			var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+			var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, Role=0 };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+		
 
-            if (!result.Succeeded)
+			if (!result.Succeeded)
             {
                 return GetErrorResult(result);
             }
