@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { DropdownElement } from 'src/app/shared/classes';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DropdownElement } from 'src/models/classes';
 import { TipPutnika } from 'src/app/shared/constants';
 import { User } from 'src/models/korisnik';
 import { NgForm } from '@angular/forms';
@@ -16,7 +16,7 @@ export class RegistrationComponent implements OnInit {
   user: User;
   dropdownToPass: DropdownElement[];
   
-  constructor(private route: ActivatedRoute, private userService: UserService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private userService: UserService) { }
 
   ngOnInit() {
     this.resetForm();
@@ -32,9 +32,7 @@ export class RegistrationComponent implements OnInit {
   OnSubmit(form: NgForm) {
     this.userService.registerUser(form.value)
       .subscribe((data: any) => {
-        if (data.Succeeded == true) {
-          this.resetForm(form);
-        }
+          this.router.navigate(['/dashboard']);
       });
   }
 

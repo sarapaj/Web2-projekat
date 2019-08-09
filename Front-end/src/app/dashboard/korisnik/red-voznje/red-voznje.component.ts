@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DropdownElement } from 'src/app/shared/classes';
+import { DropdownElement } from 'src/models/classes';
 import { TipRedaVoznje, TipDana, LinijePrivremeno } from 'src/app/shared/constants';
 import { RedVoznjeService } from 'src/app/services/red-voznje.service';
 import { RedVoznjeForma } from 'src/models/red-voznje-forma';

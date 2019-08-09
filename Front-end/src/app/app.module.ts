@@ -15,10 +15,8 @@ import { HeaderComponent } from './shared/header/header.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { TrenutnaLokacijaComponent } from './dashboard/korisnik/trenutna-lokacija/trenutna-lokacija.component';
 import { ProfilComponent } from './shared/profil/profil.component';
-import { MyTableComponent } from './shared/my-table/my-table.component';
 import { UrediLinijeComponent } from './dashboard/admin/uredi-linije/uredi-linije.component';
 import { UrediStaniceComponent } from './dashboard/admin/uredi-stanice/uredi-stanice.component';
-import { MyDropdownComponent } from './shared/my-dropdown/my-dropdown.component';
 import { KarteComponent } from './dashboard/kontrolor/karte/karte.component';
 import { PutniciComponent } from './dashboard/kontrolor/putnici/putnici.component';
 import { UserService } from './services/user.service';
@@ -39,10 +37,8 @@ import { AuthGuard } from './auth/auth.guard';
     CenovnikComponent,
     TrenutnaLokacijaComponent,
     ProfilComponent,
-    MyTableComponent,
     UrediLinijeComponent,
     UrediStaniceComponent,
-    MyDropdownComponent  ,
     KarteComponent,
     PutniciComponent
   ],

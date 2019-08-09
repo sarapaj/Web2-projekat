@@ -1,7 +1,14 @@
 <form>
     <div class="form-group my-div">
         <div class="form-label-group">
-            <app-my-dropdown [dropdownElement] = "dropdownToPass"></app-my-dropdown>       
+            <div *ngFor = "let element of dropdownToPass" class="my-div">
+                <label>{{element.label}} &nbsp;</label>
+                <select class="dropdown no-arrow dropdown-toggle" id="userDropdown">
+                  <option  *ngFor = "let item of element.value">{{item}}</option>
+                </select>
+                &nbsp;&nbsp;&nbsp;
+            </div>
+            <!-- <app-my-dropdown [dropdownElement] = "dropdownToPass"></app-my-dropdown>        -->
         </div>
     </div>
     &nbsp;&nbsp;

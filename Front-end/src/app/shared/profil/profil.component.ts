@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DropdownElement } from '../classes';
+import { DropdownElement } from '../../../models/classes';
 import { TipPutnika } from '../constants';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DropdownElement } from 'src/app/shared/classes';
+import { DropdownElement } from 'src/models/classes';
 import { LinijePrivremeno } from 'src/app/shared/constants';
 
 @Component({

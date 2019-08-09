@@ -2,17 +2,16 @@
     <form #cenovnikForm="ngForm" (ngSubmit)="OnSubmit(cenovnikForm)">
         <div class="form-group my-div">
             <div class="form-label-group">
-                <div class="my-div">
-                <app-my-dropdown [dropdownElement] = "dropdownToPass"></app-my-dropdown>    
-                <label>Tip karte &nbsp;</label>
-                <select (change)="selectTicketTypeChangeHandler($event)"  class="dropdown no-arrow dropdown-toggle" id="userDropdown">
-                    <option  *ngFor = "let item of this.dropdownToPassTicket.value">{{item}}</option>
-                </select>    
-                &nbsp;&nbsp;&nbsp;
-                <label>Tip putnika &nbsp;</label>
-                <select (change)="selectPassengerChangeHandler($event)"  class="dropdown no-arrow dropdown-toggle" id="userDropdown">
-                    <option  *ngFor = "let item of this.dropDownToPassPassenger.value">{{item}}</option>
-                </select>    
+                <div class="my-div">  
+                  <label>Tip karte &nbsp;</label>
+                  <select (change)="selectTicketTypeChangeHandler($event)"  class="dropdown no-arrow dropdown-toggle" id="userDropdown">
+                      <option  *ngFor = "let item of this.dropdownToPassTicket.value">{{item}}</option>
+                  </select>    
+                  &nbsp;&nbsp;&nbsp;
+                  <label>Tip putnika &nbsp;</label>
+                  <select (change)="selectPassengerChangeHandler($event)"  class="dropdown no-arrow dropdown-toggle" id="userDropdown">
+                      <option  *ngFor = "let item of this.dropDownToPassPassenger.value">{{item}}</option>
+                  </select>    
                 </div> 
             </div>
             

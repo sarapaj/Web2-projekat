@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DropdownElement } from 'src/app/shared/classes';
+import { DropdownElement } from 'src/models/classes';
 import { TipKarte, TipPutnika } from 'src/app/shared/constants';
 import { CenovnikForma } from 'src/models/cenovnik-forma';
 import { NgForm } from '@angular/forms';
