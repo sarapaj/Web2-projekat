@@ -11,7 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class DashRootComponent implements OnInit {
 
-  public userRole;
+  public userRole = 4;
  
   sidebarElements = [];
   headerElements = [];
