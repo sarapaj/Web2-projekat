@@ -27,6 +27,9 @@ namespace WebApp.Models
 		public string Document { get; set; }
 		public PassengerType Type { get; set; }
 		public UserRole Role { get; set; }
+		public string Name { get; set; }
+		public string Lastname { get; set; }
+		public string Address { get; set; }
 		
 
 		public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)

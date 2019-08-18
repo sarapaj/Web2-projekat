@@ -266,6 +266,10 @@
     <Compile Include="Migrations\201908170916566_bp.Designer.cs">
       <DependentUpon>201908170916566_bp.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908181810275_Prosirenje user-a.cs" />
+    <Compile Include="Migrations\201908181810275_Prosirenje user-a.Designer.cs">
+      <DependentUpon>201908181810275_Prosirenje user-a.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -412,6 +416,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908170916566_bp.resx">
       <DependentUpon>201908170916566_bp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908181810275_Prosirenje user-a.resx">
+      <DependentUpon>201908181810275_Prosirenje user-a.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
