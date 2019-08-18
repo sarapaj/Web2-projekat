@@ -21,6 +21,8 @@ export class UserService {
     this.getUserClaims().subscribe(claim => {
       this._http.get(this._baseUrl + '/api/Ticket/GetUserRole?Email=' + (claim as any).Email).subscribe(role => {
         this.userRole = role;
+        localStorage.setItem('role', this.userRole); //cuvamo ulogu u local storage chrome
+        console.log("User role iz metode " + role);
       })
     });
   }

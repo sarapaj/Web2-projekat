@@ -16,16 +16,24 @@ export class LoginComponent implements OnInit {
   Password;
   Email;
   isLoginError = false;
+  userRole;
 
   ngOnInit() {
     this.Password= '';
     this.Email = '';
   }
 
+
   OnSubmit(){
     this.userService.userAuthentication(this.Email, this.Password).subscribe((data:any) => {
       localStorage.setItem('userToken', data.access_token);
+      
+      console.log("Setovan token nakon uspesnog logina");
+
+      this.userService.setUserRole();
+
       this.router.navigate(['/dashboard']);
+
     },
     (err: HttpErrorResponse) => {
       this.isLoginError = true;
@@ -33,4 +41,7 @@ export class LoginComponent implements OnInit {
     }
     );
   }
+
+
+
 }

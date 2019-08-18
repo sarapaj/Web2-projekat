@@ -11,29 +11,29 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class DashRootComponent implements OnInit {
 
-  public userRole = 4;
+  public userRole = "4";
  
   sidebarElements = [];
   headerElements = [];
   
-  constructor(private route: ActivatedRoute, private _userService: UserService) { }
+  constructor(private route: ActivatedRoute, private _userService: UserService) {
+  }
 
   ngOnInit() {
-    this.userRole = this._userService.getUserRole();
+    this.userRole = localStorage.getItem('role');
     this.determineUserRole();
-
   }
 
   private determineUserRole() {
-    if(this.userRole == 1){
+    if(this.userRole == "1"){
       this.sidebarElements = UserSidebarElements;
       this.headerElements = LogedUserHeaderElements;
     }
-    else if(this.userRole == 2){
+    else if(this.userRole == "2"){
       this.sidebarElements = AdminSidebarElements;
       this.headerElements = LogedUserHeaderElements;
     }
-    else if(this.userRole == 3){
+    else if(this.userRole == "3"){
       this.sidebarElements = KontrolerSidebarElements;
       this.headerElements = LogedUserHeaderElements;
     }
