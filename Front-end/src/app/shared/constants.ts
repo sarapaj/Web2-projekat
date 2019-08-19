@@ -72,9 +72,18 @@ export const NotLogedUserHeaderElements = [
 
 // tipovi
 export const TipPutnika = [ 
-    "djak",
-    "penzioner",
-    "regularni"
+    {
+        name: "djak",
+        value: 0
+    },
+    {
+        name: "penzioner",
+        value: 1
+    },
+    {
+        name: "regularni",
+        value: 2
+    }
 ];
 
 export const TipKarte = [ 

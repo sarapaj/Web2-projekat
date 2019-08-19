@@ -4,21 +4,58 @@
     <div class="card-header">Registracija</div>
     <div class="card-body">
       <form #userRegistrationForm="ngForm" (ngSubmit)="OnSubmit(userRegistrationForm)">
+        <!-- EMAIL -->
         <div class="form-group">
           <div class="form-row">
             <div class="col-md-6">
               <div class="form-label-group">
-                <input type="text" id="Email" class="form-control" #Email="ngModel" [(ngModel)]="user.Email" name="Email" placeholder="Ime" required="required" autofocus="autofocus">
+                <input type="text" id="Email" class="form-control" #Email="ngModel" [(ngModel)]="user.Email" name="Email" placeholder="example@example.com" required="required" autofocus="autofocus">
                 <label for="Email">Email</label>
               </div>
             </div>
           </div>
         </div>
+        <!-- NAME AND SURNAME -->
         <div class="form-group">
           <div class="form-row">
             <div class="col-md-6">
               <div class="form-label-group">
-                <input type="password" id="inputPassword" class="form-control" #Password="ngModel" [(ngModel)]="user.Password"name="Password"  placeholder="Lozinka" required="required">
+                <input type="text" id="Name" class="form-control" #Name="ngModel" [(ngModel)]="user.Name" name="Name" placeholder="Name" required="required" autofocus="autofocus">
+                <label for="Name">Name</label>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-label-group">
+                <input type="text" id="Surname" class="form-control" #Surname="ngModel" [(ngModel)]="user.Surname" name="Surname" placeholder="Surname" required="required" autofocus="autofocus">
+                <label for="Surname">Surname</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ADDRESS -->
+        <div class="form-group">
+          <div class="form-row">
+            <div class="col-md-6">
+              <div class="form-label-group">
+                <input type="text" id="Address" class="form-control" #Address="ngModel" [(ngModel)]="user.Address" name="Address" placeholder="Address" required="required" autofocus="autofocus">
+                <label for="Address">Address</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- BIRTHDAY -->
+        <!-- <div class="form-group">
+          <div class="form-label-group">
+            <input data-format="yyyy-MM-dd" type="date" id="Birthday" class="form-control" #Birthday="ngModel" [(ngModel)]="user.Birthday" name="Birthday"/>
+            <label for="Birthday">Datum rodjenja</label>
+          </div>
+        </div> -->
+        <!-- PASS -->
+        <div class="form-group">
+          <div class="form-row">
+            <div class="col-md-6">
+              <div class="form-label-group">
+                <input type="password" id="inputPassword" class="form-control" #Password="ngModel" [(ngModel)]="user.Password" name="Password"  placeholder="Lozinka" required="required">
                 <label for="inputPassword">Lozinka</label>
               </div>
             </div>
@@ -31,6 +68,32 @@
           </div>
         </div>
       
+        <!-- tip putnika -->
+        <div class="form-group my-div">
+            <div class="form-label-group">
+                <div *ngFor = "let element of dropdownToPass" class="my-div">
+                    <label>{{element.label}} &nbsp;</label>
+                    <select (change)="selectPassengerChangeHandler($event)"  class="dropdown no-arrow dropdown-toggle" id="userDropdown" name="PassangerType" [(ngModel)] = "user.PassangerType">
+                        <option  *ngFor = "let item of element.value" [value]="item.value">{{item.name}}</option>
+                    </select>
+                    &nbsp;&nbsp;&nbsp;
+                </div>
+            </div>
+        </div>
+    
+        <!-- dokaz -->
+        <!-- <div class="form-group my-div" *ngIf="poljeIndex">
+          <div class="form-label-group">
+            <input type="file" size="60" class="form-control" name="dokazIndeks" (change)="handleFileInput($event.target.files)"/>
+            <label for="dokazIndeks">Slika indeksa</label>
+          </div>
+        </div>
+        <div class="form-group my-div" *ngIf="poljePenzija">
+            <div class="form-label-group">
+              <input type="file" size="60" class="form-control" name="dokazPenzija" (change)="handleFileInput($event.target.files)"/>
+              <label for="dokazPenzija">Slika penzionog ceka</label>
+            </div>
+          </div> -->
 
         <button class="btn btn-primary btn-block" type="submit">Register</button>
       </form>
@@ -40,12 +103,3 @@
     </div>
   </div>
 </div>
-
-<script type="text/javascript">
-  $(function() {
-    $('#datetimepicker4').datetimepicker({
-      pickTime: false
-    });
-  });
-</script>
-

@@ -15,10 +15,15 @@ export class RegistrationComponent implements OnInit {
 
   user: User;
   dropdownToPass: DropdownElement[];
+  // registrationForma: RegistrationForm;
+  poljeIndex: boolean;
+  poljePenzija: boolean;
   
   constructor(private router: Router, private route: ActivatedRoute, private userService: UserService) { }
 
   ngOnInit() {
+    this.poljeIndex = false;
+    this.poljePenzija = false;
     this.resetForm();
     this.dropdownToPass = [
       {
@@ -36,6 +41,26 @@ export class RegistrationComponent implements OnInit {
       });
   }
 
+  handleFileInput(files: FileList) {
+    // this.user.dokaz = files.item(0);
+  }
+
+  selectPassengerChangeHandler(event:any){
+    console.log(this.user.PassangerType);
+    if(this.user.PassangerType == 0){
+      this.poljePenzija = false;
+      this.poljeIndex = true;
+    }
+    else if(this.user.PassangerType == 1){
+      this.poljeIndex = false;
+      this.poljePenzija = true;
+    }
+    else{
+      this.poljeIndex = false;
+      this.poljePenzija = false;
+    }
+  }
+
   resetForm(form?: NgForm) {
     if (form != null)
       form.reset();
@@ -43,6 +68,11 @@ export class RegistrationComponent implements OnInit {
       Email: '',
       Password: '',
       ConfirmPassword: '',
+      Name: '',
+      Surname: '',
+      Address: '',
+      // Birthday: null,
+      PassangerType: 2
     }
   }
 

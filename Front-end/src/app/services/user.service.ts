@@ -14,7 +14,6 @@ export class UserService {
   userClaims: UserClaims = new UserClaims();
   
   constructor(private _http: HttpClient) {
-    this.setUserRole();
   }
 
   setUserRole() {
@@ -36,9 +35,15 @@ export class UserService {
     const body: User = {
       Email: user.Email,
       Password: user.Password,
-      ConfirmPassword: user.ConfirmPassword,      
+      ConfirmPassword: user.ConfirmPassword,
+      Name: user.Name,
+      Surname: user.Surname,
+      Address: user.Address,
+      // Birthday: user.Birthday,
+      PassangerType: user.PassangerType,
+      // dokaz: user.dokaz    
     }
-
+    console.log(user);
     return this._http.post(this._baseUrl + '/api/Account/Register', body);
   }  
 

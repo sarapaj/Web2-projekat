@@ -48,6 +48,33 @@ namespace WebApp.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        
+        [Required]
+        [Display(Name = "Name")]
+        public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "Surname")]
+        public string Surname { get; set; }
+
+        [Required]
+        [Display(Name = "Address")]
+        public string Address { get; set; }
+
+        //[Required]
+        //[Display(Name = "Birthday")]
+        //public DateTime Birthday { get; set; }
+
+        [Required]
+        [Display(Name = "PassangerType")]
+        public int PassangerType { get; set; }
+
+        // TODO
+        // treba postaviti odgovarajuci tip
+        // za sad cemo ignorisati ovo polje
+        //[Display(Name = "AttachedFile")]
+        //public string AttachedFile { get; set; }
     }
 
     public class RegisterExternalBindingModel
