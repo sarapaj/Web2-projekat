@@ -9,7 +9,8 @@
           <div class="form-row">
             <div class="col-md-6">
               <div class="form-label-group">
-                <input type="text" id="Email" class="form-control" #Email="ngModel" [(ngModel)]="user.Email" name="Email" placeholder="example@example.com" required="required" autofocus="autofocus">
+                <input type="text" id="Email" class="form-control" #Email="ngModel" [(ngModel)]="user.Email" 
+                name="Email" placeholder="example@example.com" required="required" autofocus="autofocus">
                 <label for="Email">Email</label>
               </div>
             </div>
@@ -20,13 +21,16 @@
           <div class="form-row">
             <div class="col-md-6">
               <div class="form-label-group">
-                <input type="text" id="Name" class="form-control" #Name="ngModel" [(ngModel)]="user.Name" name="Name" placeholder="Name" required="required" autofocus="autofocus">
+                <input type="text" id="Name" class="form-control" #Name="ngModel" 
+                [(ngModel)]="user.Name" name="Name" placeholder="Name" required="required" autofocus="autofocus">
                 <label for="Name">Name</label>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-label-group">
-                <input type="text" id="Surname" class="form-control" #Surname="ngModel" [(ngModel)]="user.Surname" name="Surname" placeholder="Surname" required="required" autofocus="autofocus">
+                <input type="text" id="Surname" class="form-control" #Surname="ngModel" 
+                [(ngModel)]="user.Surname" name="Surname" placeholder="Surname" required="required" 
+                autofocus="autofocus">
                 <label for="Surname">Surname</label>
               </div>
             </div>
@@ -37,7 +41,9 @@
           <div class="form-row">
             <div class="col-md-6">
               <div class="form-label-group">
-                <input type="text" id="Address" class="form-control" #Address="ngModel" [(ngModel)]="user.Address" name="Address" placeholder="Address" required="required" autofocus="autofocus">
+                <input type="text" id="Address" class="form-control" #Address="ngModel"
+                 [(ngModel)]="user.Address" name="Address" placeholder="Address" required="required" 
+                 autofocus="autofocus">
                 <label for="Address">Address</label>
               </div>
             </div>
@@ -53,17 +59,26 @@
         <!-- PASS -->
         <div class="form-group">
           <div class="form-row">
+            
             <div class="col-md-6">
-              <div class="form-label-group">
-                <input type="password" id="inputPassword" class="form-control" #Password="ngModel" [(ngModel)]="user.Password" name="Password"  placeholder="Lozinka" required="required">
-                <label for="inputPassword">Lozinka</label>
-              </div>
+              <show-hide-password btnStyle="primary">
+                <div class="form-label-group">
+                  <input type="password" id="inputPassword" class="form-control" #Password="ngModel" 
+                  [(ngModel)]="user.Password" name="Password"  placeholder="Lozinka" required="required">
+                  <label for="inputPassword">Lozinka</label>
+                </div>
+              </show-hide-password>
+              
             </div>
             <div class="col-md-6">
-              <div class="form-label-group">
-                <input type="password" id="confirmPassword" class="form-control" #ConfirmPassword="ngModel" [(ngModel)]="user.ConfirmPassword" name="ConfirmPassword" placeholder="Potvrda lozinke" required="required">
-                <label for="confirmPassword">Potvrda lozinke</label>
-              </div>
+                <show-hide-password btnStyle="primary">
+                    <div class="form-label-group">
+                      <input type="password" id="confirmPassword" class="form-control" #ConfirmPassword="ngModel" 
+                      [(ngModel)]="user.ConfirmPassword" name="ConfirmPassword" placeholder="Potvrda lozinke" 
+                      required="required">
+                      <label for="confirmPassword">Potvrda lozinke</label>
+                    </div>
+                </show-hide-password>
             </div>
           </div>
         </div>  

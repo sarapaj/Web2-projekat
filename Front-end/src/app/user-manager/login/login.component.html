@@ -13,11 +13,14 @@
           </div>
         </div>
         <div class="form-group">
-          <div class="form-label-group">
-            <input type="password" [(ngModel)]="Password" name="Password" id="inputPassword" class="form-control" placeholder="Password" required="required">
-            <label for="inputPassword">Lozinka</label>
-          </div>
+          <show-hide-password btnStyle="primary">
+            <div class="form-label-group">
+              <input type="password" [(ngModel)]="Password" name="Password" id="inputPassword" class="form-control" placeholder="Password" required="required">
+              <label for="inputPassword">Lozinka</label>
+            </div>
+          </show-hide-password>
         </div>
+        
         <!-- <div class="form-group">
           <div class="checkbox">
             <label>
