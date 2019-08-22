@@ -3,6 +3,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from 'src/models/korisnik';
 import { UserClaims } from 'src/models/user-claims';
+import { stringify } from '@angular/compiler/src/util';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class UserService {
 
   setUserRole() {
     this.getUserClaims().subscribe(claim => {
-      this._http.get(this._baseUrl + '/api/Ticket/GetUserRole?Email=' + (claim as any).Email).subscribe(role => {
+      this.fetchUserRole(claim).subscribe(role => {
         this.userRole = role;
         localStorage.setItem('role', this.userRole); //cuvamo ulogu u local storage chrome
         console.log("User role iz metode " + role);
@@ -26,26 +27,42 @@ export class UserService {
     });
   }
 
+  fetchUserRole(claim) {
+    return this._http.get(this._baseUrl + '/api/Ticket/GetUserRole?Email=' + (claim as any).Email);
+  }
+
   getUserRole() {
     return this.userRole;
   }
 
-  registerUser(user:User)
+  registerUser(user:User, imageName: string)
   {
-    const body: User = {
-      Email: user.Email,
-      Password: user.Password,
-      ConfirmPassword: user.ConfirmPassword,
-      Name: user.Name,
-      Surname: user.Surname,
-      Address: user.Address,
-      // Birthday: user.Birthday,
-      PassangerType: user.PassangerType,
-      // dokaz: user.dokaz    
+    let fd = new FormData();
+
+    fd.append("Email", user.Email);
+    fd.append("Password", user.Password);
+    fd.append("ConfirmPassword", user.ConfirmPassword);
+    fd.append("Name", user.Name);
+    fd.append("Surname", user.Surname);
+    fd.append("Address", user.Address);
+    fd.append("PassengerType", user.PassengerType);
+    
+    if(user.Document != null){
+      fd.append("Document", user.Document);
+      fd.append("ImageName", imageName);
     }
+    
     console.log(user);
-    return this._http.post(this._baseUrl + '/api/Account/Register', body);
+    return this._http.post(this._baseUrl + '/api/Account/Register', fd);
   }  
+
+  postFile(fileToSend: any, imageName: string, username: string){
+    let fd = new FormData();
+    fd.append("User", username);
+    fd.append("Document", fileToSend);
+    fd.append("ImageName", imageName);
+    return this._http.post(this._baseUrl + '/api/Account/PostFile', fd);
+  }
 
   userAuthentication(Email, Password){
     var data = "UserName=" + Email + "&Password=" + Password + "&grant_type=password";

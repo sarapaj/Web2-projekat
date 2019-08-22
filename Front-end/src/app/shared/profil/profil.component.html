@@ -43,32 +43,39 @@
           <label for="adresa">Adresa</label>
         </div>
     </div>
-    <div class="form-group">
+    <!-- <div class="form-group">
       <div class="form-label-group">
         <input data-format="yyyy-MM-dd" type="date" name="datum-rodjenja"/>
         <label for="datum-rodjenja">Datum rodjenja</label>
       </div>
-    </div>
+    </div> -->
     <div class="form-group my-div">
         <div class="form-label-group">
             <div *ngFor = "let element of dropdownToPass" class="my-div">
                 <label>{{element.label}} &nbsp;</label>
                 <select class="dropdown no-arrow dropdown-toggle" id="userDropdown">
-                  <option  *ngFor = "let item of element.value">{{item}}</option>
+                  <option  *ngFor = "let item of element.value">{{item.name}}</option>
                 </select>
                 &nbsp;&nbsp;&nbsp;
             </div>
-          <!-- <app-my-dropdown [dropdownElement] = "dropdownToPass"></app-my-dropdown> -->
         </div>
     </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Izmeni</button>
+  </form>
 
-    <div class="form-group my-div">
-      <div class="form-label-group">
-        <input type="file" size="60" class="form-control" name="dokaz"/>
-        <label for="dokaz">Fotografija kao dokaz</label>
+  <hr>
+
+  <h6>Verifikacija putnika</h6>
+  <p>Djaci - fotografija indeksa;&nbsp;Penzioneri - fotografija penzionog ceka<p>
+  <form (ngSubmit)="uploadFile()">
+      <div class="form-group my-div">
+        <div class="form-label-group">
+          <input type="file" class="form-control" name="dokaz"
+          (change)="handleFileInput($event)" accept="image/png, image/jpeg"/>
+          <label for="dokaz">Fotografija kao dokaz</label>
+        </div>
       </div>
-    </div>
-
-    <br/>
-    <button type="submit">Izmeni</button>
+      <br>
+      <button type="submit" class="btn btn-primary">Dodaj sliku</button>
   </form>

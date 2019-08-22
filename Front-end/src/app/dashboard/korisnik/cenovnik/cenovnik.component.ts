@@ -86,7 +86,7 @@ export class CenovnikComponent implements OnInit {
       form.reset();
     this.cenovnikForma = {
       tipKarte: TipKarte[0],
-      tipPutnika: TipPutnika[0]
+      tipPutnika: TipPutnika[0].name
     }
   }
   

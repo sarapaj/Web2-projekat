@@ -18,7 +18,8 @@ export class RegistrationComponent implements OnInit {
   // registrationForma: RegistrationForm;
   poljeIndex: boolean;
   poljePenzija: boolean;
-  
+  imageName: string = "";
+
   constructor(private router: Router, private route: ActivatedRoute, private userService: UserService) { }
 
   ngOnInit() {
@@ -33,31 +34,40 @@ export class RegistrationComponent implements OnInit {
     ];
   }
 
-
   OnSubmit(form: NgForm) {
-    this.userService.registerUser(form.value)
+    this.userService.registerUser(this.user, this.imageName)
       .subscribe((data: any) => {
-          this.router.navigate(['/dashboard']);
+        alert("Registracija uspesna!");
+        this.router.navigate(['/login']);
       });
   }
-
-  handleFileInput(files: FileList) {
-    // this.user.dokaz = files.item(0);
-  }
-
+  
   selectPassengerChangeHandler(event:any){
-    console.log(this.user.PassangerType);
-    if(this.user.PassangerType == 0){
+    console.log(this.user.PassengerType)
+    if(this.user.PassengerType == "0"){
       this.poljePenzija = false;
       this.poljeIndex = true;
     }
-    else if(this.user.PassangerType == 1){
+    else if(this.user.PassengerType == "1"){
       this.poljeIndex = false;
       this.poljePenzija = true;
     }
     else{
       this.poljeIndex = false;
       this.poljePenzija = false;
+    }
+  }
+
+  handleFileInput(event: any) {
+    if(event.target.files[0].size > 4194304){
+      event.target.value = "";  
+      alert("File is too big!");
+    }
+    else{
+      const file = event.target.files[0];
+      this.user.Document = file;
+      this.imageName = this.user.Document.name;
+      console.log(this.imageName);
     }
   }
 
@@ -72,7 +82,8 @@ export class RegistrationComponent implements OnInit {
       Surname: '',
       Address: '',
       // Birthday: null,
-      PassangerType: 2
+      PassengerType: "2",
+      Document: null
     }
   }
 

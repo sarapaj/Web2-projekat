@@ -66,14 +66,14 @@
               </div>
             </div>
           </div>
-        </div>
+        </div>  
       
         <!-- tip putnika -->
         <div class="form-group my-div">
             <div class="form-label-group">
                 <div *ngFor = "let element of dropdownToPass" class="my-div">
                     <label>{{element.label}} &nbsp;</label>
-                    <select (change)="selectPassengerChangeHandler($event)"  class="dropdown no-arrow dropdown-toggle" id="userDropdown" name="PassangerType" [(ngModel)] = "user.PassangerType">
+                    <select (change)="selectPassengerChangeHandler($event)"  class="dropdown no-arrow dropdown-toggle" id="userDropdown" name="PassengerType" [(ngModel)] = "user.PassengerType">
                         <option  *ngFor = "let item of element.value" [value]="item.value">{{item.name}}</option>
                     </select>
                     &nbsp;&nbsp;&nbsp;
@@ -82,18 +82,20 @@
         </div>
     
         <!-- dokaz -->
-        <!-- <div class="form-group my-div" *ngIf="poljeIndex">
+        <div class="form-group my-div" *ngIf="poljeIndex">
           <div class="form-label-group">
-            <input type="file" size="60" class="form-control" name="dokazIndeks" (change)="handleFileInput($event.target.files)"/>
+            <input type="file" class="form-control" name="dokazIndeks" (change)="handleFileInput($event)"
+            accept="image/png, image/jpeg"/>
             <label for="dokazIndeks">Slika indeksa</label>
           </div>
         </div>
         <div class="form-group my-div" *ngIf="poljePenzija">
             <div class="form-label-group">
-              <input type="file" size="60" class="form-control" name="dokazPenzija" (change)="handleFileInput($event.target.files)"/>
+              <input type="file" class="form-control" name="dokazPenzija" (change)="handleFileInput($event)"
+              accept="image/png, image/jpeg"/>
               <label for="dokazPenzija">Slika penzionog ceka</label>
             </div>
-          </div> -->
+        </div>
 
         <button class="btn btn-primary btn-block" type="submit">Register</button>
       </form>
@@ -103,3 +105,16 @@
     </div>
   </div>
 </div>
+<!-- 
+<form (ngSubmit)="myFunc()">
+
+  <div class="form-group my-div">
+      <div class="form-label-group">
+        <input type="file" size="60" class="form-control" name="upload" (change)="handleFileInput($event)"/>
+        <label for="upload">Bilo sta sestro</label>
+      </div>
+  </div>
+
+  <button class="btn btn-primary btn-block" type="submit">OKOK</button>
+
+</form> -->

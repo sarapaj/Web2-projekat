@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
+using System.Web;
 using Newtonsoft.Json;
 
 namespace WebApp.Models
@@ -68,13 +70,10 @@ namespace WebApp.Models
 
         [Required]
         [Display(Name = "PassangerType")]
-        public int PassangerType { get; set; }
+        public string PassangerType { get; set; }
 
-        // TODO
-        // treba postaviti odgovarajuci tip
-        // za sad cemo ignorisati ovo polje
-        //[Display(Name = "AttachedFile")]
-        //public string AttachedFile { get; set; }
+        //[Display(Name = "dokaz")]
+        //public HttpPostedFileBase dokaz { get; set; }
     }
 
     public class RegisterExternalBindingModel

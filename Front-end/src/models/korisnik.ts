@@ -6,6 +6,6 @@ export class User{
     Surname: string;
     Address: string;
     // Birthday: Date;
-    PassangerType: number;
-    // dokaz: any;
+    PassengerType: string;
+    Document: any;
 }

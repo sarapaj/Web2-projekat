@@ -10,7 +10,7 @@
                   &nbsp;&nbsp;&nbsp;
                   <label>Tip putnika &nbsp;</label>
                   <select (change)="selectPassengerChangeHandler($event)"  class="dropdown no-arrow dropdown-toggle" id="userDropdown">
-                      <option  *ngFor = "let item of this.dropDownToPassPassenger.value">{{item}}</option>
+                      <option  *ngFor = "let item of this.dropDownToPassPassenger.value">{{item.name}}</option>
                   </select>    
                 </div> 
             </div>

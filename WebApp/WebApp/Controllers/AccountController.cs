@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -322,31 +324,86 @@ namespace WebApp.Controllers
             return logins;
         }
 
+        [AllowAnonymous]
+        [Route("PostFile")]
+        [HttpPost]
+        public HttpResponseMessage PostFile()
+        {
+            var httpRequest = HttpContext.Current.Request;
+
+            var username = httpRequest.Form["User"];
+
+            
+            if(httpRequest.Files["Document"] != null)
+            {
+                // image handling
+                var imageName = httpRequest.Form["ImageName"];
+                var postedFile = httpRequest.Files["Document"];
+                var filePath = HttpContext.Current.Server.MapPath("~/App_Data/uploads/" + Guid.NewGuid() + "_" + imageName);
+                filePath.Replace("-", "");
+                postedFile.SaveAs(filePath);
+                // ---------------
+
+                Task<ApplicationUser> user = UserManager.FindByEmailAsync(username);
+                user.Wait();
+                var updatedUser = user.Result;
+                updatedUser.Document = filePath;
+
+                Task<IdentityResult> result = UserManager.UpdateAsync(updatedUser);
+
+                return Request.CreateResponse(HttpStatusCode.Created);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+
+        }
+
+
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
 		[HttpPost]
-        public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+        public async Task<IHttpActionResult> Register()
         {
-			if (!ModelState.IsValid)
-			{
-				return BadRequest(ModelState);
-			}
+            var httpRequest = HttpContext.Current.Request;
+
+            var email = httpRequest.Form["Email"];
+            var pass = httpRequest.Form["Password"];
+            var confirmPass = httpRequest.Form["ConfirmPassword"];
+            var name = httpRequest.Form["Name"];
+            var surname = httpRequest.Form["Surname"];
+            var address = httpRequest.Form["Address"];
+            var passengerType = httpRequest.Form["PassengerType"];
+            int type = Int32.Parse(passengerType);
+            var imageName = httpRequest.Form["ImageName"];
 
             var user = new ApplicationUser()
             {
-                UserName = model.Email,
-                Email = model.Email,
+                UserName = email,
+                Email = email,
                 Role = 0,
-                Name = model.Name,
-                Lastname = model.Surname,
-                Address = model.Address
+                Name = name,
+                Lastname = surname,
+                Address = address,
+                Type = (PassengerType)type
             };
 
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-		
+            if (httpRequest.Files["Document"] != null)
+            {
+                // image handling
+                var postedFile = httpRequest.Files["Document"];
+                var filePath = HttpContext.Current.Server.MapPath("~/App_Data/uploads/" + Guid.NewGuid() + "_" + imageName);
+                //filePath.Replace("-", "");
+                postedFile.SaveAs(filePath);
+                // ---------------
 
-			if (!result.Succeeded)
+                user.Document = filePath;
+            }
+
+            IdentityResult result = await UserManager.CreateAsync(user, pass);
+
+            if (!result.Succeeded)
             {
                 return GetErrorResult(result);
             }
