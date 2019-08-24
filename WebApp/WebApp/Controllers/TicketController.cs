@@ -77,34 +77,7 @@ namespace WebApp.Controllers
             }
         }
 
-		[Route("ValidateDocument")]
-		[ResponseType(typeof(bool))]
-		[HttpPost]
-		public IHttpActionResult ValidateDocument(string userEmail, bool result)
-		{
-			if (!ModelState.IsValid)
-			{
-				return BadRequest(ModelState);
-			}
-
-			try
-			{
-				var users = _unitOfWork.ApplicationUsers.Find(x => x.Email.ToString() == userEmail);
-
-				foreach (var user in users)
-				{
-					user.validDocument = result;
-					_unitOfWork.ApplicationUsers.Update(user);
-				}
-				_unitOfWork.Complete();
-
-				return Ok(true);
-			}
-			catch (DbUpdateConcurrencyException)
-			{
-				return NotFound();
-			}
-		}
+	
 
 		[Route("GetAllTicketTypes")]
         [ResponseType(typeof(IEnumerable<TicketTypeViewModel>))]

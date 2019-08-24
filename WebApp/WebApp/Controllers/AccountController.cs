@@ -385,7 +385,8 @@ namespace WebApp.Controllers
 				Lastname = surname,
 				Address = address,
 				Type = (PassengerType)type,
-				Birthday = DateTime.Now
+				Birthday = DateTime.Now,
+				validDocument = false
 			};
 
             if (httpRequest.Files["Document"] != null)
