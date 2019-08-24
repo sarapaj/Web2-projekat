@@ -242,23 +242,63 @@ namespace WebApp.Controllers
 		{
 			try
 			{
-				var ticket = _unitOfWork.Tickets.Get(ticketID);
+				var tickets = _unitOfWork.Tickets.Find(x => x.Id == ticketID);
 
-				if (ticket.TicketType.ToString() == "vremenska")
-				{
-					
-				}
-				else if (ticket.TicketType.ToString() == "dnevna")
+				foreach (var ticket in tickets)
 				{
 
-				}
-				else if (ticket.TicketType.ToString() == "mesecna")
-				{
+					if (ticket.TicketType.ToString() == "vremenska")
+					{
+						DateTime temp = ticket.CheckInDate.Value.AddMinutes(60);
 
-				}
-				else if (ticket.TicketType.ToString() == "godisnja")
-				{
+						if (ticket.CheckInDate > temp)
+						{
+							return Ok(false);
+						}
+						else
+						{
+							return Ok(true);
+						}
+					}
+					else if (ticket.TicketType.ToString() == "dnevna")
+					{
+						DateTime temp = ticket.CheckInDate.Value.AddDays(1);
 
+						if (ticket.CheckInDate > temp)
+						{
+							return Ok(false);
+						}
+						else
+						{
+							return Ok(true);
+						}
+					}
+					else if (ticket.TicketType.ToString() == "mesecna")
+					{
+						DateTime temp = ticket.CheckInDate.Value.AddMonths(1);
+
+						if (ticket.CheckInDate > temp)
+						{
+							return Ok(false);
+						}
+						else
+						{
+							return Ok(true);
+						}
+					}
+					else if (ticket.TicketType.ToString() == "godisnja")
+					{
+						DateTime temp = ticket.CheckInDate.Value.AddYears(1);
+
+						if (ticket.CheckInDate > temp)
+						{
+							return Ok(false);
+						}
+						else
+						{
+							return Ok(true);
+						}
+					}
 				}
 			}
 			catch (DbUpdateConcurrencyException)
