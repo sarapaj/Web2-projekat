@@ -262,9 +262,9 @@
     <Compile Include="Migrations\201906051726386_InititalDataBase.Designer.cs">
       <DependentUpon>201906051726386_InititalDataBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201908191848595_ExtendedUser.cs" />
-    <Compile Include="Migrations\201908191848595_ExtendedUser.Designer.cs">
-      <DependentUpon>201908191848595_ExtendedUser.cs</DependentUpon>
+    <Compile Include="Migrations\201908241053481_Prosiren user.cs" />
+    <Compile Include="Migrations\201908241053481_Prosiren user.Designer.cs">
+      <DependentUpon>201908241053481_Prosiren user.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -410,8 +410,8 @@
     <EmbeddedResource Include="Migrations\201906051726386_InititalDataBase.resx">
       <DependentUpon>201906051726386_InititalDataBase.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908191848595_ExtendedUser.resx">
-      <DependentUpon>201908191848595_ExtendedUser.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201908241053481_Prosiren user.resx">
+      <DependentUpon>201908241053481_Prosiren user.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
