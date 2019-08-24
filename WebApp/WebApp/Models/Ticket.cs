@@ -16,7 +16,7 @@ namespace WebApp.Models
 		[ForeignKey("TicketType")]
 		public int TicketTypeiD { get; set; }
 
-		public int UserId { get; set; }
+		public string UserId { get; set; }
 
 		public virtual ApplicationUser User { get; set; }
 		public virtual TicketType TicketType { get; set; }

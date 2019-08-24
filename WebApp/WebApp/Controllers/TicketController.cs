@@ -25,7 +25,44 @@ namespace WebApp.Controllers
 			_context = context;
 		}
 
-        [Route("GetAllDiscounts")]
+		[Route("GetAllTickets")]
+		[ResponseType(typeof(IEnumerable<TicketViewModel>))]
+		[HttpGet]
+		public IHttpActionResult GetAllTickets(string email)
+		{
+			var rez = new List<TicketViewModel>();
+
+			try
+			{
+				var users = _unitOfWork.ApplicationUsers.Find(x => x.Email == email);
+				foreach (var user in users)
+				{
+					var tickets = _unitOfWork.Tickets.Find(x => x.UserId == user.Id);
+
+
+					foreach (var item in tickets)
+					{
+						TicketViewModel temp = new TicketViewModel();
+						temp.checkInDate = item.CheckInDate.ToString();
+						temp.datePurchase = item.PurchaseDate.ToString();
+						temp.ticketType = item.TicketType.Name;
+						temp.id = item.Id;
+
+						rez.Add(temp);
+					}
+				}
+
+				rez.Reverse();
+				return Ok(rez);
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				return NotFound();
+			}
+		}
+
+
+		[Route("GetAllDiscounts")]
         [ResponseType(typeof(List<Discount>))]
         [HttpGet]
         public IHttpActionResult GetAllDiscounts()
@@ -346,7 +383,7 @@ namespace WebApp.Controllers
 		[Route("AddTicket")]
 		[ResponseType(typeof(Ticket))]
 		[HttpPost]
-		public IHttpActionResult AddTicket(Ticket ticket)
+		public IHttpActionResult AddTicket(string ticketType, string email)
 		{
 
 			if (!ModelState.IsValid)
@@ -354,13 +391,32 @@ namespace WebApp.Controllers
 				return BadRequest(ModelState);
 			}
 
+			Ticket ticket = new Ticket();
+
 			try
 			{
+				var ticketTypes = _unitOfWork.TicketTypes.Find(x=> x.Name == ticketType);
+
+				foreach (var type in ticketTypes)
+				{
+					ticket.TicketType = type;
+					ticket.TicketTypeiD = type.Id; 
+				}
+
+				var users = _unitOfWork.ApplicationUsers.Find(x => x.Email == email);
+				foreach (var user in users)
+				{
+					ticket.User = user;
+					ticket.UserId = user.Id;
+				}
+
+				ticket.PurchaseDate = DateTime.Now;
+
 				_unitOfWork.Tickets.Add(ticket);
 				_unitOfWork.Complete();
 
 			}
-			catch (DbUpdateConcurrencyException)
+			catch (Exception )
 			{
 				return StatusCode(HttpStatusCode.InternalServerError);
 			}

@@ -266,6 +266,10 @@
     <Compile Include="Migrations\201908241053481_Prosiren user.Designer.cs">
       <DependentUpon>201908241053481_Prosiren user.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908241306569_Izmena tipa polja userID u tabeli.cs" />
+    <Compile Include="Migrations\201908241306569_Izmena tipa polja userID u tabeli.Designer.cs">
+      <DependentUpon>201908241306569_Izmena tipa polja userID u tabeli.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -281,6 +285,7 @@
     <Compile Include="Models\TicketType.cs" />
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="Models\ViewModels\TicketTypeViewModel.cs" />
+    <Compile Include="Models\ViewModels\TicketViewModel.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
     <Compile Include="Persistence\Repository\ApplicationUserRepository.cs" />
     <Compile Include="Persistence\Repository\CoordinateRepository.cs" />
@@ -412,6 +417,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908241053481_Prosiren user.resx">
       <DependentUpon>201908241053481_Prosiren user.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908241306569_Izmena tipa polja userID u tabeli.resx">
+      <DependentUpon>201908241306569_Izmena tipa polja userID u tabeli.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

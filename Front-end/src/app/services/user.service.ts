@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from 'src/models/korisnik';
 import { UserClaims } from 'src/models/user-claims';
 import { stringify } from '@angular/compiler/src/util';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,13 +19,19 @@ export class UserService {
   }
 
   setUserRole() {
-    this.getUserClaims().subscribe(claim => {
-      this.fetchUserRole(claim).subscribe(role => {
-        this.userRole = role;
-        localStorage.setItem('role', this.userRole); //cuvamo ulogu u local storage chrome
-        console.log("User role iz metode " + role);
-      })
-    });
+    return new Observable(obs => {
+      this.getUserClaims().subscribe(claim => {
+        this.fetchUserRole(claim).subscribe(role => {
+          obs.next(role);
+          obs.complete();
+        })
+      });
+    })
+  }
+
+  setRole(role) {
+    this.userRole = role;
+    localStorage.setItem('role', this.userRole); //cuvamo ulogu u local storage chrome
   }
 
   fetchUserRole(claim) {

@@ -24,6 +24,7 @@ import { UserService } from './services/user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { RedVoznjeService } from './services/red-voznje.service';
 import { AuthGuard } from './auth/auth.guard';
+import { KupovinaKarteComponent } from './dashboard/korisnik/kupovina-karte/kupovina-karte.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { AuthGuard } from './auth/auth.guard';
     UrediLinijeComponent,
     UrediStaniceComponent,
     KarteComponent,
-    PutniciComponent
+    PutniciComponent,
+    KupovinaKarteComponent
   ],
   imports: [
     BrowserModule,

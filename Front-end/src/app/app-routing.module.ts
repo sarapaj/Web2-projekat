@@ -13,12 +13,16 @@ import { UrediStaniceComponent } from './dashboard/admin/uredi-stanice/uredi-sta
 import { KarteComponent } from './dashboard/kontrolor/karte/karte.component';
 import { PutniciComponent } from './dashboard/kontrolor/putnici/putnici.component';
 import { AuthGuard } from './auth/auth.guard';
+import { KupovinaKarteComponent } from './dashboard/korisnik/kupovina-karte/kupovina-karte.component';
+import { RoleAdminGuard } from './auth/auth.roleAdmin.guard';
+import { RoleControllerGuard } from './auth/auth.roleController.guard';
 
 const routes: Routes = [
     {
       path: "",
       redirectTo: "login",
-      pathMatch: "full"
+      pathMatch: "full",
+      canActivate: [AuthGuard],
     },
     {
       path: "register",
@@ -31,6 +35,7 @@ const routes: Routes = [
     {
       path: "dashboard",
       component: DashRootComponent,
+      canActivate: [AuthGuard],
       children: [
         {
           path: "red-voznje",
@@ -39,6 +44,11 @@ const routes: Routes = [
         {
           path: "mreza-linija",
           component: MrezaLinijaComponent
+        },
+        {
+          path: "kupovina-karte",
+          component: KupovinaKarteComponent,
+          canActivate:[AuthGuard]
         },
         {
           path: "trenutna-lokacija",
@@ -55,21 +65,23 @@ const routes: Routes = [
         },
         {
           path: "linije",
-          component: UrediLinijeComponent
+          component: UrediLinijeComponent,
+          canActivate: [RoleAdminGuard],
         },
         {
           path: "stanice",
-          component: UrediStaniceComponent
+          component: UrediStaniceComponent,
+          canActivate: [RoleAdminGuard],
         },
         {
           path: "validiraj-karte",
           component: KarteComponent,
-          canActivate:[AuthGuard]
+          canActivate:[RoleControllerGuard]
         },
         {
           path: "verifikuj-putnike",
           component: PutniciComponent,
-          canActivate:[AuthGuard]
+          canActivate:[RoleControllerGuard]
         }
       ]
     },

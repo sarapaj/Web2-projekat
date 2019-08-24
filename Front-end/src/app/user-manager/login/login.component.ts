@@ -27,12 +27,13 @@ export class LoginComponent implements OnInit {
   OnSubmit(){
     this.userService.userAuthentication(this.Email, this.Password).subscribe((data:any) => {
       localStorage.setItem('userToken', data.access_token);
-      
+      localStorage.setItem('email', this.Email);
       console.log("Setovan token nakon uspesnog logina");
 
-      this.userService.setUserRole();
-
-      this.router.navigate(['/dashboard']);
+      this.userService.setUserRole().subscribe((role) => {
+        this.userService.setRole(role);
+        this.router.navigate(['/dashboard']);
+      })
 
     },
     (err: HttpErrorResponse) => {

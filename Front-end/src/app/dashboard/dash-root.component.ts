@@ -21,7 +21,7 @@ export class DashRootComponent implements OnInit {
 
   ngOnInit() {
     this.userRole = localStorage.getItem('role');
-    console.log(this.userRole);
+    console.log('POZ', this.userRole);
     this.determineUserRole();
   }
 

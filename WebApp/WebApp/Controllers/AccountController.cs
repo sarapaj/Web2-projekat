@@ -355,8 +355,6 @@ namespace WebApp.Controllers
             }
 
             return Request.CreateResponse(HttpStatusCode.BadRequest);
-
-
         }
 
 
@@ -378,16 +376,17 @@ namespace WebApp.Controllers
             int type = Int32.Parse(passengerType);
             var imageName = httpRequest.Form["ImageName"];
 
-            var user = new ApplicationUser()
-            {
-                UserName = email,
-                Email = email,
-                Role = 0,
-                Name = name,
-                Lastname = surname,
-                Address = address,
-                Type = (PassengerType)type
-            };
+			var user = new ApplicationUser()
+			{
+				UserName = email,
+				Email = email,
+				Role = 0,
+				Name = name,
+				Lastname = surname,
+				Address = address,
+				Type = (PassengerType)type,
+				Birthday = DateTime.Now
+			};
 
             if (httpRequest.Files["Document"] != null)
             {
