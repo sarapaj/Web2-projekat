@@ -41,7 +41,7 @@ export class ProfilComponent implements OnInit {
 
   uploadFile(){
     this.userService.postFile(this.uploadedFile, this.uploadedFile.name, this.currentUser.Email).subscribe((data:any) => {
-
+      alert("Image uploaded successfully");
     })
   }
 
