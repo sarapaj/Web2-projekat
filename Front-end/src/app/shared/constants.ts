@@ -15,10 +15,6 @@ export const UserSidebarElements = [
     {
         label: "Cenovnik",
         route: "cenovnik"
-    },
-    {
-        label: "Karte",
-        route: "kupovina-karte"
     }
 ];
 

@@ -263,10 +263,6 @@
     <Compile Include="Migrations\201906051726386_InititalDataBase.Designer.cs">
       <DependentUpon>201906051726386_InititalDataBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201908241106477_ProsirenjeKorisnikaDB.cs" />
-    <Compile Include="Migrations\201908241106477_ProsirenjeKorisnikaDB.Designer.cs">
-      <DependentUpon>201908241106477_ProsirenjeKorisnikaDB.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201908241306569_Izmena tipa polja userID u tabeli.cs" />
     <Compile Include="Migrations\201908241306569_Izmena tipa polja userID u tabeli.Designer.cs">
       <DependentUpon>201908241306569_Izmena tipa polja userID u tabeli.cs</DependentUpon>
@@ -415,9 +411,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201906051726386_InititalDataBase.resx">
       <DependentUpon>201906051726386_InititalDataBase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908241106477_ProsirenjeKorisnikaDB.resx">
-      <DependentUpon>201908241106477_ProsirenjeKorisnikaDB.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908241306569_Izmena tipa polja userID u tabeli.resx">
       <DependentUpon>201908241306569_Izmena tipa polja userID u tabeli.cs</DependentUpon>

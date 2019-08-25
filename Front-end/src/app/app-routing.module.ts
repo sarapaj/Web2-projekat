@@ -35,7 +35,6 @@ const routes: Routes = [
     {
       path: "dashboard",
       component: DashRootComponent,
-      canActivate: [AuthGuard],
       children: [
         {
           path: "red-voznje",
