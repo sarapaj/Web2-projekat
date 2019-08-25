@@ -407,7 +407,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201908250000272_RebuildDB.resx">
       <DependentUpon>201908250000272_RebuildDB.cs</DependentUpon>
-    </EmbeddedResource>
+	</EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

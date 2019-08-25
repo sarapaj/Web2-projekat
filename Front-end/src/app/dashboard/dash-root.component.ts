@@ -41,6 +41,7 @@ export class DashRootComponent implements OnInit {
     else{
       this.sidebarElements = UserSidebarElements; // neregistrovani korisnik
       this.headerElements = NotLogedUserHeaderElements;
+      localStorage.setItem('role','4');
     }
   }
 }

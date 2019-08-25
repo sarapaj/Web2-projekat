@@ -10,15 +10,17 @@ export class HeaderComponent implements OnInit {
 
   @Input() elements;
   routerLinkVariable;
-
+  userRole;
   constructor(private router:Router) { }
 
   ngOnInit() {
+    this.userRole = localStorage.getItem('role');
   }
 
   LogOutButtonClick(){
     localStorage.removeItem('userToken');
     localStorage.removeItem('role');
+    localStorage.removeItem('email');
     this.router.navigate(['/login']);
   }
 
