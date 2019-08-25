@@ -5,6 +5,7 @@ import { Karta } from 'src/models/karta';
 import { TipKarte } from 'src/app/shared/constants';
 import { DropdownElement } from 'src/models/classes';
 import { NgForm } from '@angular/forms';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-kupovina-karte',
@@ -13,17 +14,22 @@ import { NgForm } from '@angular/forms';
 })
 export class KupovinaKarteComponent implements OnInit {
 
-  constructor(private _karteServis: KarteService) {}
+  constructor(private _karteServis: KarteService, private _userService: UserService) {}
     
   username: string;
   karte: Karta[];
   dropdownToPassTicket: DropdownElement;
   tipKarte: string;
+  isDocumentValid;
+  documentStatus;
 
   ngOnInit() {
     this.resetForm();
     this.username = localStorage.getItem("email");
+    this.checkDocument(); //true ili false da li je valid
+    this.getDocumentStatusMessage(); //poruka o statusu obrade dokumenta
     this.getMyTickets();
+
 
     this.dropdownToPassTicket = {label:"Tip karte", value: TipKarte};
   }
@@ -34,6 +40,24 @@ export class KupovinaKarteComponent implements OnInit {
     });
   }
 
+  checkDocument()
+  {
+    this._userService.checkIsDocumentValid(this.username).subscribe(data =>{
+      this.isDocumentValid = data;
+    })
+  }
+
+  getDocumentStatusMessage()
+  {
+    this._userService.checkDocumentStatus(this.username).subscribe(data =>{
+      this.documentStatus = data;
+    })
+  }
+
+  getDocumentStatus()
+  {
+
+  }
   selectTicketTypeChangeHandler(event:any){
     this.tipKarte = event.target.value;
     console.log("tip karte: " + this.tipKarte);

@@ -1,23 +1,31 @@
 
-<form #kupovinaKarte="ngForm" (ngSubmit)="OnSubmit(kupovinaKarte)">
-    <div class="form-group my-div">
-        <div class="form-label-group">
-            <div class="my-div">  
-              <label>Tip karte &nbsp;</label>
-              <select (change)="selectTicketTypeChangeHandler($event)"  class="dropdown no-arrow dropdown-toggle" id="userDropdown">
-                  <option  *ngFor = "let item of this.dropdownToPassTicket.value">{{item}}</option>
-              </select>    
-            </div> 
-        </div>
-        
-    </div>
-    &nbsp;&nbsp;
-    <button type="submit">Kupi</button>
-</form>
+<div>
+  <p>Status validacije dokumenta: {{documentStatus}}</p>
+  <p *ngIf='!isDocumentValid'>Kupovina karte ce biti omogucena nakon uspesne validacije</p>
+</div>
+
+
+<div *ngIf='isDocumentValid'>
+  <form #kupovinaKarte="ngForm" (ngSubmit)="OnSubmit(kupovinaKarte)">
+      <div class="form-group my-div">
+          <div class="form-label-group">
+              <div class="my-div">  
+                <label>Tip karte &nbsp;</label>
+                <select (change)="selectTicketTypeChangeHandler($event)"  class="dropdown no-arrow dropdown-toggle" id="userDropdown">
+                    <option  *ngFor = "let item of this.dropdownToPassTicket.value">{{item}}</option>
+                </select>    
+              </div> 
+          </div>
+          
+      </div>
+      &nbsp;&nbsp;
+      <button type="submit">Kupi</button>
+  </form>
+</div>
+
+
 
 <hr>
-
-
 
 <div class="card mb-3">
         <div class="card-header">

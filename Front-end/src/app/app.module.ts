@@ -43,7 +43,7 @@ import { KupovinaKarteComponent } from './dashboard/korisnik/kupovina-karte/kupo
     UrediStaniceComponent,
     KarteComponent,
     PutniciComponent,
-    KupovinaKarteComponent
+    KupovinaKarteComponent,
   ],
   imports: [
     BrowserModule,

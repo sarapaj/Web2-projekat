@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using WebApp.Models;
 using WebApp.Persistence.UnitOfWork;
 
 namespace WebApp.Controllers
@@ -66,10 +67,10 @@ namespace WebApp.Controllers
 			{
 				var users = _unitOfWork.ApplicationUsers.Find(x => x.Email.ToString() == userEmail);
 
-				bool rez;
+				bool rez = false;
 				foreach (var user in users)
 				{
-					if (user.validDocument)
+					if (user.validDocument == ValidacijaDokumenta.prihvacen) // 0 procesiranje, 1 prihvacen, 2 odbijen
 					{
 						rez = true;
 					}
@@ -77,12 +78,48 @@ namespace WebApp.Controllers
 					{
 						rez = false;
 					}
-
-					_unitOfWork.ApplicationUsers.Update(user);
 				}
-				_unitOfWork.Complete();
 
-				return Ok(true);
+				return Ok(rez);
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				return NotFound();
+			}
+		}
+
+		[Route("CheckDocumentStatus")]
+		[ResponseType(typeof(string))]
+		[HttpGet]
+		public IHttpActionResult CheckDocumentStatus(string userEmail)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+
+			try
+			{
+				var users = _unitOfWork.ApplicationUsers.Find(x => x.Email.ToString() == userEmail);
+
+				string rez = "";
+				foreach (var user in users)
+				{
+					if (user.validDocument == ValidacijaDokumenta.procesiranje) // 0 procesiranje, 1 prihvacen, 2 odbijen
+					{
+						rez = "Procesiranje dokumenta je u toku";
+					}
+					else if (user.validDocument == ValidacijaDokumenta.prihvacen)
+					{
+						rez = "Dokument je validan";
+					}
+					else if (user.validDocument == ValidacijaDokumenta.odbijen)
+					{
+						rez = "Dokument nije validan";
+					}
+				}
+
+				return Ok(rez);
 			}
 			catch (DbUpdateConcurrencyException)
 			{
@@ -106,7 +143,15 @@ namespace WebApp.Controllers
 
 				foreach (var user in users)
 				{
-					user.validDocument = result;
+					if (result)
+					{
+						user.validDocument = ValidacijaDokumenta.prihvacen;
+					}
+					else
+					{
+						user.validDocument = ValidacijaDokumenta.odbijen;
+					}
+
 					_unitOfWork.ApplicationUsers.Update(user);
 				}
 				_unitOfWork.Complete();

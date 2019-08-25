@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UserSidebarElements, AdminSidebarElements, KontrolerSidebarElements, NotLogedUserHeaderElements, LogedUserHeaderElements } from '../shared/constants';
+import { UserSidebarElements, AdminSidebarElements, KontrolerSidebarElements, NotLogedUserHeaderElements, LogedUserHeaderElements, NotLoggedUserSidebarElements } from '../shared/constants';
 import { UserService } from '../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -38,7 +38,7 @@ export class DashRootComponent implements OnInit {
       this.headerElements = LogedUserHeaderElements;
     }
     else{
-      this.sidebarElements = UserSidebarElements; // neregistrovani korisnik
+      this.sidebarElements = NotLoggedUserSidebarElements; // neregistrovani korisnik
       this.headerElements = NotLogedUserHeaderElements;
       localStorage.setItem('role','4');
     }

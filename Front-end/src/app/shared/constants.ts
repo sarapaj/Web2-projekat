@@ -15,6 +15,29 @@ export const UserSidebarElements = [
     {
         label: "Cenovnik",
         route: "cenovnik"
+    },
+    {
+        label: "Karte",
+        route: "kupovina-karte"
+    }
+];
+
+export const NotLoggedUserSidebarElements = [
+    {
+        label: "Red voznje",
+        route: "red-voznje"
+    },
+    {
+        label: "Mreza linija",
+        route: "mreza-linija"
+    },
+    {
+        label: "Trenutna lokacija",
+        route: "trenutna-lokacija"
+    },
+    {
+        label: "Cenovnik",
+        route: "cenovnik"
     }
 ];
 

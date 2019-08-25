@@ -474,7 +474,7 @@ namespace WebApp.Controllers
 				Address = address,
 				Type = (PassengerType)type,
 				Birthday = DateTime.Now,
-				validDocument = false
+				validDocument = ValidacijaDokumenta.procesiranje
 			};
 
             if (httpRequest.Files["Document"] != null)

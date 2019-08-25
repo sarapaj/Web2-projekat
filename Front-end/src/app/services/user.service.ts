@@ -38,6 +38,16 @@ export class UserService {
     return this._http.get(this._baseUrl + '/api/Ticket/GetUserRole?Email=' + (claim as any).Email);
   }
 
+  checkIsDocumentValid(email:string)
+  {
+    return this._http.get(`${this._baseUrl}/api/Kontrolor/IsDocumentValid?userEmail=${email}`);
+  }
+
+  checkDocumentStatus(email:string)
+  {
+    return this._http.get(`${this._baseUrl}/api/Kontrolor/CheckDocumentStatus?userEmail=${email}`);
+  }
+
   getUserRole() {
     return this.userRole;
   }
@@ -95,4 +105,7 @@ export class UserService {
 
     return this._http.post(this._baseUrl + '/api/Account/ChangeUserInfo', fd);
   }
+
+
+
 }
