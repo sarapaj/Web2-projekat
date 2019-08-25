@@ -52,6 +52,9 @@ namespace WebApp.Controllers
 					}
 				}
 
+		
+				
+
 				rez.Reverse();
 				return Ok(rez);
 			}
@@ -245,80 +248,7 @@ namespace WebApp.Controllers
 			return NotFound();
 		}
 
-		[Route("ValidateTicket")]
-		[ResponseType(typeof(bool))]
-		[HttpGet]
-		public IHttpActionResult ValidateTicket(int ticketID)
-		{
-			try
-			{
-				var tickets = _unitOfWork.Tickets.Find(x => x.Id == ticketID);
-
-				foreach (var ticket in tickets)
-				{
-
-					if (ticket.TicketType.ToString() == "vremenska")
-					{
-						DateTime temp = ticket.CheckInDate.Value.AddMinutes(60);
-
-						if (ticket.CheckInDate > temp)
-						{
-							return Ok(false);
-						}
-						else
-						{
-							return Ok(true);
-						}
-					}
-					else if (ticket.TicketType.ToString() == "dnevna")
-					{
-						DateTime temp = ticket.CheckInDate.Value.AddDays(1);
-
-						if (ticket.CheckInDate > temp)
-						{
-							return Ok(false);
-						}
-						else
-						{
-							return Ok(true);
-						}
-					}
-					else if (ticket.TicketType.ToString() == "mesecna")
-					{
-						DateTime temp = ticket.CheckInDate.Value.AddMonths(1);
-
-						if (ticket.CheckInDate > temp)
-						{
-							return Ok(false);
-						}
-						else
-						{
-							return Ok(true);
-						}
-					}
-					else if (ticket.TicketType.ToString() == "godisnja")
-					{
-						DateTime temp = ticket.CheckInDate.Value.AddYears(1);
-
-						if (ticket.CheckInDate > temp)
-						{
-							return Ok(false);
-						}
-						else
-						{
-							return Ok(true);
-						}
-					}
-				}
-			}
-			catch (DbUpdateConcurrencyException)
-			{
-				return StatusCode(HttpStatusCode.InternalServerError);
-			}
-
-			return NotFound();
-		}
-
+	
 
 		[Route("EditTicketPrice")]
 		[ResponseType(typeof(void))]
@@ -384,6 +314,7 @@ namespace WebApp.Controllers
 				}
 
 				ticket.PurchaseDate = DateTime.Now;
+				ticket.CheckInDate = new DateTime(2000, 1, 1, 1, 1, 1);
 
 				_unitOfWork.Tickets.Add(ticket);
 				_unitOfWork.Complete();

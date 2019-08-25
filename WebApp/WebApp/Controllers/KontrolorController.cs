@@ -127,6 +127,82 @@ namespace WebApp.Controllers
 			}
 		}
 
+		[Route("ValidateTicket")]
+		[ResponseType(typeof(bool))]
+		[HttpGet]
+		public IHttpActionResult ValidateTicket(int ticketID)
+		{
+			try
+			{
+				var tickets = _unitOfWork.Tickets.Find(x => x.Id == ticketID);
+
+				foreach (var ticket in tickets)
+				{
+
+					if (ticket.TicketType.Name == "Vremenska")
+					{
+						DateTime temp = ticket.CheckInDate.Value.AddMinutes(60);
+
+						if (ticket.CheckInDate > temp)
+						{
+							return Ok(false);
+						}
+						else
+						{
+							return Ok(true);
+						}
+					}
+					else if (ticket.TicketType.Name == "Dnevna")
+					{
+						DateTime temp = ticket.CheckInDate.Value.AddDays(1);
+
+						if (ticket.CheckInDate > temp)
+						{
+							return Ok(false);
+						}
+						else
+						{
+							return Ok(true);
+						}
+					}
+					else if (ticket.TicketType.Name == "Mesecna")
+					{
+						DateTime temp = ticket.CheckInDate.Value.AddMonths(1);
+
+						if (ticket.CheckInDate > temp)
+						{
+							return Ok(false);
+						}
+						else
+						{
+							return Ok(true);
+						}
+					}
+					else if (ticket.TicketType.Name == "Godisnja")
+					{
+						DateTime temp = ticket.CheckInDate.Value.AddYears(1);
+
+						if (ticket.CheckInDate > temp)
+						{
+							return Ok(false);
+						}
+						else
+						{
+							return Ok(true);
+						}
+					}
+				}
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				return StatusCode(HttpStatusCode.InternalServerError);
+			}
+
+			return Ok(false);
+		}
+
+
+
 		[Route("ValidateDocument")]
 		[ResponseType(typeof(bool))]
 		[HttpPost]

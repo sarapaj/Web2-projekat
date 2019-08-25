@@ -1,7 +1,7 @@
-<form>
-    <div class="form-group my-div">
+<form #karteForm="ngForm" (ngSubmit)="OnSubmit()">
+  <div class="form-group my-div">
         <div class="form-label-group">
-          <input type="text" class="form-control" placeholder="ID" required="required" id="idKarte">
+          <input type="text" class="form-control" [(ngModel)]="ID" name="ID" placeholder="ID" required="required" id="idKarte">
           <label for="idKarte">ID karte:</label>
         </div>
     </div>

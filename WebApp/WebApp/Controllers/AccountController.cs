@@ -446,13 +446,39 @@ namespace WebApp.Controllers
         }
 
 
-        // POST api/Account/Register
-        [AllowAnonymous]
+		//public enum UserRole { korisnik, admin, kontrolor };
+
+		public async void DodajKontrolora()
+		{
+			var user = new ApplicationUser()
+			{
+				UserName = "kontrolor@gmail.com",
+				Email = "kontrolor@gmail.com",
+				Role = UserRole.kontrolor,
+				Name = "Petar",
+				Lastname = "Petrovic",
+				Address = "Novi Sad",
+				Type = PassengerType.regularni,
+				Birthday = DateTime.Now,
+				validDocument = ValidacijaDokumenta.procesiranje,
+			};
+
+			string pass = "Kontrolor123!";
+
+			IdentityResult result = await UserManager.CreateAsync(user, pass);
+
+		}
+
+
+		// POST api/Account/Register
+		[AllowAnonymous]
         [Route("Register")]
 		[HttpPost]
         public async Task<IHttpActionResult> Register()
         {
-            var httpRequest = HttpContext.Current.Request;
+			//DodajKontrolora();
+
+			var httpRequest = HttpContext.Current.Request;
 
             var email = httpRequest.Form["Email"];
             var pass = httpRequest.Form["Password"];

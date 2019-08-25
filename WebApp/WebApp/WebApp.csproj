@@ -259,10 +259,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201908250000272_RebuildDB.cs" />
-    <Compile Include="Migrations\201908250000272_RebuildDB.Designer.cs">
-      <DependentUpon>201908250000272_RebuildDB.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201908251220362_Izmena tipa dokumenta.cs" />
     <Compile Include="Migrations\201908251220362_Izmena tipa dokumenta.Designer.cs">
       <DependentUpon>201908251220362_Izmena tipa dokumenta.cs</DependentUpon>
@@ -409,7 +405,6 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-
     <EmbeddedResource Include="Migrations\201906051726386_InititalDataBase.resx">
       <DependentUpon>201906051726386_InititalDataBase.cs</DependentUpon>
     </EmbeddedResource>
