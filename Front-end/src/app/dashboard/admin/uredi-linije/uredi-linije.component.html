@@ -32,7 +32,7 @@
     <div class="form-label-group">
         <div class="my-div">
             <label>Linija &nbsp;</label>
-            <select class="dropdown no-arrow dropdown-toggle" id="userDropdown" [(ngModel)] = "selectedLine">
+            <select class="dropdown no-arrow dropdown-toggle" id="userDropdown" [(ngModel)]="chosenLineName">
                 <option  *ngFor = "let item of dropdownToPassLine.value">{{item}}</option>
             </select>   
             &nbsp;&nbsp;&nbsp;   
@@ -53,16 +53,28 @@
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-              <th *ngFor = "let th of tableHeader">{{th}}</th>
+              <th>Naziv</th>
+              <th>Region</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
-              <tr *ngFor='let item of tableBody'>
-                  <td *ngFor="let cell of item">
-                    {{cell}}
+              <tr>
+                  <td>
+                    <input type="text" name="lineName" [(ngModel)]="selectedName">
                   </td>
                   <td>
-                      <button (click)="onClick(item[1])">Obrisi</button>
+                      <select class="dropdown no-arrow dropdown-toggle" name="lineRegion" 
+                      [(ngModel)] = "selectedRegion" >
+                          <option *ngFor="let item of regionsDropdown.value" [value]="item.value">{{item.name}}</option>
+                      </select>
+                  </td>
+                  <td>
+                      <button (click)="deleteLine()">Obrisi</button>
+                  </td>
+                  <td>
+                    <button (click)="changeLine()">Izmeni</button>
                   </td>
               </tr>
           </tbody>

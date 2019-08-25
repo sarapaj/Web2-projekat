@@ -5,6 +5,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Description;
@@ -229,7 +230,7 @@ namespace WebApp.Controllers
 		[ResponseType(typeof(void))]
 		[Route("EditLine")]
 		[HttpPut]
-		public IHttpActionResult EditLine(string name, Line line)
+		public IHttpActionResult EditLine()
 		{
 
 			if (!ModelState.IsValid)
@@ -237,13 +238,29 @@ namespace WebApp.Controllers
 				return BadRequest(ModelState);
 			}
 
-			if (name != line.Name)
-			{
-				return BadRequest();
-			}
+            Line line = new Line();
 
-			try
-			{
+            var httpRequest = HttpContext.Current.Request;
+            var idString = httpRequest.Form["Id"];
+            int Id = Int32.Parse(idString);
+            var Name = httpRequest.Form["Name"];
+            var regionNumber = httpRequest.Form["Region"];
+            Regions Region;
+            if(regionNumber == "0")
+            {
+                Region = Regions.gradski;
+            }
+            else
+            {
+                Region = Regions.prigradski;
+            }
+
+            line.Id = Id;
+            line.Name = Name;
+            line.Region = Region;
+
+            try
+            {
 				_unitOfWork.Lines.Update(line);
 				_unitOfWork.Complete();
 			}

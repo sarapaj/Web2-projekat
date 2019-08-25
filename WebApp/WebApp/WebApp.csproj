@@ -259,9 +259,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201908251220362_Izmena tipa dokumenta.cs" />
-    <Compile Include="Migrations\201908251220362_Izmena tipa dokumenta.Designer.cs">
-      <DependentUpon>201908251220362_Izmena tipa dokumenta.cs</DependentUpon>
+    <Compile Include="Migrations\201908250000272_RebuildDB.cs" />
+    <Compile Include="Migrations\201908250000272_RebuildDB.Designer.cs">
+      <DependentUpon>201908250000272_RebuildDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908251335116_BiloSta.cs" />
+    <Compile Include="Migrations\201908251335116_BiloSta.Designer.cs">
+      <DependentUpon>201908251335116_BiloSta.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -405,14 +409,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201906051726386_InititalDataBase.resx">
-      <DependentUpon>201906051726386_InititalDataBase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908241306569_Izmena tipa polja userID u tabeli.resx">
-      <DependentUpon>201908241306569_Izmena tipa polja userID u tabeli.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908251220362_Izmena tipa dokumenta.resx">
-      <DependentUpon>201908251220362_Izmena tipa dokumenta.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201908251335116_BiloSta.resx">
+      <DependentUpon>201908251335116_BiloSta.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

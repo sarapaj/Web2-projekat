@@ -26,20 +26,24 @@ export class LinijeService {
       name: naziv,
       region: oblast      
     }
-    console.log(data);
     return this._http.post(`${this._baseUrl}/api/Line/AddLine`, data);
   }
 
-  public editLine(linija: Linija, nazivLinije: string){
-    return this._http.put(`${this._baseUrl}/api/Line/EditLine/${nazivLinije}`, linija);
+  public editLine(line: Linija){
+    let fd = new FormData;
+    fd.append("Id", line.id.toString());
+    fd.append("Name", line.nazivLinije);
+    fd.append("Region", line.region.toString());
+    return this._http.put(`${this._baseUrl}/api/Line/EditLine`, fd);
   }
 
   public deleteLine(nazivLinije: string){
     return this._http.delete(`${this._baseUrl}/api/Line/DeleteLine?name=${nazivLinije}`);
   }
   
-  public getLineByName(name: number){
+  public getLineByName(name: string){
     this.nameToPass = String(name);
     return this._http.get(`${this._baseUrl}/api/Line/GetLineByName?name=${this.nameToPass}`);
   }
+
 }

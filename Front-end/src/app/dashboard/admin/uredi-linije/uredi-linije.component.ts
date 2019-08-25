@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DropdownElement } from 'src/models/classes';
-import { LinijePrivremeno } from 'src/app/shared/constants';
+import { LinijePrivremeno, TipRedaVoznje } from 'src/app/shared/constants';
 import { LinijeService } from 'src/app/services/linije.service';
 import { Linija } from 'src/models/linija';
 
@@ -12,13 +12,15 @@ import { Linija } from 'src/models/linija';
 export class UrediLinijeComponent implements OnInit {
   
   dropdownToPassLine: DropdownElement;
-  tableHeader: string[];
-  tableBody;
-  selectedLine = 13;
+  regionsDropdown: DropdownElement;
+  chosenLineName: string;
   showForm = false;
   newLineRegion = 2;
   newLineName = "";
-  newLine: Linija;
+  selectedId: number;
+  selectedName: string;
+  selectedRegion: number;
+  updatedLine: Linija;
 
   constructor( private _http: LinijeService ) { }
 
@@ -28,18 +30,46 @@ export class UrediLinijeComponent implements OnInit {
         label: "",
         value: []
       };
+      
+      this.regionsDropdown = 
+      {
+        label: "",
+        value: [
+          {
+            name: TipRedaVoznje[0],
+            value: 0        
+          },
+          {
+            name: TipRedaVoznje[1],
+            value: 1
+          }
+        ]
+      };
+
+      this.updatedLine = {
+        id: null,
+        nazivLinije: null,
+        region: null
+      }
+
+      this.selectedId = null;
+      this.selectedName = null;
+      this.selectedRegion = null;
 
       this.showLineNames();
-
-    this.tableHeader = ["Redni broj", "Naziv", " "];
-
-
   }
 
   showLineDetails() {
-    this._http.getLineByName(this.selectedLine).subscribe((res: any) =>
+    if(this.chosenLineName == null){
+      return;
+    }
+    
+    this._http.getLineByName(this.chosenLineName).subscribe((res: any) =>
     {
-      this.tableBody = [[String(res.Id), res.Name]];
+      this.selectedName = res.Name;
+      this.selectedRegion = res.Region;
+      this.selectedId = res.Id;
+
     })
   }
 
@@ -50,18 +80,46 @@ export class UrediLinijeComponent implements OnInit {
         label: "Linije",
         value: res
       }
+
+      this.chosenLineName = null;
+
+      // this.selectedName = this.chosenLineName;
     })
   }
 
-  onClick(name) {
-    this._http.deleteLine(name).subscribe(res =>
-      {
-        this.refreshPage();
-      })
+  deleteLine() {
+    if(this.selectedName == null){
+      return;
+    }
+
+    this._http.deleteLine(this.selectedName).subscribe(res =>
+    {
+        this.selectedId = null;
+        this.selectedName = null;
+        this.selectedRegion = null;
+        this.chosenLineName = null;
+
+        alert("Line is successfully deleted");
+    })
+  }
+
+  changeLine(){
+    if(this.selectedId == null || this.selectedName == null || this.selectedRegion == null){
+      return;
+    }
+
+    this.updatedLine.id = this.selectedId;
+    this.updatedLine.nazivLinije = this.selectedName;
+    this.updatedLine.region = this.selectedRegion;
+
+    this._http.editLine(this.updatedLine).subscribe((res: any) =>
+    {
+      this.chosenLineName = null;
+      alert("Line is successfully edited");
+    })
   }
 
   refreshPage(){
-    // refresh stranice
     window.location.reload();
   }
 
@@ -70,17 +128,10 @@ export class UrediLinijeComponent implements OnInit {
   }
 
   addNewLine(){
-
-    // console.log("Od forme:");
-    // console.log(`naziv linije: ${this.newLineName}`);
-    // console.log(`broj regiona: ${this.newLineRegion}`);
-
-    
     this._http.addNewLine(this.newLineName, this.newLineRegion).subscribe((res) =>
     {
-      return res;
+      alert((res as any).Name + " line is successfully added");
+      this.showLineNames();
     });
-
-    this.refreshPage();
   }
 }
