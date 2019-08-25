@@ -62,17 +62,16 @@ namespace WebApp.Controllers
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
 
 
-			return new UserInfoViewModel
-			{
-				Email = User.Identity.GetUserName(),
+            return new UserInfoViewModel
+            {
+                Email = User.Identity.GetUserName(),
                 HasRegistered = externalLogin == null,
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
             };
         }
 
-
-		// POST api/Account/Logout
-		[Route("Logout")]
+        // POST api/Account/Logout
+        [Route("Logout")]
         public IHttpActionResult Logout()
         {
             Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
@@ -324,6 +323,94 @@ namespace WebApp.Controllers
             return logins;
         }
 
+        // GET api/Account/GetAllUserInfo
+        [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
+        [AllowAnonymous]
+        [Route("GetAllUserInfo")]
+        [HttpGet]
+        public UserInfoViewModel GetAllUserInfo()  //profil info
+        {
+            ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
+
+            var username = User.Identity.GetUserName();
+
+            Task<ApplicationUser> user = UserManager.FindByEmailAsync(username);
+            user.Wait();
+            var appUser = user.Result;
+
+            string userType = appUser.Type.ToString();
+            int userTypeNumber;
+            if(userType == "djak")
+            {
+                userTypeNumber = 0;
+            }
+            else if(userType == "penzioner")
+            {
+                userTypeNumber = 1;
+            }
+            else // regularni
+            {
+                userTypeNumber = 2;
+            }
+
+            return new UserInfoViewModel
+            {
+                Email = appUser.Email,
+                Name = appUser.Name,
+                Surname = appUser.Lastname,
+                Address = appUser.Address,
+                PassengerType = userTypeNumber.ToString()
+            };
+        }
+
+        [AllowAnonymous]
+        [Route("ChangeUserInfo")]
+        [HttpPost]
+        public HttpResponseMessage ChangeUserInfo()
+        {
+            var httpRequest = HttpContext.Current.Request;
+
+            var email = httpRequest.Form["Email"];
+            var name = httpRequest.Form["Name"];
+            var surname = httpRequest.Form["Surname"];
+            var address = httpRequest.Form["Address"];
+            var passengerType = httpRequest.Form["PassengerType"];
+
+
+            Task<ApplicationUser> user = UserManager.FindByEmailAsync(email);
+            user.Wait();
+
+            var updateUser = user.Result;
+
+            updateUser.Name = name;
+            updateUser.Lastname = surname;
+            updateUser.Address = address;
+            if(passengerType == "0")
+            {
+                updateUser.Type = PassengerType.djak;
+
+            }
+            else if (passengerType == "1")
+            {
+                updateUser.Type = PassengerType.penzioner;
+            }
+            else
+            {
+                updateUser.Type = PassengerType.regularni;
+            }
+
+
+            Task<IdentityResult> result = UserManager.UpdateAsync(updateUser);
+            result.Wait();
+
+            if(result == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.Created);
+        }
+
         [AllowAnonymous]
         [Route("PostFile")]
         [HttpPost]
@@ -350,6 +437,7 @@ namespace WebApp.Controllers
                 updatedUser.Document = filePath;
 
                 Task<IdentityResult> result = UserManager.UpdateAsync(updatedUser);
+                result.Wait();
 
                 return Request.CreateResponse(HttpStatusCode.Created);
             }

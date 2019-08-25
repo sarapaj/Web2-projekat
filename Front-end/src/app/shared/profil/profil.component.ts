@@ -20,7 +20,10 @@ export class ProfilComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   OnSubmit(form: NgForm) {
-    // todo
+    this.userService.changeUserInfo(this.currentUser).subscribe(() =>
+    {
+      alert("Your profile is successfully changed");
+    })
   }
 
   handleFileInput(event: any) {
@@ -37,22 +40,22 @@ export class ProfilComponent implements OnInit {
   }
 
   uploadFile(){
-    this.userService.getUserClaims().subscribe((claim: any) => {
-      this.username= (claim as any).Email;
-      this.userService.postFile(this.uploadedFile, this.uploadedFile.name, this.username).subscribe((data:any) => {
+    this.userService.postFile(this.uploadedFile, this.uploadedFile.name, this.currentUser.Email).subscribe((data:any) => {
 
-      })
+    })
+  }
+
+  getUserInfo(){
+    this.userService.getAllUserInfo().subscribe((user: any) => {
+      this.currentUser.Email = (user as any).Email;
+      this.currentUser.Name = (user as any).Name;
+      this.currentUser.Surname = (user as any).Surname;
+      this.currentUser.Address = (user as any).Address;
+      this.currentUser.PassengerType = (user as any).PassengerType;
     })
   }
 
   ngOnInit() {
-    // dovuci sve podatke user-a
-    this.dropdownToPass = [
-      {
-        label: "Tip putnika",
-        value: TipPutnika
-      }
-    ];
     this.currentUser = {
       Email: '',
       Password: '',
@@ -64,6 +67,19 @@ export class ProfilComponent implements OnInit {
       PassengerType: "2",
       Document: null
     }
+
+    this.getUserInfo();
+    
+    this.dropdownToPass = [
+      {
+        label: "Tip putnika",
+        value: TipPutnika
+      }
+    ];   
+  }
+
+  PassworrdChange(form: NgForm){
+
   }
 }
 

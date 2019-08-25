@@ -42,6 +42,20 @@ export class UserService {
     return this.userRole;
   }
 
+  userAuthentication(Email, Password){
+    var data = "UserName=" + Email + "&Password=" + Password + "&grant_type=password";
+    var reqHeader = new HttpHeaders({ 'Content-Type': 'application/x-www-urlencoded','No-Auth':'True' });
+    return this._http.post(this._baseUrl + '/oauth/token', data, { headers: reqHeader });
+  }
+
+  getUserClaims(){
+    return this._http.get(this._baseUrl+'/api/Account/UserInfo', {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});
+  }
+
+  getAllUserInfo(){
+    return this._http.get(this._baseUrl+'/api/Account/GetAllUserInfo', {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});
+  }
+
   registerUser(user:User, imageName: string)
   {
     let fd = new FormData();
@@ -71,13 +85,14 @@ export class UserService {
     return this._http.post(this._baseUrl + '/api/Account/PostFile', fd);
   }
 
-  userAuthentication(Email, Password){
-    var data = "UserName=" + Email + "&Password=" + Password + "&grant_type=password";
-    var reqHeader = new HttpHeaders({ 'Content-Type': 'application/x-www-urlencoded','No-Auth':'True' });
-    return this._http.post(this._baseUrl + '/oauth/token', data, { headers: reqHeader });
-  }
+  changeUserInfo(updatedUser: User){
+    let fd = new FormData();
+    fd.append("Email", updatedUser.Email);
+    fd.append("Name", updatedUser.Name);
+    fd.append("Surname", updatedUser.Surname);
+    fd.append("Address", updatedUser.Address);
+    fd.append("PassengerType", updatedUser.PassengerType);
 
-  getUserClaims(){
-    return this._http.get(this._baseUrl+'/api/Account/UserInfo', {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});
-   }
+    return this._http.post(this._baseUrl + '/api/Account/ChangeUserInfo', fd);
+  }
 }

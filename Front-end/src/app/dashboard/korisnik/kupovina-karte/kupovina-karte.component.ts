@@ -30,9 +30,7 @@ export class KupovinaKarteComponent implements OnInit {
 
   getMyTickets(){
     this._karteServis.getAllTickets(this.username).subscribe(data => {
-      
       this.karte = data;
-    
     });
   }
 
@@ -42,8 +40,9 @@ export class KupovinaKarteComponent implements OnInit {
   }
 
   OnSubmit(form: NgForm) {
-    this._karteServis.buyTicket(this.username, this.tipKarte).subscribe();
-    this.getMyTickets();
+    this._karteServis.buyTicket(this.username, this.tipKarte).subscribe(() => {
+      this.getMyTickets();
+    })
   }
 
   resetForm(form?: NgForm) {
