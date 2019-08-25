@@ -38,9 +38,8 @@ Front-end/modules/rollup-test/dist/
 Front-end/.bazelrc.user
 
 
-
+WebApp/WebApp/App_Data/uploads/*
 WebApp/WebApp/Migrations/
 WebApp/WebApp/bin/
 WebApp/WebApp/obj/
 WebApp/.vs/
-WebApp/WebApp/App_Data/uploads/
