@@ -135,6 +135,7 @@ namespace WebApp.Controllers
 			try
 			{
 				var tickets = _unitOfWork.Tickets.Find(x => x.Id == ticketID);
+				DateTime temp2 = DateTime.Now;
 
 				foreach (var ticket in tickets)
 				{
@@ -143,7 +144,7 @@ namespace WebApp.Controllers
 					{
 						DateTime temp = ticket.CheckInDate.Value.AddMinutes(60);
 
-						if (ticket.CheckInDate > temp)
+						if (ticket.CheckInDate > temp2)
 						{
 							return Ok(false);
 						}
@@ -156,7 +157,7 @@ namespace WebApp.Controllers
 					{
 						DateTime temp = ticket.CheckInDate.Value.AddDays(1);
 
-						if (ticket.CheckInDate > temp)
+						if (ticket.CheckInDate > temp2)
 						{
 							return Ok(false);
 						}
@@ -169,7 +170,7 @@ namespace WebApp.Controllers
 					{
 						DateTime temp = ticket.CheckInDate.Value.AddMonths(1);
 
-						if (ticket.CheckInDate > temp)
+						if (ticket.CheckInDate > temp2)
 						{
 							return Ok(false);
 						}
@@ -182,7 +183,7 @@ namespace WebApp.Controllers
 					{
 						DateTime temp = ticket.CheckInDate.Value.AddYears(1);
 
-						if (ticket.CheckInDate > temp)
+						if (ticket.CheckInDate > temp2)
 						{
 							return Ok(false);
 						}
