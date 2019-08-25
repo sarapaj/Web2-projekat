@@ -19,7 +19,6 @@ export class RegistrationComponent implements OnInit {
   poljeIndex: boolean;
   poljePenzija: boolean;
   imageName: string = "";
-  matchHelper: boolean = true;
 
   constructor(private router: Router, private route: ActivatedRoute, private userService: UserService) { }
 
@@ -69,15 +68,6 @@ export class RegistrationComponent implements OnInit {
       this.user.Document = file;
       this.imageName = this.user.Document.name;
       console.log(this.imageName);
-    }
-  }
-
-  CheckPassMatch(event: any){
-    if(this.user.Password != this.user.ConfirmPassword){
-      this.matchHelper = false;
-    }
-    else{
-      this.matchHelper = true;
     }
   }
 

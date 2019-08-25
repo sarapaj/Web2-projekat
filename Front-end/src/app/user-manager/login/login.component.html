@@ -8,17 +8,23 @@
       <form #loginForm="ngForm" (ngSubmit)="OnSubmit()">
         <div class="form-group">
           <div class="form-label-group">
-            <input type="email" [(ngModel)]="Email" name="Email" id="inputEmail" class="form-control" placeholder="Email address" required="required" autofocus="autofocus">
-            <label for="inputEmail">Email adresa</label>
+            <input type="email" [(ngModel)]="Email" name="Email" id="Email" class="form-control" 
+            placeholder="Email address" required autofocus="autofocus"
+            [class.is-invalid]="EmailHash.invalid && EmailHash.touched" #EmailHash="ngModel">
+            <label for="Email">Email adresa</label>
           </div>
+          <small class="text-danger" [class.d-none]="EmailHash.valid || EmailHash.untouched">Required field!</small>
         </div>
         <div class="form-group">
           <show-hide-password btnStyle="primary">
             <div class="form-label-group">
-              <input type="password" [(ngModel)]="Password" name="Password" id="inputPassword" class="form-control" placeholder="Password" required="required">
-              <label for="inputPassword">Lozinka</label>
+              <input type="password" [(ngModel)]="Password" name="Password" id="Password" 
+              class="form-control" placeholder="Password" required #PasswordHash="ngModel"
+              [class.is-invalid]="PasswordHash.invalid && PasswordHash.touched">
+              <label for="Password">Lozinka</label>
             </div>
           </show-hide-password>
+          <small class="text-danger" [class.d-none]="PasswordHash.valid || PasswordHash.untouched">Required field!</small>
         </div>
         
         <!-- <div class="form-group">
@@ -29,7 +35,8 @@
             </label>
           </div>
         </div> -->
-        <button type="submit" class="btn btn-primary btn-block" [routerLink]="[routerLinkVariable]">Login</button>
+        <button type="submit" class="btn btn-primary btn-block" [routerLink]="[routerLinkVariable]"
+        [disabled]="loginForm.form.invalid">Login</button>
         <!-- [routerLink] = "['/dashboard']" -->
       </form>
       <div class="text-center">

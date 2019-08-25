@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { User } from 'src/models/korisnik';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ export class LoginComponent implements OnInit {
   Email;
   isLoginError = false;
   userRole;
+  user = User;
 
   ngOnInit() {
     this.Password= '';
@@ -28,7 +30,7 @@ export class LoginComponent implements OnInit {
     this.userService.userAuthentication(this.Email, this.Password).subscribe((data:any) => {
       localStorage.setItem('userToken', data.access_token);
       localStorage.setItem('email', this.Email);
-      console.log("Setovan token nakon uspesnog logina");
+      // console.log("Setovan token nakon uspesnog logina");
 
       this.userService.setUserRole().subscribe((role) => {
         this.userService.setRole(role);

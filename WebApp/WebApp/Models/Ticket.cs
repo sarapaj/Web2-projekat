@@ -9,8 +9,8 @@ namespace WebApp.Models
 	public class Ticket
 	{
 		public int Id { get; set; }
-		public Nullable<System.DateTime> PurchaseDate { get; set; }
-		public Nullable<System.DateTime> CheckInDate { get; set; }
+		public Nullable<DateTime> PurchaseDate { get; set; }
+		public Nullable<DateTime> CheckInDate { get; set; }
 
 
 		[ForeignKey("TicketType")]

@@ -1,4 +1,3 @@
-
 <div class="container">
   <div class="card card-register mx-auto mt-5">
     <div class="card-header">Registracija</div>
@@ -25,7 +24,7 @@
               <div class="form-label-group">
                 <input type="text" id="Name" class="form-control" #Name="ngModel" 
                 [class.is-invalid]="Name.invalid && Name.touched"
-                [(ngModel)]="user.Name" name="Name" placeholder="Name" required autofocus="autofocus">
+                [(ngModel)]="user.Name" name="Name" placeholder="Name" required>
                 <label for="Name"><span style="color:red;">*</span> Name</label>
               </div>
               <small class="text-danger" [class.d-none] = "Name.valid || Name.untouched">Required field!</small>
@@ -34,7 +33,7 @@
               <div class="form-label-group">
                 <input type="text" id="Surname" class="form-control" #Surname="ngModel" 
                 [(ngModel)]="user.Surname" name="Surname" placeholder="Surname" required 
-                [class.is-invalid]="Surname.invalid && Surname.touched" autofocus="autofocus">
+                [class.is-invalid]="Surname.invalid && Surname.touched">
                 <label for="Surname"><span style="color:red;">*</span> Surname</label>
               </div>
               <small class="text-danger" [class.d-none] = "Surname.valid || Surname.untouched">Required field!</small>
@@ -48,7 +47,7 @@
               <div class="form-label-group">
                 <input type="text" id="Address" class="form-control" #Address="ngModel"
                  [(ngModel)]="user.Address" name="Address" placeholder="Address" required 
-                 [class.is-invalid]="Address.invalid && Address.touched" autofocus="autofocus">
+                 [class.is-invalid]="Address.invalid && Address.touched">
                 <label for="Address"><span style="color:red;">*</span> Address</label>
               </div>
               <small class="text-danger" [class.d-none] = "Address.valid || Address.untouched">Required field!</small>
@@ -68,19 +67,19 @@
             <div class="col-md-6">
               <show-hide-password btnStyle="primary">
                 <div class="form-label-group">
-                  <input type="password" #Password="ngModel" id="inputPassword" class="form-control" #Password="ngModel" 
+                  <input type="password" #PasswordH="ngModel" id="inputPassword" class="form-control"
                   [(ngModel)]="user.Password" name="Password" required 
-                  [class.is-invalid]="Password.invalid && Password.touched" placeholder="Password"
+                  [class.is-invalid]="PasswordH.invalid && PasswordH.touched" placeholder="Password"
                   pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{1,}$" minlength="6">
                   <label for="inputPassword"><span style="color:red;">*</span> Password</label>
                 </div>
               </show-hide-password>              
-              <div *ngIf="Password.errors && (Password.invalid || Password.touched)">
-                  <small class="text-danger" *ngIf="Password.errors.required">
+              <div *ngIf="PasswordH.errors && (PasswordH.invalid || PasswordH.touched)">
+                  <small class="text-danger" *ngIf="PasswordH.errors.required">
                   Required field! </small> 
-                  <small class="text-danger" *ngIf="Password.errors.minlength">
+                  <small class="text-danger" *ngIf="PasswordH.errors.minlength">
                     Password must have at least 6 characters! </small> 
-                  <small class="text-danger" *ngIf="Password.errors.pattern">
+                  <small class="text-danger" *ngIf="PasswordH.errors.pattern">
                     Password must contain at least 1 number, 1 big and small letter and 1 special character! </small>
               </div>
             </div>

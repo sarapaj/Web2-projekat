@@ -1,74 +1,126 @@
-<form>
-    <div class="form-group">
-      <div class="form-row">
-        <div class="col-md-6">
-          <div class="form-label-group">
-            <input type="text" id="firstName" class="form-control" placeholder="Ime" required="required" autofocus="autofocus">
-            <label for="firstName">Ime</label>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-label-group">
-            <input type="text" id="lastName" class="form-control" placeholder="Prezime" required="required">
-            <label for="lastName">Prezime</label>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="form-label-group">
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email adresa" required="required">
-        <label for="inputEmail">Email adresa</label>
-      </div>
-    </div>
-    <div class="form-group">
-        <div class="form-row">
-          <div class="col-md-6">
-            <show-hide-password btnStyle="primary">
-              <div class="form-label-group">
-                <input type="password" id="inputPassword" class="form-control"
-                name="Password"  placeholder="Lozinka">
-                <label for="inputPassword">Lozinka</label>
+<div class="container">
+    <div class="card card-register mx-auto mt-5">
+      <div class="card-header">Registracija</div>
+      <div class="card-body">
+        <form #userUpdateForm="ngForm" (ngSubmit)="OnSubmit(userUpdateForm)">
+          <!-- EMAIL -->
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-6">
+                <div class="form-label-group">
+                  <input type="email" id="Email" [class.is-invalid]="Email.invalid && Email.touched" 
+                  #Email="ngModel" class="form-control" [(ngModel)]="currentUser.Email" 
+                  name="Email" required placeholder="Email">
+                  <label for="Email">Email</label>
+                </div>
+                <small class="text-danger" [class.d-none] = "Email.valid || Email.untouched">Required field!</small>
               </div>
-            </show-hide-password>
-          </div>
-          <div class="col-md-6">
-              <show-hide-password btnStyle="primary">
-                  <div class="form-label-group">
-                    <input type="password" id="confirmPassword" class="form-control" 
-                    name="ConfirmPassword" placeholder="Potvrda lozinke">
-                    <label for="confirmPassword">Potvrda lozinke</label>
-                  </div>
-              </show-hide-password>
-          </div>
-        </div>
-      </div>  
-    <div class="form-group">
-        <div class="form-label-group">
-          <input type="text" id="adresa" class="form-control" placeholder="Adresa" required="required">
-          <label for="adresa">Adresa</label>
-        </div>
-    </div>
-    <!-- <div class="form-group">
-      <div class="form-label-group">
-        <input data-format="yyyy-MM-dd" type="date" name="datum-rodjenja"/>
-        <label for="datum-rodjenja">Datum rodjenja</label>
-      </div>
-    </div> -->
-    <div class="form-group my-div">
-        <div class="form-label-group">
-            <div *ngFor = "let element of dropdownToPass" class="my-div">
-                <label>{{element.label}} &nbsp;</label>
-                <select class="dropdown no-arrow dropdown-toggle" id="userDropdown">
-                  <option  *ngFor = "let item of element.value">{{item.name}}</option>
-                </select>
-                &nbsp;&nbsp;&nbsp;
             </div>
-        </div>
+          </div>
+          <!-- NAME AND SURNAME -->
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-6">
+                <div class="form-label-group">
+                  <input type="text" id="Name" class="form-control" #Name="ngModel" 
+                  [class.is-invalid]="Name.invalid && Name.touched"
+                  [(ngModel)]="currentUser.Name" name="Name" placeholder="Name" required>
+                  <label for="Name">Name</label>
+                </div>
+                <small class="text-danger" [class.d-none] = "Name.valid || Name.untouched">Required field!</small>
+              </div>
+              <div class="col-md-6">
+                <div class="form-label-group">
+                  <input type="text" id="Surname" class="form-control" #Surname="ngModel" 
+                  [(ngModel)]="currentUser.Surname" name="Surname" placeholder="Surname" required 
+                  [class.is-invalid]="Surname.invalid && Surname.touched">
+                  <label for="Surname">Surname</label>
+                </div>
+                <small class="text-danger" [class.d-none] = "Surname.valid || Surname.untouched">Required field!</small>
+              </div>
+            </div>
+          </div>
+          <!-- ADDRESS -->
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-6">
+                <div class="form-label-group">
+                  <input type="text" id="Address" class="form-control" #Address="ngModel"
+                   [(ngModel)]="currentUser.Address" name="Address" placeholder="Address" required 
+                   [class.is-invalid]="Address.invalid && Address.touched">
+                  <label for="Address">Address</label>
+                </div>
+                <small class="text-danger" [class.d-none] = "Address.valid || Address.untouched">Required field!</small>
+              </div>
+            </div>
+          </div>
+          <!-- BIRTHDAY -->
+          <!-- <div class="form-group">
+            <div class="form-label-group">
+              <input data-format="yyyy-MM-dd" type="date" id="Birthday" class="form-control" #Birthday="ngModel" [(ngModel)]="currentUser.Birthday" name="Birthday"/>
+              <label for="Birthday">Datum rodjenja</label>
+            </div>
+          </div> -->
+          <!-- PASS -->
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-6">
+                <show-hide-password btnStyle="primary">
+                  <div class="form-label-group">
+                    <input type="password" #Password="ngModel" id="inputPassword" class="form-control" #Password="ngModel" 
+                    [(ngModel)]="currentUser.Password" name="Password" required 
+                    [class.is-invalid]="Password.invalid && Password.touched" placeholder="Password"
+                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{1,}$" minlength="6">
+                    <label for="inputPassword">Password</label>
+                  </div>
+                </show-hide-password>              
+                <div *ngIf="Password.errors && (Password.invalid || Password.touched)">
+                    <small class="text-danger" *ngIf="Password.errors.required">
+                    Required field! </small> 
+                    <small class="text-danger" *ngIf="Password.errors.minlength">
+                      Password must have at least 6 characters! </small> 
+                    <small class="text-danger" *ngIf="Password.errors.pattern">
+                      Password must contain at least 1 number, 1 big and small letter and 1 special character! </small>
+                </div>
+              </div>
+              <div class="col-md-6">
+                  <show-hide-password btnStyle="primary">
+                      <div class="form-label-group">
+                        <input type="password" id="confirmPassword" class="form-control" #ConfirmPassword="ngModel" 
+                        [(ngModel)]="currentUser.ConfirmPassword" name="ConfirmPassword" placeholder="Confirm password" 
+                        required [class.is-invalid]="ConfirmPassword.invalid && ConfirmPassword.touched" 
+                        ng-pattern="currentUser.Password">
+                        <label for="confirmPassword">Confirm password</label>
+                      </div>
+                  </show-hide-password>
+                <small class="text-danger" [class.d-none]="ConfirmPassword.valid || ConfirmPassword.untouched">
+                  Required field! </small> 
+                <small class="text-danger" [class.d-none]="ConfirmPassword.untouched || currentUser.Password == currentUser.ConfirmPassword">
+                  &nbsp;Passwords doesn't match!</small>
+              </div>
+            </div>
+          </div>  
+        
+          <!-- tip putnika -->
+          <div class="form-group my-div">
+              <div class="form-label-group">
+                  <div *ngFor = "let element of dropdownToPass" class="my-div">
+                      <label>{{element.label}} &nbsp;</label>
+                      <select class="dropdown no-arrow dropdown-toggle" id="userDropdown" name="PassengerType" 
+                      [(ngModel)] = "currentUser.PassengerType">
+                          <option  *ngFor = "let item of element.value" [value]="item.value">{{item.name}}</option>
+                      </select>
+                      &nbsp;&nbsp;&nbsp;
+                  </div>
+              </div>
+          </div>
+  
+          <button class="btn btn-primary btn-block" type="submit"
+          [disabled]="userUpdateForm.form.invalid">Register</button>
+        </form>
+      </div>
     </div>
-    <br>
-    <button type="submit" class="btn btn-primary">Izmeni</button>
-  </form>
+  </div>
 
   <hr>
 
