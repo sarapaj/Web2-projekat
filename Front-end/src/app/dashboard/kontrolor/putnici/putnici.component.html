@@ -2,7 +2,7 @@
   <div style="margin: 0 auto;text-align: left;">
       <div>
           <label>Document</label>
-          <div><img src="{{imageSrc}}" alt="document" height="250" width="220"></div>
+          <div><img [src]="imageUrl" alt="document" height="250" width="220"></div>
       </div>
       <form #dokumentForm="ngForm" (ngSubmit)="OnSubmit(dokumentForm)">
         <div class="form-group my-div">

@@ -19,7 +19,7 @@ export class KontrolorService {
   }
 
   public getDocument(email:string){
-    return this._http.get(`${this._baseUrl}/api/Kontrolor/GetDocument?userEmail=${email}`);
+    return this._http.get(`${this._baseUrl}/api/Kontrolor/GetImage?userEmail=${email}`);
   }
  
   public validateDocument(email:string, result:boolean){

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { KontrolorService } from 'src/app/services/kontrolor.service';
 import { UserKontrolor } from 'src/models/user-kontrolor';
 import { DropdownElement } from 'src/models/classes';
-import { validacijaDokumenta } from 'src/app/shared/constants';
 import { NgForm } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-putnici',
@@ -11,6 +11,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./putnici.component.css']
 })
 export class PutniciComponent implements OnInit {
+
 
   tableHeader: string[];
   users;
@@ -22,11 +23,11 @@ export class PutniciComponent implements OnInit {
   email:string;
   status:boolean;
   result;
+  imageUrl;
 
-  constructor(private kontrolorService:KontrolorService) { }
+  constructor(private kontrolorService:KontrolorService, private sanitizer:DomSanitizer) { }
 
   ngOnInit() {
-    this.dropdownToPassDocument = {label: "Validacija dokumenta", value: validacijaDokumenta};
     this.tableHeader = ["Dokaz", "Tip putnika", "Ime", "Prezime", "Datum rodjenja", "Adresa", " ", " "];
     this.getUsers();
     this.buttonName = "Show image";
@@ -44,9 +45,12 @@ export class PutniciComponent implements OnInit {
     });
   }
 
+  mystring;
   getDocument(){
-    this.kontrolorService.getDocument(this.email).subscribe(data => {
-      this.imageSrc = data;
+    this.kontrolorService.getDocument(this.email).subscribe((data:string) => {
+      let objectURL = `data:image/jpeg;base64,${data}`
+      // objectURL = data.slice(1,data.length);
+      this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL);
     });
   }
 
@@ -62,7 +66,11 @@ export class PutniciComponent implements OnInit {
     }
 
     this.kontrolorService.validateDocument(this.email, this.status).subscribe();
+    this.getUsers();
   }
+
+    
+     
 
   toggle(email:string) {
     //this.show = !this.show;

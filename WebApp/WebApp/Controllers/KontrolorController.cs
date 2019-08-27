@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebApp.Models;
@@ -33,26 +34,21 @@ namespace WebApp.Controllers
 		[Route("GetImage")]
 		[ResponseType(typeof(File))]
 		[HttpGet]
-		public async System.Threading.Tasks.Task<IHttpActionResult> GetImageAsync(string email)
+		public async Task<IHttpActionResult> GetImage(string userEmail)
 		{
 			try
 			{
-				var users = _unitOfWork.ApplicationUsers.Find(x => x.Email.ToString() == email);
-				
-				string file = "";
+				var users = _unitOfWork.ApplicationUsers.Find(x => x.Email.ToString() == userEmail);
+
+				string image = "";
 				foreach (var user in users)
 				{
-					file = user.Document;
+					image = user.Document;
 				}
 
-				var memory = new MemoryStream();
-				using (var stream = new FileStream(file, FileMode.Open))
-				{
-					await stream.CopyToAsync(memory);
-				}
+				Byte[] b = System.IO.File.ReadAllBytes(@"D:\WEB2GIT\Web2-projekat\WebApp\WebApp\App_Data\uploads\slikaa.jpg");   // You can use your own method over here.         
 
-				memory.Position = 0;
-				return Ok(file);
+				return Ok(b);
 			}
 			catch (Exception e)
 			{
@@ -60,35 +56,9 @@ namespace WebApp.Controllers
 			}
 		}
 
-		private static string AssemblyDirectory
-		{
-			get
-			{
-				string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-				UriBuilder uri = new UriBuilder(codeBase);
-				string path = Uri.UnescapeDataString(uri.Path);
-				return Path.GetDirectoryName(path);
-			}
-		}
+		
 
-		private string GetMimeType(string file)
-		{
-			string extension = Path.GetExtension(file).ToLowerInvariant();
-			switch (extension)
-			{
-				case ".txt": return "text/plain";
-				case ".pdf": return "application/pdf";
-				case ".doc": return "application/vnd.ms-word";
-				case ".docx": return "application/vnd.ms-word";
-				case ".xls": return "application/vnd.ms-excel";
-				case ".png": return "image/png";
-				case ".jpg": return "image/jpeg";
-				case ".jpeg": return "image/jpeg";
-				case ".gif": return "image/gif";
-				case ".csv": return "text/csv";
-				default: return "";
-			}
-		}
+	
 
 		[Route("GetDocument")]
 		[ResponseType(typeof(string))]
@@ -138,16 +108,19 @@ namespace WebApp.Controllers
 
 				foreach (var item in users)
 				{
-					userList.Add(new UserViewModel()
+					if (item.Document != null)
 					{
-						Document = item.Document,
-						documentStatus = Enum.GetName(item.validDocument.GetType(), item.validDocument),
-						Type = Enum.GetName(item.Type.GetType(), item.Type),
-						Name = item.Name,
-						LastName = item.Lastname,
-						Email = item.Email,
-						id = item.Id
-					});
+						userList.Add(new UserViewModel()
+						{
+							Document = item.Document,
+							documentStatus = Enum.GetName(item.validDocument.GetType(), item.validDocument),
+							Type = Enum.GetName(item.Type.GetType(), item.Type),
+							Name = item.Name,
+							LastName = item.Lastname,
+							Email = item.Email,
+							id = item.Id
+						});
+					}
 				}
 
 				return Ok(userList);
