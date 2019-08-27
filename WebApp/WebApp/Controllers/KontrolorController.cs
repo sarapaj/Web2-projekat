@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebApp.Models;
+using WebApp.Models.ViewModels;
 using WebApp.Persistence.UnitOfWork;
 
 namespace WebApp.Controllers
@@ -23,6 +28,66 @@ namespace WebApp.Controllers
 		{
 			_unitOfWork = unitOfWork;
 			_context = context;
+		}
+
+		[Route("GetImage")]
+		[ResponseType(typeof(File))]
+		[HttpGet]
+		public async System.Threading.Tasks.Task<IHttpActionResult> GetImageAsync(string email)
+		{
+			try
+			{
+				var users = _unitOfWork.ApplicationUsers.Find(x => x.Email.ToString() == email);
+				
+				string file = "";
+				foreach (var user in users)
+				{
+					file = user.Document;
+				}
+
+				var memory = new MemoryStream();
+				using (var stream = new FileStream(file, FileMode.Open))
+				{
+					await stream.CopyToAsync(memory);
+				}
+
+				memory.Position = 0;
+				return Ok(file);
+			}
+			catch (Exception e)
+			{
+				return BadRequest();
+			}
+		}
+
+		private static string AssemblyDirectory
+		{
+			get
+			{
+				string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+				UriBuilder uri = new UriBuilder(codeBase);
+				string path = Uri.UnescapeDataString(uri.Path);
+				return Path.GetDirectoryName(path);
+			}
+		}
+
+		private string GetMimeType(string file)
+		{
+			string extension = Path.GetExtension(file).ToLowerInvariant();
+			switch (extension)
+			{
+				case ".txt": return "text/plain";
+				case ".pdf": return "application/pdf";
+				case ".doc": return "application/vnd.ms-word";
+				case ".docx": return "application/vnd.ms-word";
+				case ".xls": return "application/vnd.ms-excel";
+				case ".png": return "image/png";
+				case ".jpg": return "image/jpeg";
+				case ".jpeg": return "image/jpeg";
+				case ".gif": return "image/gif";
+				case ".csv": return "text/csv";
+				default: return "";
+			}
 		}
 
 		[Route("GetDocument")]
@@ -44,8 +109,48 @@ namespace WebApp.Controllers
 				{
 					image = user.Document;
 				}
-
+				
 				return Ok(image);
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				return NotFound();
+			}
+		}
+
+		[Route("GetUsers")]
+		[ResponseType(typeof(List<UserInfoViewModel>))]
+		[HttpGet]
+		public IHttpActionResult GetUsers()
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+
+			try
+			{
+				var users = _unitOfWork.ApplicationUsers.GetAll();
+
+				List<UserViewModel> userList = new List<UserViewModel>();
+				//Uri relativeUri = uri2.MakeRelativeUri(uri1);
+
+
+				foreach (var item in users)
+				{
+					userList.Add(new UserViewModel()
+					{
+						Document = item.Document,
+						documentStatus = Enum.GetName(item.validDocument.GetType(), item.validDocument),
+						Type = Enum.GetName(item.Type.GetType(), item.Type),
+						Name = item.Name,
+						LastName = item.Lastname,
+						Email = item.Email,
+						id = item.Id
+					});
+				}
+
+				return Ok(userList);
 			}
 			catch (DbUpdateConcurrencyException)
 			{
@@ -130,7 +235,7 @@ namespace WebApp.Controllers
 		[Route("ValidateTicket")]
 		[ResponseType(typeof(bool))]
 		[HttpGet]
-		public IHttpActionResult ValidateTicket(int ticketID)
+		public IHttpActionResult ValidateTicket(int ticketID) //to do proveri da li korisnik radi checkin ??
 		{
 			try
 			{
@@ -142,7 +247,7 @@ namespace WebApp.Controllers
 
 					if (ticket.TicketType.Name == "Vremenska")
 					{
-						DateTime temp = ticket.CheckInDate.Value.AddMinutes(60);
+						DateTime temp = ticket.PurchaseDate.Value.AddMinutes(60);
 
 						if (ticket.CheckInDate > temp2)
 						{
@@ -155,7 +260,7 @@ namespace WebApp.Controllers
 					}
 					else if (ticket.TicketType.Name == "Dnevna")
 					{
-						DateTime temp = ticket.CheckInDate.Value.AddDays(1);
+						DateTime temp = ticket.PurchaseDate.Value.AddDays(1);
 
 						if (ticket.CheckInDate > temp2)
 						{
@@ -168,7 +273,7 @@ namespace WebApp.Controllers
 					}
 					else if (ticket.TicketType.Name == "Mesecna")
 					{
-						DateTime temp = ticket.CheckInDate.Value.AddMonths(1);
+						DateTime temp = ticket.PurchaseDate.Value.AddMonths(1);
 
 						if (ticket.CheckInDate > temp2)
 						{
@@ -181,7 +286,7 @@ namespace WebApp.Controllers
 					}
 					else if (ticket.TicketType.Name == "Godisnja")
 					{
-						DateTime temp = ticket.CheckInDate.Value.AddYears(1);
+						DateTime temp = ticket.PurchaseDate.Value.AddYears(1);
 
 						if (ticket.CheckInDate > temp2)
 						{

@@ -13,4 +13,17 @@ export class KontrolorService {
   public validateTicket(ticketID:number){
     return this._http.get(`${this._baseUrl}/api/Kontrolor/ValidateTicket?ticketID=${ticketID}`);
   }
-}
+
+  public getUsers(){
+    return this._http.get(`${this._baseUrl}/api/Kontrolor/GetUsers`);
+  }
+
+  public getDocument(email:string){
+    return this._http.get(`${this._baseUrl}/api/Kontrolor/GetDocument?userEmail=${email}`);
+  }
+ 
+  public validateDocument(email:string, result:boolean){
+    return this._http.post(`${this._baseUrl}/api/Kontrolor/ValidateDocument?userEmail=${email}&result=${result}`, email);
+  }
+  }
+  

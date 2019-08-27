@@ -259,14 +259,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201908250000272_RebuildDB.cs" />
-    <Compile Include="Migrations\201908250000272_RebuildDB.Designer.cs">
-      <DependentUpon>201908250000272_RebuildDB.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908251335116_BiloSta.cs" />
-    <Compile Include="Migrations\201908251335116_BiloSta.Designer.cs">
-      <DependentUpon>201908251335116_BiloSta.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -283,6 +275,7 @@
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="Models\ViewModels\TicketTypeViewModel.cs" />
     <Compile Include="Models\ViewModels\TicketViewModel.cs" />
+    <Compile Include="Models\ViewModels\UserViewModel.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
     <Compile Include="Persistence\Repository\ApplicationUserRepository.cs" />
     <Compile Include="Persistence\Repository\CoordinateRepository.cs" />
@@ -407,11 +400,6 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201908251335116_BiloSta.resx">
-      <DependentUpon>201908251335116_BiloSta.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

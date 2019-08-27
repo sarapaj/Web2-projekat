@@ -94,6 +94,17 @@ export const NotLogedUserHeaderElements = [
 
 
 // tipovi
+export const validacijaDokumenta = [
+    {
+        name: "Validan",
+        value: 0
+    },
+    {
+        name: "Nevalidan",
+        value: 1
+    }
+];
+
 export const TipPutnika = [ 
     {
         name: "djak",

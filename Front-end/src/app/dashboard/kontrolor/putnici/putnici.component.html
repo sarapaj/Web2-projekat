@@ -1,3 +1,30 @@
+<div *ngIf="show">
+  <div style="margin: 0 auto;text-align: left;">
+      <div>
+          <label>Document</label>
+          <div><img src="{{imageSrc}}" alt="document" height="250" width="220"></div>
+      </div>
+      <form #dokumentForm="ngForm" (ngSubmit)="OnSubmit(dokumentForm)">
+        <div class="form-group my-div">
+            <div class="form-label-group">
+                <div class="my-div">  
+                  <label>Validacija dokumenta &nbsp;</label>
+                  <select [(ngModel)]="result" name="result" (change)="selectDocumentStatus($event)"  class="dropdown no-arrow dropdown-toggle">
+                      <option>Validan</option>
+                      <option>Nevalidan</option>
+                  </select>    
+                  &nbsp;&nbsp;&nbsp;
+                </div> 
+            </div>
+            
+        </div>
+        &nbsp;&nbsp;
+        <button type="submit">Posalji</button>
+    </form>
+  </div>
+</div>
+
+<hr>
 <div class="card mb-3">
         <div class="card-header">
           <i class="fas fa-table"></i>
@@ -11,29 +38,25 @@
                   <th>Tip putnika</th>
                   <th>Ime</th>
                   <th>Prezime</th>
-                  <th>Datum rodjenja</th>
-                  <th>Adresa</th>
+                  <th>Email</th>
+                  <th>Status</th>
                   <th></th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                <tr *ngFor='let user of users'>
+                    <td><img src={{user.Document}} height="25" width="20"/>                    </td>
+                    <td>{{user.Type}}</td>
+                    <td>{{user.Name}}</td>
+                    <td>{{user.LastName}}</td>
+                    <td>{{user.Email}}</td>
+                    <td>{{user.documentStatus}}</td>
+                    <td><button (click)="toggle(user.Email)" id="bt">
+                      {{buttonName}}
+                  </button></td>
                 </tr>
-                  <!-- <tr *ngFor='let item of tableBodyElement'>
-                      <td *ngFor="let cell of item">
-                        {{cell}}
-                      </td>
-                  </tr> -->
-              </tbody>
+            </tbody>
             </table>
             </div>
           </div>
