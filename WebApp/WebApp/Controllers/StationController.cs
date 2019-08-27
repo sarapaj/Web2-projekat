@@ -5,6 +5,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebApp.Models;
@@ -41,43 +42,180 @@ namespace WebApp.Controllers
 			}
 		}
 
+        [Route("GetStationNames")]
+        [ResponseType(typeof(List<string>))]
+        [HttpGet]
+        public IHttpActionResult GetStationNames()  //vraca imena svih stanica za dropdown meni  
+        {
+            try
+            {
+                List<string> rez = new List<string>();
+                List<Station> temp = (List<Station>)_unitOfWork.Stations.GetAll();
 
-		[ResponseType(typeof(void))]
+                if (temp != null)
+                {
+                    foreach (var item in temp)
+                    {
+                        rez.Add(item.Name);
+                    }
+
+                    return Ok(rez);
+                }
+
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound();
+            }
+
+            return NotFound();
+        }
+
+        [Route("GetStationByName")]
+        [ResponseType(typeof(Station))]
+        [HttpGet]
+        public IHttpActionResult GetStationByName(string name)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var stations = _unitOfWork.Stations.Find(x => x.Name.ToString() == name);
+
+
+                foreach (var st in stations)
+                {
+                    if (st != null)
+                    {
+                        return Ok(st);
+                    }
+                }
+
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound();
+            }
+
+            return NotFound();
+        }
+
+        [ResponseType(typeof(void))]
 		[Route("EditStation")]
 		[HttpPut]
-		public IHttpActionResult EditStation(string name, string newName, string newAddress)
+		public IHttpActionResult EditStation()
 		{
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-			if (!ModelState.IsValid)
-			{
-				return BadRequest(ModelState);
-			}
+            var httpRequest = HttpContext.Current.Request;
+            var idString = httpRequest.Form["Id"];
+            int Id = Int32.Parse(idString);
+            var Name = httpRequest.Form["Name"];
+            var Address = httpRequest.Form["Address"];
 
-			//if (name != station.Name)
-			//{
-			//	return BadRequest();
-			//}
+            try
+            {
+                var stations = _unitOfWork.Stations.Find(x => x.Id == Id);
 
-			try
-			{
-				var temp = _unitOfWork.Stations.Find(x => x.Name == name);
-				foreach (var item in temp)
-				{
-					item.Name = newName;
-					item.Address = newAddress;
-					_unitOfWork.Stations.Update(item);
-					_unitOfWork.Complete();
-				}
-			}
-			catch (DbUpdateConcurrencyException)
-			{
-				return NotFound();
-			}
 
-			return StatusCode(HttpStatusCode.NoContent);
-		}
+                foreach (var st in stations)
+                {
+                    if (st != null)
+                    {
+                        st.Name = Name;
+                        st.Address = Address;
+                        try
+                        {
+                            _unitOfWork.Stations.Update(st);
+                        }
+                        catch (DbUpdateConcurrencyException)
+                        {
+                            return NotFound();
+                        }
 
-		[Route("DeleteStation")]
+                    }
+                }
+                _unitOfWork.Complete();
+                return Ok();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound();
+            }
+        }
+
+
+        [Route("AddStation")]
+        [ResponseType(typeof(Station))]
+        [HttpPost]
+        public IHttpActionResult AddStation()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            Station station = new Station();
+            Coordinate coord = new Coordinate();
+            
+            var httpRequest = HttpContext.Current.Request;
+            var name = httpRequest.Form["Name"];
+            var address = httpRequest.Form["Address"];
+            var coordIdStr = httpRequest.Form["coordId"];
+
+            if (name == null || address == null || coordIdStr == null)
+            {
+                return BadRequest();
+            }
+
+            station.Name = name;
+            station.Address = address;
+            int coordId = Int32.Parse(coordIdStr);
+            station.CoordinateId = coordId;
+
+            try
+            {
+                var coordinates = _unitOfWork.Coordinates.Find(x => x.Id == coordId);
+
+
+                if (coordinates != null)
+                {
+                    foreach (var c in coordinates)
+                    {
+                        station.Coordinate = c;
+
+                    }
+                }
+
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                _unitOfWork.Stations.Add(station);
+                _unitOfWork.Complete();
+
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound();
+            }
+
+            return Ok(station);
+        }
+
+
+
+        [Route("DeleteStation")]
 		[ResponseType(typeof(Station))]
 		[HttpDelete]
 		public IHttpActionResult DeleteStation(string name)
@@ -94,18 +232,17 @@ namespace WebApp.Controllers
                 
                 if (stations != null)
                 {
-                    foreach (var station in stations)
+                    foreach(var station in stations)
                     {
                         _unitOfWork.Stations.Remove(station);
-                        
+
                     }
 
                     _unitOfWork.Complete();
                     return Ok(stations);
                 }
 
-                
-			}
+            }
 			catch (DbUpdateConcurrencyException)
 			{
 				return NotFound();
@@ -161,6 +298,60 @@ namespace WebApp.Controllers
 			return Ok(conn);
 		}
 
-		
+        [Route("AddCoordinate")]
+        [ResponseType(typeof(Coordinate))]
+        [HttpPost]
+        public IHttpActionResult AddCordinate()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            Coordinate coord = new Coordinate();
+
+            var httpRequest = HttpContext.Current.Request;
+            var xStr = httpRequest.Form["xCoord"];
+            var yStr = httpRequest.Form["yCoord"];
+
+            if (xStr == null || yStr == null)
+            {
+                return BadRequest();
+            }
+
+            int y = Int32.Parse(yStr);
+            int x = Int32.Parse(xStr);
+
+            coord.x = x;
+            coord.y = y;
+
+            try
+            {
+                _unitOfWork.Coordinates.Add(coord);
+                _unitOfWork.Complete();
+
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound();
+            }
+
+            return Ok(coord);
+        }
+
+        [Route("GetAllCoordinates")]
+        [ResponseType(typeof(List<Coordinate>))]
+        [HttpGet]
+        public IHttpActionResult GetAllCoordinates()
+        {
+            try
+            {
+                return Ok(_unitOfWork.Coordinates.GetAll());
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound();
+            }
+        }
     }
 }

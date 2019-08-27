@@ -1,26 +1,150 @@
+<div>
+  <button type="button" class="btn btn-primary"
+    (click) = "toggleForm()">
+    {{showForm ? "Odustani" : "Dodaj stanicu"}}
+  </button>
+  <br/><br/>
+  <div *ngIf="showForm"> 
+    <!-- Name -->
+    <div class="form-group">
+      <div class="form-label-group">
+        <input type="text" id="StationName" class="form-control" placeholder="Station name" 
+        required="required" [(ngModel)] = "newStationName">
+        <label for="StationName">Ime stanice</label>  
+      </div>
+    </div>
+    <!-- Address -->
+    <div class="form-group">
+      <div class="form-label-group">
+        <input type="text" id="StationAddress" class="form-control" placeholder="Station address" 
+        required="required" [(ngModel)] = "newStationAddress">
+        <label for="StationAddress">Adresa stanice</label>  
+      </div>
+    </div>
+    <!-- All coordinates -->
+    <div class="form-group">
+      <div class="form-label-group">
+        <label>Koordinate</label><br><br>
+        <select name="chooseCoord" class="dropdown no-arrow dropdown-toggle" id="userDropdown" 
+        [(ngModel)]="chosenCoordAddToStation">
+            <option *ngFor = "let item of coordinatesDropdown.value">{{item}}</option>
+        </select>
+      </div>
+    </div>
+    &nbsp;
+    <button (click)="addNewStation()">OK</button>
+  </div>
+  <hr>
+</div>
+
+<!-- Dodavanje novih koordinata -->
+<div>
+    <button type="button" class="btn btn-primary"
+    (click) = "toggleCoordForm()">
+    {{showCoordForm ? "Odustani" : "Dodaj koordinate"}}
+  </button>
+  <br/><br/>
+  <div *ngIf="showCoordForm"> 
+    <!-- X -->
+    <div class="form-group">
+      <div class="form-label-group">
+        <input type="text" id="newXcoord" class="form-control" placeholder="X koordinata" 
+        required="required" [(ngModel)] = "newXcoord">
+        <label for="newXcoord">X koordinata</label>  
+      </div>
+    </div>
+    <!-- Y -->
+    <div class="form-group">
+      <div class="form-label-group">
+        <input type="text" id="newYcoord" class="form-control" placeholder="Y koordinata" 
+        required="required" [(ngModel)] = "newYcoord">
+        <label for="newYcoord">Y koordinata</label>  
+      </div>
+    </div>
+    <button (click)="addNewCoord()">OK</button>
+  </div>
+</div>
+
+<hr>
+
+<div class="form-group my-div">
+  <div class="form-label-group">
+      <div class="my-div">
+          <label>Stanica &nbsp;</label>
+          <select class="dropdown no-arrow dropdown-toggle" id="userDropdown" [(ngModel)]="chosenStationName">
+              <option *ngFor = "let item of dropdownToPassStation.value">{{item}}</option>
+          </select>
+          &nbsp;&nbsp;&nbsp;   
+      </div>     
+  </div>
+</div>
+&nbsp;&nbsp;
+<button (click)="showStationDetails()">Prikazi</button>
+<hr>
+
 <div class="card mb-3">
+  <div class="card-header">
+    <i class="fas fa-table"></i>
+    Detalji stanice
+  </div>
+  <div class="card-body">
+    <label for="stationName">Naziv</label>
+    <br>
+    <input type="text" name="stationName" [(ngModel)]="selectedName">
+    <br><br>
+
+    <label for="stationAddress">Adresa</label>
+    <br>
+    <input type="text" name="stationAddress" [(ngModel)]="selectedAddress">
+    <br><br>
+
+    <label for="xCoord">X koordinata</label>
+    <br>
+    <input type="text" name="xCoord" [(ngModel)]="selectedXCoord" disabled>
+    <br><br>
+
+    <label for="yCoord">Y koordinata</label>
+    <br>
+    <input type="text" name="yCoord" [(ngModel)]="selectedYCoord" disabled>
+    <br><br>
+
+    <button (click)="deleteStation()">Obrisi</button>&nbsp;
+    <button (click)="changeStation()">Izmeni</button>
+  </div>
+</div>
+
+<!-- <div class="card mb-3">
     <div class="card-header">
       <i class="fas fa-table"></i>
-      Data Table Example</div>
+      Detalji stanice</div>
     <div class="card-body">
       <div class="table-responsive">
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-              <th *ngFor = "let th of tableHeader">{{th}}</th>
+              <th>Naziv</th>
+              <th>Adresa</th>
+              <th>X koordinata</th>
+              <th>Y koordinata</th>
             </tr>
           </thead>
           <tbody>
-              <tr *ngFor='let item of tableBody'>
-                <td *ngFor="let cell of item">
-                  {{cell}}
-                </td>
-                <td>
-                  <button (click)="onClick(item[0])">Obrisi</button>
-                </td>
+              <tr>
+                  <td>
+                    <input type="text" name="stationName" [(ngModel)]="selectedName">
+                  </td>
+                  <td>
+                      <input type="text" name="stationAddress" [(ngModel)]="selectedAddress">
+                  </td>
+                  <td>
+                      <input type="text" name="xCoord" [(ngModel)]="selectedXCoord" disabled>
+                  </td>
+                  <td>
+                      <input type="text" name="yCoord" [(ngModel)]="selectedYCoord" disabled>
+                  </td>
               </tr>
           </tbody>
         </table>
         </div>
       </div>
-</div>
+</div> -->

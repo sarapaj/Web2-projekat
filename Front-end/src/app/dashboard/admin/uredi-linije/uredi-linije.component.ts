@@ -15,7 +15,7 @@ export class UrediLinijeComponent implements OnInit {
   regionsDropdown: DropdownElement;
   chosenLineName: string;
   showForm = false;
-  newLineRegion = 2;
+  newLineRegion = null;
   newLineName = "";
   selectedId: number;
   selectedName: string;
@@ -69,7 +69,6 @@ export class UrediLinijeComponent implements OnInit {
       this.selectedName = res.Name;
       this.selectedRegion = res.Region;
       this.selectedId = res.Id;
-
     })
   }
 
@@ -82,8 +81,6 @@ export class UrediLinijeComponent implements OnInit {
       }
 
       this.chosenLineName = null;
-
-      // this.selectedName = this.chosenLineName;
     })
   }
 
@@ -100,6 +97,7 @@ export class UrediLinijeComponent implements OnInit {
         this.chosenLineName = null;
 
         alert("Line is successfully deleted");
+        this.showLineNames();
     })
   }
 
@@ -116,6 +114,7 @@ export class UrediLinijeComponent implements OnInit {
     {
       this.chosenLineName = null;
       alert("Line is successfully edited");
+      this.showLineNames();
     })
   }
 
@@ -131,7 +130,11 @@ export class UrediLinijeComponent implements OnInit {
     this._http.addNewLine(this.newLineName, this.newLineRegion).subscribe((res) =>
     {
       alert((res as any).Name + " line is successfully added");
+      this.newLineName = null;
+      this.newLineRegion = null;
+      this.showForm = !this.showForm;
       this.showLineNames();
     });
   }
+  
 }
