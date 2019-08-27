@@ -5,34 +5,37 @@
   </button>
   <br/><br/>
   <div *ngIf="showForm"> 
-    <!-- Name -->
-    <div class="form-group">
-      <div class="form-label-group">
-        <input type="text" id="StationName" class="form-control" placeholder="Station name" 
-        required="required" [(ngModel)] = "newStationName">
-        <label for="StationName">Ime stanice</label>  
+    <form #addNewStationForm="ngForm">
+      <!-- Name -->
+      <div class="form-group">
+        <div class="form-label-group">
+          <input type="text" id="StationName" name="StationName" class="form-control" placeholder="Station name" [(ngModel)]="newStationName" 
+          [class.is-invalid]="NewStationNameHash.invalid && NewStationNameHash.touched" #NewStationNameHash="ngModel" required> 
+          <label for="StationName">Ime stanice</label>  
+        </div>
       </div>
-    </div>
-    <!-- Address -->
-    <div class="form-group">
-      <div class="form-label-group">
-        <input type="text" id="StationAddress" class="form-control" placeholder="Station address" 
-        required="required" [(ngModel)] = "newStationAddress">
-        <label for="StationAddress">Adresa stanice</label>  
+      <!-- Address -->
+      <div class="form-group">
+        <div class="form-label-group">
+          <input type="text" id="StationAddress" class="form-control" placeholder="Station address" 
+          required [(ngModel)] = "newStationAddress" name="StationAddress"
+          [class.is-invalid]="NewStationAddressHash.invalid && NewStationAddressHash.touched" #NewStationAddressHash="ngModel">
+          <label for="StationAddress">Adresa stanice</label>  
+        </div>
       </div>
-    </div>
-    <!-- All coordinates -->
-    <div class="form-group">
-      <div class="form-label-group">
-        <label>Koordinate</label><br><br>
-        <select name="chooseCoord" class="dropdown no-arrow dropdown-toggle" id="userDropdown" 
-        [(ngModel)]="chosenCoordAddToStation">
-            <option *ngFor = "let item of coordinatesDropdown.value">{{item}}</option>
-        </select>
+      <!-- All coordinates -->
+      <div class="form-group">
+        <div class="form-label-group">
+          <label>Koordinate</label><br><br>
+          <select name="chooseCoord" class="dropdown no-arrow dropdown-toggle" id="userDropdown" 
+          [(ngModel)]="chosenCoordAddToStation" required>
+              <option *ngFor = "let item of coordinatesDropdown.value">{{item}}</option>
+          </select>
+        </div>
       </div>
-    </div>
-    &nbsp;
-    <button (click)="addNewStation()">OK</button>
+      &nbsp;
+      <button (click)="addNewStation()" [disabled]="addNewStationForm.form.invalid">OK</button>
+    </form>
   </div>
   <hr>
 </div>
@@ -45,23 +48,25 @@
   </button>
   <br/><br/>
   <div *ngIf="showCoordForm"> 
-    <!-- X -->
-    <div class="form-group">
-      <div class="form-label-group">
-        <input type="text" id="newXcoord" class="form-control" placeholder="X koordinata" 
-        required="required" [(ngModel)] = "newXcoord">
-        <label for="newXcoord">X koordinata</label>  
+    <form #addCoordForm="ngForm">
+      <!-- X -->
+      <div class="form-group">
+        <div class="form-label-group">
+          <input type="text" id="newXcoord" class="form-control" placeholder="X koordinata" name="newXcoord"
+          required [(ngModel)] = "newXcoord" [class.is-invalid]="xCoordHash.invalid && xCoordHash.touched" #xCoordHash="ngModel">
+          <label for="newXcoord">X koordinata</label>  
+        </div>
       </div>
-    </div>
-    <!-- Y -->
-    <div class="form-group">
-      <div class="form-label-group">
-        <input type="text" id="newYcoord" class="form-control" placeholder="Y koordinata" 
-        required="required" [(ngModel)] = "newYcoord">
-        <label for="newYcoord">Y koordinata</label>  
+      <!-- Y -->
+      <div class="form-group">
+        <div class="form-label-group">
+          <input type="text" id="newYcoord" class="form-control" placeholder="Y koordinata" name="newYcoord"
+          required [(ngModel)] = "newYcoord" [class.is-invalid]="yCoordHash.invalid && yCoordHash.touched" #yCoordHash="ngModel">
+          <label for="newYcoord">Y koordinata</label>  
+        </div>
       </div>
-    </div>
-    <button (click)="addNewCoord()">OK</button>
+      <button (click)="addNewCoord()" [disabled]="addCoordForm.form.invalid">OK</button>
+    </form>
   </div>
 </div>
 
@@ -71,7 +76,7 @@
   <div class="form-label-group">
       <div class="my-div">
           <label>Stanica &nbsp;</label>
-          <select class="dropdown no-arrow dropdown-toggle" id="userDropdown" [(ngModel)]="chosenStationName">
+          <select class="dropdown no-arrow dropdown-toggle" id="userDropdown" [(ngModel)]="chosenStationName" name="stationDropdownName">
               <option *ngFor = "let item of dropdownToPassStation.value">{{item}}</option>
           </select>
           &nbsp;&nbsp;&nbsp;   
@@ -88,63 +93,87 @@
     Detalji stanice
   </div>
   <div class="card-body">
-    <label for="stationName">Naziv</label>
-    <br>
-    <input type="text" name="stationName" [(ngModel)]="selectedName">
-    <br><br>
-
-    <label for="stationAddress">Adresa</label>
-    <br>
-    <input type="text" name="stationAddress" [(ngModel)]="selectedAddress">
-    <br><br>
-
-    <label for="xCoord">X koordinata</label>
-    <br>
-    <input type="text" name="xCoord" [(ngModel)]="selectedXCoord" disabled>
-    <br><br>
-
-    <label for="yCoord">Y koordinata</label>
-    <br>
-    <input type="text" name="yCoord" [(ngModel)]="selectedYCoord" disabled>
-    <br><br>
-
-    <button (click)="deleteStation()">Obrisi</button>&nbsp;
-    <button (click)="changeStation()">Izmeni</button>
-  </div>
-</div>
-
-<!-- <div class="card mb-3">
-    <div class="card-header">
-      <i class="fas fa-table"></i>
-      Detalji stanice</div>
-    <div class="card-body">
-      <div class="table-responsive">
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-          <thead>
+    <div class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Naziv</th>
+            <th>Adresa</th>
+            <th>X koordinata</th>
+            <th>Y koordinata</th>
+          </tr>
+        </thead>
+        <tbody>
             <tr>
-              <th>Naziv</th>
-              <th>Adresa</th>
-              <th>X koordinata</th>
-              <th>Y koordinata</th>
+              <form  #chosenLineForm="ngForm">
+                <td>
+                  <input type="text" name="stationName" [(ngModel)]="selectedName" class="form-control" required
+                  [class.is-invalid]="changeStationNameHash.invalid && changeStationNameHash.touched"
+                    #changeStationNameHash="ngModel" id="stationName">
+                </td>
+                <td>
+                  <input type="text" name="stationAddress" [(ngModel)]="selectedAddress" class="form-control" 
+                  [class.is-invalid]="changeStationAddressHash.invalid && changeStationAddressHash.touched"
+                    #changeStationAddressHash="ngModel" required id="stationAddress">
+                </td>
+                <td>
+                  <input type="text" name="xCoord" [(ngModel)]="selectedXCoord" disabled class="form-control" 
+                  [class.is-invalid]="changeXCoordHash.invalid && changeXCoordHash.touched"
+                    #changeXCoordHash="ngModel" id="xCoord">
+                </td>
+                <td>
+                  <input type="text" name="yCoord" [(ngModel)]="selectedYCoord" disabled class="form-control" 
+                  [class.is-invalid]="changeYCoordHash.invalid && changeYCoordHash.touched"
+                    #changeYCoordHash="ngModel" id="yCoord">
+                </td>
+              </form>
             </tr>
-          </thead>
-          <tbody>
-              <tr>
-                  <td>
-                    <input type="text" name="stationName" [(ngModel)]="selectedName">
-                  </td>
-                  <td>
-                      <input type="text" name="stationAddress" [(ngModel)]="selectedAddress">
-                  </td>
-                  <td>
-                      <input type="text" name="xCoord" [(ngModel)]="selectedXCoord" disabled>
-                  </td>
-                  <td>
-                      <input type="text" name="yCoord" [(ngModel)]="selectedYCoord" disabled>
-                  </td>
-              </tr>
-          </tbody>
-        </table>
+        </tbody>
+      </table>
+      <button (click)="deleteStation()" [disabled]="chosenLineForm.form.invalid">Obrisi</button>
+      <button (click)="changeStation()" [disabled]="chosenLineForm.form.invalid">Izmeni</button>
+      </div>
+    </div>
+  <!-- <form #changeStationForm="ngForm">
+    <div class="card-body">
+      <div class="form-group">
+        <div class="form-label-group">
+          <input type="text" name="stationName" [(ngModel)]="selectedName" class="form-control" required
+          [class.is-invalid]="changeStationNameHash.invalid && changeStationNameHash.touched"
+           #changeStationNameHash="ngModel" id="stationName">
+          <label for="stationName">Naziv</label>
         </div>
       </div>
-</div> -->
+  
+      <div class="form-group">
+          <div class="form-label-group">
+            <input type="text" name="stationAddress" [(ngModel)]="selectedAddress" class="form-control" 
+            [class.is-invalid]="changeStationAddressHash.invalid && changeStationAddressHash.touched"
+             #changeStationAddressHash="ngModel" required id="stationAddress"> 
+             <label for="stationAddress">Adresa</label>
+        </div>
+      </div>
+  
+      <div class="form-group">
+          <div class="form-label-group">
+            <input type="text" name="xCoord" [(ngModel)]="selectedXCoord" disabled class="form-control" 
+            [class.is-invalid]="changeXCoordHash.invalid && changeXCoordHash.touched"
+             #changeXCoordHash="ngModel" id="xCoord">
+             <label for="xCoord">X koordinata</label>
+        </div>
+      </div>
+  
+      <div class="form-group">
+          <div class="form-label-group">
+            <input type="text" name="yCoord" [(ngModel)]="selectedYCoord" disabled class="form-control" 
+            [class.is-invalid]="changeYCoordHash.invalid && changeYCoordHash.touched"
+             #changeYCoordHash="ngModel" id="yCoord">
+             <label for="yCoord">Y koordinata</label>
+        </div>
+      </div>
+      <button (click)="deleteStation()" >Obrisi</button>&nbsp;
+      <button (click)="changeStation()" [disabled]="changeStationForm.form.invalid">Izmeni</button>
+    </div>
+  </form> -->
+</div>
+

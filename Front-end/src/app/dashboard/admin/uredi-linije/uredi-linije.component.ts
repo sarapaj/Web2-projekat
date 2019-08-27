@@ -16,7 +16,7 @@ export class UrediLinijeComponent implements OnInit {
   chosenLineName: string;
   showForm = false;
   newLineRegion = null;
-  newLineName = "";
+  newLineName = null;
   selectedId: number;
   selectedName: string;
   selectedRegion: number;
@@ -124,6 +124,9 @@ export class UrediLinijeComponent implements OnInit {
 
   toggleForm() {
     this.showForm = !this.showForm;
+
+    this.newLineName = null;
+    this.newLineRegion = null;
   }
 
   addNewLine(){

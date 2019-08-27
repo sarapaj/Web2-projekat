@@ -291,8 +291,10 @@ namespace WebApp.Controllers
 				{
 					foreach (var item in line)
 					{
-						_unitOfWork.Lines.Remove(item);
+                        _unitOfWork.Lines.Remove(item);
 					}
+
+
 					_unitOfWork.Complete();
 
 					return Ok(line);

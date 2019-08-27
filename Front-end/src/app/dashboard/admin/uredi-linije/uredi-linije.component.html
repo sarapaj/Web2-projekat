@@ -5,25 +5,26 @@
   </button>
   <br/><br/>
   <div *ngIf="showForm"> 
-
-    <div class="form-group">
-      <div class="form-label-group">
-        <input type="text" id="LineName" class="form-control" placeholder="Naziv Linije" required="required" 
-        [(ngModel)] = "newLineName">
-        <label for="LineName">Naziv linije</label>  
-      </div>
-    </div>
-    <div class="form-group">
-        <label>Region</label>
+    <form #addLineForm="ngForm">
+      <div class="form-group">
         <div class="form-label-group">
-            <select class="dropdown no-arrow dropdown-toggle" id="userDropdown"  [(ngModel)] = "newLineRegion">
-              <option value="0">gradski</option>
-              <option value="1">prigradski</option>
-            </select>
+          <input type="text" id="LineName" class="form-control" placeholder="Naziv Linije" required name="LineName"
+          [(ngModel)] = "newLineName" [class.is-invalid]="LineNameHash.invalid && LineNameHash.touched" #LineNameHash="ngModel">
+          <label for="LineName">Naziv linije</label>  
         </div>
-    </div>
-    &nbsp;
-    <button (click)="addNewLine()">OK</button>
+      </div>
+      <div class="form-group">
+          <label>Region</label>
+          <div class="form-label-group">
+              <select class="dropdown no-arrow dropdown-toggle" id="userDropdown" [(ngModel)]="newLineRegion" name="regionDropdownName">
+                <option value="0">gradski</option>
+                <option value="1">prigradski</option>
+              </select>
+          </div>
+      </div>
+      &nbsp;
+      <button (click)="addNewLine()" [disabled]="addLineForm.form.invalid">OK</button>
+    </form> 
   </div>
   <hr>
 </div>
@@ -32,7 +33,7 @@
     <div class="form-label-group">
         <div class="my-div">
             <label>Linija &nbsp;</label>
-            <select class="dropdown no-arrow dropdown-toggle" id="userDropdown" [(ngModel)]="chosenLineName">
+            <select class="dropdown no-arrow dropdown-toggle" id="userDropdown" [(ngModel)]="chosenLineName" name="lineDropdownName">
                 <option  *ngFor = "let item of dropdownToPassLine.value">{{item}}</option>
             </select>   
             &nbsp;&nbsp;&nbsp;   
@@ -45,40 +46,37 @@
 <hr>
 
 <div class="card mb-3">
-    <div class="card-header">
-      <i class="fas fa-table"></i>
-      Detalji linije</div>
-    <div class="card-body">
-      <div class="table-responsive">
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-          <thead>
+  <div class="card-header">
+    <i class="fas fa-table"></i>Detalji linije
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Naziv</th>
+            <th>Region</th>
+          </tr>
+        </thead>
+        <tbody>
             <tr>
-              <th>Naziv</th>
-              <th>Region</th>
-              <th></th>
-              <th></th>
+              <form  #chosenLineForm="ngForm">
+                <td>
+                  <input type="text" name="lineName" required [(ngModel)]="selectedName" 
+                  [class.is-invalid]="SelectedNameHash.invalid && SelectedNameHash.touched" #SelectedNameHash="ngModel">
+                </td>
+                <td>
+                    <select class="dropdown no-arrow dropdown-toggle" name="lineRegion" name="chosenRegionDropdownName"
+                    [(ngModel)] = "selectedRegion" required>
+                        <option *ngFor="let item of regionsDropdown.value" [value]="item.value">{{item.name}}</option>
+                    </select>
+                </td>
+              </form>
             </tr>
-          </thead>
-          <tbody>
-              <tr>
-                  <td>
-                    <input type="text" name="lineName" [(ngModel)]="selectedName">
-                  </td>
-                  <td>
-                      <select class="dropdown no-arrow dropdown-toggle" name="lineRegion" 
-                      [(ngModel)] = "selectedRegion" >
-                          <option *ngFor="let item of regionsDropdown.value" [value]="item.value">{{item.name}}</option>
-                      </select>
-                  </td>
-                  <td>
-                      <button (click)="deleteLine()">Obrisi</button>
-                  </td>
-                  <td>
-                    <button (click)="changeLine()">Izmeni</button>
-                  </td>
-              </tr>
-          </tbody>
-        </table>
-        </div>
-      </div>
+        </tbody>
+      </table>
+      <button (click)="deleteLine()" [disabled]="chosenLineForm.form.invalid">Obrisi</button>
+      <button (click)="changeLine()" [disabled]="chosenLineForm.form.invalid">Izmeni</button>
+    </div>
+  </div>
 </div>
