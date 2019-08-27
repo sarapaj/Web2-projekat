@@ -34,7 +34,7 @@
         <div class="my-div">
             <label>Linija &nbsp;</label>
             <select class="dropdown no-arrow dropdown-toggle" id="userDropdown" [(ngModel)]="chosenLineName" name="lineDropdownName">
-                <option  *ngFor = "let item of dropdownToPassLine.value">{{item}}</option>
+                <option *ngFor="let item of dropdownToPassLine.value">{{item}}</option>
             </select>   
             &nbsp;&nbsp;&nbsp;   
         </div>     
@@ -45,10 +45,13 @@
 
 <hr>
 
-<div class="card mb-3">
+<div class="card mb-3" *ngIf="lineDetails">
   <div class="card-header">
     <i class="fas fa-table"></i>Detalji linije
   </div>
+
+  
+  <form #chosenLineForm="ngForm" >
   <div class="card-body">
     <div class="table-responsive">
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -59,24 +62,25 @@
           </tr>
         </thead>
         <tbody>
-            <tr>
-              <form  #chosenLineForm="ngForm">
-                <td>
-                  <input type="text" name="lineName" required [(ngModel)]="selectedName" 
-                  [class.is-invalid]="SelectedNameHash.invalid && SelectedNameHash.touched" #SelectedNameHash="ngModel">
-                </td>
-                <td>
-                    <select class="dropdown no-arrow dropdown-toggle" name="lineRegion" name="chosenRegionDropdownName"
-                    [(ngModel)] = "selectedRegion" required>
-                        <option *ngFor="let item of regionsDropdown.value" [value]="item.value">{{item.name}}</option>
-                    </select>
-                </td>
-              </form>
-            </tr>
+          <tr>
+            <td>
+              <input type="text" name="lineName" required [(ngModel)]="selectedName" 
+              [class.is-invalid]="SelectedNameHash.invalid && SelectedNameHash.touched" #SelectedNameHash="ngModel">
+            </td>
+            <td>
+                <select class="dropdown no-arrow dropdown-toggle" name="lineRegion" name="chosenRegionDropdownName"
+                [(ngModel)] = "selectedRegion" required>
+                    <option *ngFor="let item of regionsDropdown.value" [value]="item.value">{{item.name}}</option>
+                </select>
+            </td>
+          </tr>
+
         </tbody>
       </table>
       <button (click)="deleteLine()" [disabled]="chosenLineForm.form.invalid">Obrisi</button>
-      <button (click)="changeLine()" [disabled]="chosenLineForm.form.invalid">Izmeni</button>
+      <button (click)="changeLine()" [disabled]="chosenLineForm.form.is-invalid">Izmeni</button>
     </div>
   </div>
+  
+</form> 
 </div>

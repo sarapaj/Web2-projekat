@@ -21,8 +21,9 @@ export class UrediLinijeComponent implements OnInit {
   selectedName: string;
   selectedRegion: number;
   updatedLine: Linija;
+  lineDetails = false;
 
-  constructor( private _http: LinijeService ) { }
+  constructor(private _http: LinijeService) { }
 
   ngOnInit() {
     this.dropdownToPassLine = 
@@ -69,6 +70,8 @@ export class UrediLinijeComponent implements OnInit {
       this.selectedName = res.Name;
       this.selectedRegion = res.Region;
       this.selectedId = res.Id;
+
+      this.lineDetails = true;
     })
   }
 

@@ -29,6 +29,7 @@ export class UrediStaniceComponent implements OnInit {
   selectedYCoord: string;
   selectedId: number;
   allCoord: any;
+  stationDetails = false;
 
   constructor(private _http: StaniceService) { }
 
@@ -144,6 +145,8 @@ export class UrediStaniceComponent implements OnInit {
       this.selectedAddress = res.Address;
       this.selectedXCoord = res.Coordinate.x;
       this.selectedYCoord = res.Coordinate.y;
+
+      this.stationDetails = true;
     })
   }
 

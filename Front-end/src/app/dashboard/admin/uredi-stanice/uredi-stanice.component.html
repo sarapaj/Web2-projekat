@@ -87,93 +87,51 @@
 <button (click)="showStationDetails()">Prikazi</button>
 <hr>
 
-<div class="card mb-3">
+<div class="card mb-3" *ngIf="stationDetails">
   <div class="card-header">
     <i class="fas fa-table"></i>
     Detalji stanice
   </div>
-  <div class="card-body">
-    <div class="table-responsive">
-      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-        <thead>
-          <tr>
-            <th>Naziv</th>
-            <th>Adresa</th>
-            <th>X koordinata</th>
-            <th>Y koordinata</th>
-          </tr>
-        </thead>
-        <tbody>
-            <tr>
-              <form  #chosenLineForm="ngForm">
-                <td>
-                  <input type="text" name="stationName" [(ngModel)]="selectedName" class="form-control" required
-                  [class.is-invalid]="changeStationNameHash.invalid && changeStationNameHash.touched"
-                    #changeStationNameHash="ngModel" id="stationName">
-                </td>
-                <td>
-                  <input type="text" name="stationAddress" [(ngModel)]="selectedAddress" class="form-control" 
-                  [class.is-invalid]="changeStationAddressHash.invalid && changeStationAddressHash.touched"
-                    #changeStationAddressHash="ngModel" required id="stationAddress">
-                </td>
-                <td>
-                  <input type="text" name="xCoord" [(ngModel)]="selectedXCoord" disabled class="form-control" 
-                  [class.is-invalid]="changeXCoordHash.invalid && changeXCoordHash.touched"
-                    #changeXCoordHash="ngModel" id="xCoord">
-                </td>
-                <td>
-                  <input type="text" name="yCoord" [(ngModel)]="selectedYCoord" disabled class="form-control" 
-                  [class.is-invalid]="changeYCoordHash.invalid && changeYCoordHash.touched"
-                    #changeYCoordHash="ngModel" id="yCoord">
-                </td>
-              </form>
-            </tr>
-        </tbody>
-      </table>
-      <button (click)="deleteStation()" [disabled]="chosenLineForm.form.invalid">Obrisi</button>
-      <button (click)="changeStation()" [disabled]="chosenLineForm.form.invalid">Izmeni</button>
-      </div>
-    </div>
-  <!-- <form #changeStationForm="ngForm">
+  <form  #chosenLineForm="ngForm">
     <div class="card-body">
-      <div class="form-group">
-        <div class="form-label-group">
-          <input type="text" name="stationName" [(ngModel)]="selectedName" class="form-control" required
-          [class.is-invalid]="changeStationNameHash.invalid && changeStationNameHash.touched"
-           #changeStationNameHash="ngModel" id="stationName">
-          <label for="stationName">Naziv</label>
-        </div>
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Naziv</th>
+              <th>Adresa</th>
+              <th>X koordinata</th>
+              <th>Y koordinata</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input type="text" name="stationName" [(ngModel)]="selectedName" class="form-control" required
+                [class.is-invalid]="changeStationNameHash.invalid && changeStationNameHash.touched"
+                  #changeStationNameHash="ngModel" id="stationName">
+              </td>
+              <td>
+                <input type="text" name="stationAddress" [(ngModel)]="selectedAddress" class="form-control" 
+                [class.is-invalid]="changeStationAddressHash.invalid && changeStationAddressHash.touched"
+                  #changeStationAddressHash="ngModel" required id="stationAddress">
+              </td>
+              <td>
+                <input type="text" name="xCoord" [(ngModel)]="selectedXCoord" disabled class="form-control" 
+                [class.is-invalid]="changeXCoordHash.invalid && changeXCoordHash.touched"
+                  #changeXCoordHash="ngModel" id="xCoord">
+              </td>
+              <td>
+                <input type="text" name="yCoord" [(ngModel)]="selectedYCoord" disabled class="form-control" 
+                [class.is-invalid]="changeYCoordHash.invalid && changeYCoordHash.touched"
+                  #changeYCoordHash="ngModel" id="yCoord">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button (click)="deleteStation()" [disabled]="chosenLineForm.form.invalid">Obrisi</button>
+        <button (click)="changeStation()" [disabled]="chosenLineForm.form.invalid">Izmeni</button>
       </div>
-  
-      <div class="form-group">
-          <div class="form-label-group">
-            <input type="text" name="stationAddress" [(ngModel)]="selectedAddress" class="form-control" 
-            [class.is-invalid]="changeStationAddressHash.invalid && changeStationAddressHash.touched"
-             #changeStationAddressHash="ngModel" required id="stationAddress"> 
-             <label for="stationAddress">Adresa</label>
-        </div>
-      </div>
-  
-      <div class="form-group">
-          <div class="form-label-group">
-            <input type="text" name="xCoord" [(ngModel)]="selectedXCoord" disabled class="form-control" 
-            [class.is-invalid]="changeXCoordHash.invalid && changeXCoordHash.touched"
-             #changeXCoordHash="ngModel" id="xCoord">
-             <label for="xCoord">X koordinata</label>
-        </div>
-      </div>
-  
-      <div class="form-group">
-          <div class="form-label-group">
-            <input type="text" name="yCoord" [(ngModel)]="selectedYCoord" disabled class="form-control" 
-            [class.is-invalid]="changeYCoordHash.invalid && changeYCoordHash.touched"
-             #changeYCoordHash="ngModel" id="yCoord">
-             <label for="yCoord">Y koordinata</label>
-        </div>
-      </div>
-      <button (click)="deleteStation()" >Obrisi</button>&nbsp;
-      <button (click)="changeStation()" [disabled]="changeStationForm.form.invalid">Izmeni</button>
     </div>
-  </form> -->
+  </form>
 </div>
-

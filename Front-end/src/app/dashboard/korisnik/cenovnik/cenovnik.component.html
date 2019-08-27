@@ -1,103 +1,23 @@
-<div *ngIf="userRole != 2"> <!-- izgled za korisnika -->
-    <form #cenovnikForm="ngForm" (ngSubmit)="OnSubmit(cenovnikForm)">
-        <div class="form-group my-div">
-            <div class="form-label-group">
-                <div class="my-div">  
-                  <label>Tip karte &nbsp;</label>
-                  <select (change)="selectTicketTypeChangeHandler($event)"  class="dropdown no-arrow dropdown-toggle" id="userDropdown">
-                      <option  *ngFor = "let item of this.dropdownToPassTicket.value">{{item}}</option>
-                  </select>    
-                  &nbsp;&nbsp;&nbsp;
-                  <label>Tip putnika &nbsp;</label>
-                  <select (change)="selectPassengerChangeHandler($event)"  class="dropdown no-arrow dropdown-toggle" id="userDropdown">
-                      <option  *ngFor = "let item of this.dropDownToPassPassenger.value">{{item.name}}</option>
-                  </select>    
-                </div> 
-            </div>
-            
-        </div>
-        &nbsp;&nbsp;
-        <button type="submit">Prikazi</button>
-    </form>
-    
-    <hr>
-    
-    <p>Cena: {{cena}}</p>
-  </div>
-
-<div *ngIf="userRole == 2"> <!-- izgled za admina -->
-
+<form #cenovnikForm="ngForm" (ngSubmit)="OnSubmit(cenovnikForm)">
     <div class="form-group my-div">
-            <div class="form-label-group">
-                <div class="my-div">
-                    <label>Linija &nbsp;</label>
-                    <select class="dropdown no-arrow dropdown-toggle" id="userDropdown" [(ngModel)] = "selectedTable">
-                        <option value="1">Cenovnik - tipovi putnika</option>
-                        <option value="2">Cenovnik - tipovi karata</option>
-                    </select>   
-                    &nbsp;&nbsp;&nbsp;   
-                </div>     
-            </div>
+        <div class="form-label-group">
+            <div class="my-div">  
+              <label>Tip karte &nbsp;</label>
+              <select (change)="selectTicketTypeChangeHandler($event)"  class="dropdown no-arrow dropdown-toggle" id="userDropdown">
+                  <option  *ngFor = "let item of this.dropdownToPassTicket.value">{{item}}</option>
+              </select>    
+              &nbsp;&nbsp;&nbsp;
+              <label>Tip putnika &nbsp;</label>
+              <select (change)="selectPassengerChangeHandler($event)"  class="dropdown no-arrow dropdown-toggle" id="userDropdown">
+                  <option  *ngFor = "let item of this.dropDownToPassPassenger.value">{{item.name}}</option>
+              </select>    
+            </div> 
         </div>
-        &nbsp;&nbsp;
-        <!-- <button (click)="showSelectedTable()">Prikazi</button> -->
-
-    <hr>
-    <div class="card mb-3" *ngIf="selectedTable == 1">
-        <div class="card-header">
-          Cenovnik - tipovi putnika</div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>Tip putnika</th>
-                  <th>Popust (u procentima)</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor='let item of tableBody'>
-                    <td *ngFor="let cell of item">
-                        {{cell}}
-                    </td>
-                    <td>
-                        <button>Obrisi</button>
-                    </td>
-                </tr>
-              </tbody>
-            </table>
-            </div>
-          </div>
     </div>
+    &nbsp;&nbsp;
+    <button type="submit">Prikazi</button>
+</form>
 
-    <br>
+<hr>
 
-    <div class="card mb-3" *ngIf="selectedTable == 2">
-        <div class="card-header">
-          Cenovnik - tipovi karata</div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>Tip karte</th>
-                  <th>Cena</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor='let item of tableBody2'>
-                    <td *ngFor="let cell of item">
-                        {{cell}}
-                    </td>
-                    <td>
-                        <button>Obrisi</button>
-                    </td>
-                </tr>
-              </tbody>
-            </table>
-            </div>
-          </div>
-    </div>
-</div>
+<p>Cena: {{cena}}</p>

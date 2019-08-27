@@ -48,15 +48,15 @@ export const AdminSidebarElements = [
     },
     {
         label: "Uredi cenovnik",
-        route: "cenovnik"
+        route: "uredi-cenovnik"
     },
     {
         label: "Uredi linije",
-        route: "linije"
+        route: "uredi-linije"
     },
     {
         label: "Uredi stanice",
-        route: "stanice"
+        route: "uredi-stanice"
     }
 ];
 

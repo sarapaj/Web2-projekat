@@ -16,6 +16,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { KupovinaKarteComponent } from './dashboard/korisnik/kupovina-karte/kupovina-karte.component';
 import { RoleAdminGuard } from './auth/auth.roleAdmin.guard';
 import { RoleControllerGuard } from './auth/auth.roleController.guard';
+import { UrediCenovnikComponent } from './dashboard/admin/uredi-cenovnik/uredi-cenovnik.component';
 
 const routes: Routes = [
     {
@@ -63,13 +64,18 @@ const routes: Routes = [
           canActivate:[AuthGuard]
         },
         {
-          path: "linije",
+          path: "uredi-linije",
           component: UrediLinijeComponent,
           canActivate: [RoleAdminGuard],
         },
         {
-          path: "stanice",
+          path: "uredi-stanice",
           component: UrediStaniceComponent,
+          canActivate: [RoleAdminGuard],
+        },
+        {
+          path: "uredi-cenovnik",
+          component: UrediCenovnikComponent,
           canActivate: [RoleAdminGuard],
         },
         {

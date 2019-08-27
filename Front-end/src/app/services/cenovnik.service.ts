@@ -12,12 +12,20 @@ export class CenovnikService {
 
   constructor(private _http: HttpClient) { }
 
-  public editTicketPrice(novaCena: number, tipKarte: string){
-    return this._http.put(`${this._baseUrl}/api/Ticket/EditTicketPrice/${tipKarte}/${novaCena}`, {});
+  public editTicketPrice(id: number, price: string){
+    let fd = new FormData;
+    fd.append("Id", id.toString());
+    fd.append("Price", price);
+
+    return this._http.put(`${this._baseUrl}/api/Ticket/EditTicketPrice`, fd);
   }
 
-  public editDiscount(noviPopust: number, tipPutnika: string){
-    return this._http.put(`${this._baseUrl}/api/Ticket/EditDiscount/${tipPutnika}/${noviPopust}`, {});
+  public editDiscount(id: number, percent: string){
+    let fd = new FormData;
+    fd.append("Id", id.toString());
+    fd.append("Percent", percent);
+
+    return this._http.put(`${this._baseUrl}/api/Ticket/EditDiscount`, fd);
   }
 
   public getTicketPrice(cenovnikForma:CenovnikForma){
