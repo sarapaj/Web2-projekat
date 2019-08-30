@@ -17,6 +17,7 @@ import { KupovinaKarteComponent } from './dashboard/korisnik/kupovina-karte/kupo
 import { RoleAdminGuard } from './auth/auth.roleAdmin.guard';
 import { RoleControllerGuard } from './auth/auth.roleController.guard';
 import { UrediCenovnikComponent } from './dashboard/admin/uredi-cenovnik/uredi-cenovnik.component';
+import { UrediRedVoznjeComponent } from './dashboard/admin/uredi-red-voznje/uredi-red-voznje.component';
 
 const routes: Routes = [
     {
@@ -66,6 +67,11 @@ const routes: Routes = [
         {
           path: "uredi-linije",
           component: UrediLinijeComponent,
+          canActivate: [RoleAdminGuard],
+        },
+        {
+          path: "uredi-red-voznje",
+          component: UrediRedVoznjeComponent,
           canActivate: [RoleAdminGuard],
         },
         {

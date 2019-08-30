@@ -44,7 +44,7 @@ export const NotLoggedUserSidebarElements = [
 export const AdminSidebarElements = [
     {
         label: "Uredi red voznje",
-        route: "red-voznje"
+        route: "uredi-red-voznje"
     },
     {
         label: "Uredi cenovnik",

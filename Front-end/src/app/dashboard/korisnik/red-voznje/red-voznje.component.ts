@@ -12,23 +12,25 @@ import { LinijeService } from 'src/app/services/linije.service';
   templateUrl: './red-voznje.component.html',
   styleUrls: ['./red-voznje.component.css']
 })
+
 export class RedVoznjeComponent implements OnInit {
 
   dropdownToPassDay: DropdownElement;
   dropdownToPassLine: DropdownElement;
-  tableHeader: string[];
   redVoznjeForma: RedVoznjeForma;
   tableBody;
   
   
-  constructor(
-    private route: ActivatedRoute,private _redVoznjeServis: RedVoznjeService, private _linijeServis: LinijeService) {}
+  constructor(private route: ActivatedRoute,private _redVoznjeServis: RedVoznjeService, 
+    private _linijeServis: LinijeService) {}
 
   ngOnInit() {
     this.resetForm();
 
-    this.dropdownToPassDay = {label:"Dani", value: TipDana};
-    // this.dropdownToPassLine = {label:"Linije", value:LinijePrivremeno}
+    this.dropdownToPassDay = {
+      label:"Dani", 
+      value: TipDana
+    };
 
     this.dropdownToPassLine = 
       {
@@ -37,14 +39,9 @@ export class RedVoznjeComponent implements OnInit {
       };
 
       this.showLineNames();
-
-    this.tableHeader =["Polasci"];
-    //this.tableBody = [["aa"], ["bb"]];
-
   }
 
   selectDayChangeHandler(event:any){
-    // console.log(event.target.value);
     this.redVoznjeForma.day = event.target.value;
   }
 
@@ -54,13 +51,9 @@ export class RedVoznjeComponent implements OnInit {
 
 
   OnSubmit(form: NgForm) {
-    // console.log(this.redVoznjeForma);
-
-    this._redVoznjeServis.getRedVoznje(this.redVoznjeForma).subscribe((res: any) => {
+    this._redVoznjeServis.getRedVoznje(this.redVoznjeForma.day, this.redVoznjeForma.lineName).subscribe((res: any) => {
       this.tableBody = res.map(r => { return [r];})
     })
-    // console.log(this._redVoznjeServis.list);
-    // this.tableBody = [this._redVoznjeServis.list];
   }
 
   resetForm(form?: NgForm) {

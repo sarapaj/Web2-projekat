@@ -17,13 +17,12 @@ export class RedVoznjeService {
 
   constructor(private _http: HttpClient) { }
 
-  public getRedVoznje(redVoznjeForma:RedVoznjeForma) {
-    return this._http.get(this._baseUrl + '/api/Line/GetDepartures?day=' +redVoznjeForma.day + '&lineName=' + redVoznjeForma.lineName);
+  public getRedVoznje(day: string, lineName: string) {
+    return this._http.get(this._baseUrl + '/api/Line/GetDepartures?day=' + day + '&lineName=' + lineName);
   }
 
-
-  public editRedVoznje(dan: string, linija: string, noviPolazak: RedVoznje[]){
-    return this._http.put(`${this._baseUrl}/api/Line/EditDepartures/${dan}/${linija}`, noviPolazak);
+  public editRedVoznje(day: string, line: string, newDeparture: string){
+    return this._http.put(`${this._baseUrl}/api/Line/EditDepartures/${day}/${line}`, newDeparture);
   }
 
 }

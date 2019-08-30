@@ -26,6 +26,7 @@ import { RedVoznjeService } from './services/red-voznje.service';
 import { AuthGuard } from './auth/auth.guard';
 import { KupovinaKarteComponent } from './dashboard/korisnik/kupovina-karte/kupovina-karte.component';
 import { UrediCenovnikComponent } from './dashboard/admin/uredi-cenovnik/uredi-cenovnik.component';
+import { UrediRedVoznjeComponent } from './dashboard/admin/uredi-red-voznje/uredi-red-voznje.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { UrediCenovnikComponent } from './dashboard/admin/uredi-cenovnik/uredi-c
     PutniciComponent,
     KupovinaKarteComponent,
     UrediCenovnikComponent,
+    UrediRedVoznjeComponent,
   ],
   imports: [
     BrowserModule,

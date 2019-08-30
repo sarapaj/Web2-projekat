@@ -75,7 +75,6 @@ namespace WebApp.Controllers
 		[Route("GetDepartures")]
 		[ResponseType(typeof(IEnumerable<string>))]
 		[HttpGet]
-		//[EnableCors("*", "*", "*")]
 		public IHttpActionResult GetDepartures(string day, string lineName)  //vraca polaske za konkretnu liniju
 		{
 			if (!ModelState.IsValid)
