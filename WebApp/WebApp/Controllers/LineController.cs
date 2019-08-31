@@ -121,7 +121,7 @@ namespace WebApp.Controllers
 		[Route("EditDepartures")]
 		[ResponseType(typeof(void))]
 		[HttpPut]
-		public IHttpActionResult EditDepartures(string day, string lineName, string newDepartures)  //izmena polazaka za admina
+		public IHttpActionResult EditDepartures(string day, string lineName, string newDepartures, string oldDepartures)  //izmena polazaka za admina
 		{
 
 			if (!ModelState.IsValid)
@@ -137,16 +137,22 @@ namespace WebApp.Controllers
 
 				if (lines != null)
 				{
-					foreach (var temp in lines)
-					{
-						foreach (var item in temp.Departures)
-						{
-							if (item.Day == dayEnum)
-							{
-								item.TimeOfDeparture = newDepartures;
-								_unitOfWork.Lines.Update(temp);
 
-							}
+					foreach (var line in lines)
+					{
+
+						Departure temp = line.Departures.FirstOrDefault(x => x.TimeOfDeparture == oldDepartures && x.Day == dayEnum);
+
+						if (temp != null)
+						{
+							line.Departures.Remove(temp);
+
+							temp.TimeOfDeparture = newDepartures;
+							_unitOfWork.Departures.Update(temp);
+
+
+							line.Departures.Add(temp);
+							_unitOfWork.Lines.Update(line);
 						}
 					}
 					_unitOfWork.Complete();
@@ -224,7 +230,86 @@ namespace WebApp.Controllers
 			return Ok(line);
 		}
 
+		[ResponseType(typeof(void))]
+		[Route("AddDeparture")]
+		[HttpPost]
+		public IHttpActionResult AddDeparture(string lineName, string departures, string day) //radni, neradni, praznik...iz enum Days
+		{
 
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+
+			try
+			{
+				var lines = _unitOfWork.Lines.Find(x => x.Name.ToString() == lineName);
+
+				foreach (var line in lines)
+				{
+					Departure departure = new Departure();
+					departure.TimeOfDeparture = departures;
+					Days tempDay; 
+					Enum.TryParse("Active", out tempDay);
+					departure.Day = tempDay;
+					departure.Lines.Add(line);
+
+					_unitOfWork.Departures.Add(departure);
+					line.Departures.Add(departure);
+
+					_unitOfWork.Lines.Update(line);
+				}
+
+				_unitOfWork.Complete();
+
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				return NotFound();
+			}
+
+			return StatusCode(HttpStatusCode.NoContent);
+		}
+
+		[ResponseType(typeof(void))]
+		[Route("DeleteDepartures")]
+		[HttpPost]
+		public IHttpActionResult DeleteDepartures(string lineName, string departures, string day) //radni, neradni, praznik...iz enum Days
+		{
+
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+
+			try
+			{
+				var lines = _unitOfWork.Lines.Find(x => x.Name.ToString() == lineName);
+
+				foreach (var line in lines)
+				{
+					Departure temp = line.Departures.FirstOrDefault(x => x.TimeOfDeparture == departures);
+
+					if (temp != null)
+					{
+						line.Departures.Remove(temp);
+					}
+
+					_unitOfWork.Lines.Update(line);
+				}
+
+				_unitOfWork.Complete();
+
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				return NotFound();
+			}
+
+			return StatusCode(HttpStatusCode.NoContent);
+		}
+
+		
 
 		[ResponseType(typeof(void))]
 		[Route("EditLine")]
@@ -268,7 +353,7 @@ namespace WebApp.Controllers
 				return NotFound();
 			}
 
-			return StatusCode(HttpStatusCode.NoContent);
+			return Ok();
 		}
 
 
