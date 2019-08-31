@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Mail;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
@@ -301,10 +302,18 @@ namespace WebApp.Controllers
 					if (result)
 					{
 						user.validDocument = ValidacijaDokumenta.prihvacen;
+						if (!SendEmail(userEmail, "prihvacen"))
+						{
+							return InternalServerError();
+						}
 					}
 					else
 					{
 						user.validDocument = ValidacijaDokumenta.odbijen;
+						if (!SendEmail(userEmail, "odbijen"))
+						{
+							return InternalServerError();
+						}
 					}
 
 					_unitOfWork.ApplicationUsers.Update(user);
@@ -317,6 +326,40 @@ namespace WebApp.Controllers
 			{
 				return NotFound();
 			}
+		}
+
+		public bool SendEmail(string userEmail, string status)
+		{
+			SmtpClient client = new SmtpClient();
+			client.DeliveryMethod = SmtpDeliveryMethod.Network;
+			client.EnableSsl = true;
+			client.Host = "smtp.gmail.com";
+			client.Port = 587;
+
+			// setup Smtp authentication
+			System.Net.NetworkCredential credentials =
+				new System.Net.NetworkCredential("web2projekat@gmail.com", "web2projekat1234");
+			client.UseDefaultCredentials = false;
+			client.Credentials = credentials;
+
+			MailMessage msg = new MailMessage();
+			msg.From = new MailAddress("web2projekat@gmail.com");
+			msg.To.Add(new MailAddress(userEmail)); 
+
+			msg.Subject = "Rezultat validacije dokumenta";
+			msg.IsBodyHtml = true;
+			msg.Body = string.Format("Zahtev je + " +  status);
+
+			try
+			{
+				client.Send(msg);
+				return true;
+			}
+			catch (Exception ex)
+			{
+				return false;
+			}
+
 		}
 
 
