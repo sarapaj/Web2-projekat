@@ -14,8 +14,8 @@ namespace WebApp.Models
 		}
 
 		public int Id { get; set; }
-		public int x { get; set; }
-		public int y { get; set; }
+		public double x { get; set; }
+		public double y { get; set; }
 
 
 		public virtual ICollection<Station> Stations { get; set; }
