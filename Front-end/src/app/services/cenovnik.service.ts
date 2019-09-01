@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CenovnikForma } from 'src/models/cenovnik-forma';
 
 @Injectable({
@@ -17,7 +17,7 @@ export class CenovnikService {
     fd.append("Id", id.toString());
     fd.append("Price", price);
 
-    return this._http.put(`${this._baseUrl}/api/Ticket/EditTicketPrice`, fd);
+    return this._http.put(`${this._baseUrl}/api/Ticket/EditTicketPrice`, fd, {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});
   }
 
   public editDiscount(id: number, percent: string){
@@ -25,7 +25,7 @@ export class CenovnikService {
     fd.append("Id", id.toString());
     fd.append("Percent", percent);
 
-    return this._http.put(`${this._baseUrl}/api/Ticket/EditDiscount`, fd);
+    return this._http.put(`${this._baseUrl}/api/Ticket/EditDiscount`, fd, {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});
   }
 
   public getTicketPrice(cenovnikForma:CenovnikForma){

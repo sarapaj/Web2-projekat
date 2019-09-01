@@ -516,8 +516,9 @@ namespace WebApp.Controllers
             }
 
             IdentityResult result = await UserManager.CreateAsync(user, pass);
+			UserManager.AddToRole(user.Id, "AppUser");
 
-            if (!result.Succeeded)
+			if (!result.Succeeded)
             {
                 return GetErrorResult(result);
             }

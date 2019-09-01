@@ -15,7 +15,8 @@ using WebApp.Persistence.UnitOfWork;
 
 namespace WebApp.Controllers
 {
-    [RoutePrefix("api/Ticket")]
+	[Authorize]
+	[RoutePrefix("api/Ticket")]
     public class TicketController : ApiController
     {
         IUnitOfWork _unitOfWork;
@@ -27,7 +28,8 @@ namespace WebApp.Controllers
             _context = context;
         }
 
-        [Route("GetAllTickets")]
+		[AllowAnonymous]
+		[Route("GetAllTickets")]
         [ResponseType(typeof(IEnumerable<TicketViewModel>))]
         [HttpGet]
         public IHttpActionResult GetAllTickets(string email)
@@ -63,8 +65,7 @@ namespace WebApp.Controllers
             }
         }
 
-
-        [AllowAnonymous]
+		[AllowAnonymous]
         [Route("GetAllDiscounts")]
         [ResponseType(typeof(List<Discount>))]
         [HttpGet]
@@ -107,8 +108,8 @@ namespace WebApp.Controllers
         }
 
 
-
-        [Route("GetUserRole")]
+		[AllowAnonymous]
+		[Route("GetUserRole")]
         [ResponseType(typeof(int))]
         [HttpGet]
         public IHttpActionResult GetUserRole(string Email)
@@ -148,7 +149,9 @@ namespace WebApp.Controllers
 
         }
 
-        [Route("GetTicketPrice")]
+
+		[AllowAnonymous]
+		[Route("GetTicketPrice")]
         [ResponseType(typeof(string))]
         [HttpGet]
         public IHttpActionResult GetTicketPrice(string TicketType, string PassengerType)
@@ -190,7 +193,8 @@ namespace WebApp.Controllers
             return NotFound();
         }
 
-        [Route("GetTicketTypes")]
+		[AllowAnonymous]
+		[Route("GetTicketTypes")]
         [ResponseType(typeof(List<string>))]
         [HttpGet]
         public IHttpActionResult GetTicketTypes()
@@ -219,7 +223,8 @@ namespace WebApp.Controllers
             return NotFound();
         }
 
-        [Route("GetPassengerTypes")]
+		[AllowAnonymous]
+		[Route("GetPassengerTypes")]
         [ResponseType(typeof(List<string>))]
         [HttpGet]
         public IHttpActionResult GetPassengerTypes()
@@ -249,8 +254,8 @@ namespace WebApp.Controllers
         }
 
 
-
-        [Route("AddTicket")]
+		[AllowAnonymous]
+		[Route("AddTicket")]
         [ResponseType(typeof(Ticket))]
         [HttpPost]
         public IHttpActionResult AddTicket(string ticketType, string email)
@@ -296,8 +301,7 @@ namespace WebApp.Controllers
             return Ok(ticket);
         }
 
-
-        [AllowAnonymous]
+		[Authorize(Roles = "Admin")]
         [Route("EditTicketPrice")]
         [ResponseType(typeof(void))]
         [HttpPut]
@@ -341,7 +345,7 @@ namespace WebApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
 		}
 
-        [AllowAnonymous]
+		[Authorize(Roles = "Admin")]
 		[Route("EditDiscount")]
         [ResponseType(typeof(void))]
 		[HttpPut]

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Stanica } from 'src/models/stanica';
 import { Linija } from 'src/models/linija';
 import { LinijinaStanica } from 'src/models/linijina-stanica';
@@ -23,11 +23,11 @@ export class StaniceService {
     fd.append("Address", address);
     fd.append("xCoord", x);
     fd.append("yCoord", y);
-    return this._http.put(`${this._baseUrl}/api/Station/EditStation`, fd);
+    return this._http.put(`${this._baseUrl}/api/Station/EditStation`, fd, {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});
   }
 
   public deleteStation(nazivStanice: string){
-    return this._http.delete(`${this._baseUrl}/api/Station/DeleteStation?name=${nazivStanice}`);
+    return this._http.delete(`${this._baseUrl}/api/Station/DeleteStation?name=${nazivStanice}`, {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});
   }
 
   public addStation(stationName: string, stationAddress: string, coordinateId: string){
@@ -35,7 +35,7 @@ export class StaniceService {
     fd.append("Name", stationName);
     fd.append("Address", stationAddress);
     fd.append("coordId", coordinateId);
-    return this._http.post(`${this._baseUrl}/api/Station/AddStation`, fd);
+    return this._http.post(`${this._baseUrl}/api/Station/AddStation`, fd, {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});
   }
   public getStationNames(){
     return this._http.get(`${this._baseUrl}/api/Station/GetStationNames`);
@@ -53,6 +53,6 @@ export class StaniceService {
     let fd = new FormData;
     fd.append("xCoord", x);
     fd.append("yCoord", y);
-    return this._http.post(`${this._baseUrl}/api/Station/AddCoordinate`, fd);
+    return this._http.post(`${this._baseUrl}/api/Station/AddCoordinate`, fd, {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});
   }
 }

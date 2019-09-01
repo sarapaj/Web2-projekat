@@ -1,6 +1,6 @@
 import { Injectable, ɵConsole } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Karta } from 'src/models/karta';
 
@@ -20,7 +20,7 @@ export class KarteService {
       ticketType: ticketType,
       email: username      
     }
-    return this._http.post(`${this._baseUrl}/api/Ticket/AddTicket?ticketType=${ticketType}&email=${username}`, data);
+    return this._http.post(`${this._baseUrl}/api/Ticket/AddTicket?ticketType=${ticketType}&email=${username}`, data, {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});
   }
 
   public getAllTickets(username: string): Observable<Karta[]>{

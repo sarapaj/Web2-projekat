@@ -19,6 +19,7 @@ using WebApp.Persistence.UnitOfWork;
 
 namespace WebApp.Controllers
 {
+	[Authorize]
 	[RoutePrefix("api/Kontrolor")]
 	public class KontrolorController : ApiController
     {
@@ -32,6 +33,7 @@ namespace WebApp.Controllers
 			_context = context;
 		}
 
+		[AllowAnonymous]
 		[Route("GetImage")]
 		[ResponseType(typeof(File))]
 		[HttpGet]
@@ -58,6 +60,9 @@ namespace WebApp.Controllers
 		}
 
 
+
+
+		[AllowAnonymous]
 		[Route("GetDocument")]
 		[ResponseType(typeof(string))]
 		[HttpGet]
@@ -86,6 +91,7 @@ namespace WebApp.Controllers
 			}
 		}
 
+		[Authorize(Roles = "Controller")]
 		[Route("GetUsers")]
 		[ResponseType(typeof(List<UserInfoViewModel>))]
 		[HttpGet]
@@ -129,6 +135,7 @@ namespace WebApp.Controllers
 			}
 		}
 
+		[AllowAnonymous]
 		[Route("IsDocumentValid")]
 		[ResponseType(typeof(bool))]
 		[HttpGet]
@@ -164,6 +171,7 @@ namespace WebApp.Controllers
 			}
 		}
 
+		[AllowAnonymous]
 		[Route("CheckDocumentStatus")]
 		[ResponseType(typeof(string))]
 		[HttpGet]
@@ -203,6 +211,7 @@ namespace WebApp.Controllers
 			}
 		}
 
+		[Authorize(Roles = "Controller")]
 		[Route("ValidateTicket")]
 		[ResponseType(typeof(bool))]
 		[HttpGet]
@@ -279,6 +288,7 @@ namespace WebApp.Controllers
 		}
 
 
+		[Authorize(Roles = "Controller")]
 		[Route("ValidateDocument")]
 		[ResponseType(typeof(bool))]
 		[HttpPost]

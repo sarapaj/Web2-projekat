@@ -13,6 +13,7 @@ using WebApp.Persistence.UnitOfWork;
 
 namespace WebApp.Controllers
 {
+	[Authorize]
 	[RoutePrefix("api/Station")]
 	public class StationController : ApiController
     {
@@ -27,6 +28,7 @@ namespace WebApp.Controllers
 		}
 
 
+		[AllowAnonymous]
 		[Route("GetAll")]
 		[ResponseType(typeof(List<Station>))]
 		[HttpGet]
@@ -42,7 +44,8 @@ namespace WebApp.Controllers
 			}
 		}
 
-        [Route("GetStationNames")]
+		[AllowAnonymous]
+		[Route("GetStationNames")]
         [ResponseType(typeof(List<string>))]
         [HttpGet]
         public IHttpActionResult GetStationNames()  //vraca imena svih stanica za dropdown meni  
@@ -71,7 +74,8 @@ namespace WebApp.Controllers
             return NotFound();
         }
 
-        [Route("GetStationByName")]
+		[AllowAnonymous]
+		[Route("GetStationByName")]
         [ResponseType(typeof(Station))]
         [HttpGet]
         public IHttpActionResult GetStationByName(string name)
@@ -103,7 +107,8 @@ namespace WebApp.Controllers
             return NotFound();
         }
 
-        [ResponseType(typeof(void))]
+		[Authorize(Roles = "Admin")]
+		[ResponseType(typeof(void))]
 		[Route("EditStation")]
 		[HttpPut]
 		public IHttpActionResult EditStation()
@@ -151,7 +156,8 @@ namespace WebApp.Controllers
         }
 
 
-        [Route("AddStation")]
+		[Authorize(Roles = "Admin")]
+		[Route("AddStation")]
         [ResponseType(typeof(Station))]
         [HttpPost]
         public IHttpActionResult AddStation()
@@ -214,8 +220,8 @@ namespace WebApp.Controllers
         }
 
 
-
-        [Route("DeleteStation")]
+		[Authorize(Roles = "Admin")]
+		[Route("DeleteStation")]
 		[ResponseType(typeof(Station))]
 		[HttpDelete]
 		public IHttpActionResult DeleteStation(string name)
@@ -252,7 +258,7 @@ namespace WebApp.Controllers
 
 		}
 
-
+		[Authorize(Roles = "Admin")]
 		[Route("AddStationToLine")]
 		[ResponseType(typeof(LineStationConnection))]
 		[HttpPost]
@@ -298,7 +304,9 @@ namespace WebApp.Controllers
 			return Ok(conn);
 		}
 
-        [Route("AddCoordinate")]
+
+		[Authorize(Roles = "Admin")]
+		[Route("AddCoordinate")]
         [ResponseType(typeof(Coordinate))]
         [HttpPost]
         public IHttpActionResult AddCordinate()
@@ -339,7 +347,8 @@ namespace WebApp.Controllers
             return Ok(coord);
         }
 
-        [Route("GetAllCoordinates")]
+		[AllowAnonymous]
+		[Route("GetAllCoordinates")]
         [ResponseType(typeof(List<Coordinate>))]
         [HttpGet]
         public IHttpActionResult GetAllCoordinates()

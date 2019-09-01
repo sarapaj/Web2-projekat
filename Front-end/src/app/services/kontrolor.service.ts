@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -11,19 +11,19 @@ export class KontrolorService {
   constructor(private _http: HttpClient) { }
 
   public validateTicket(ticketID:number){
-    return this._http.get(`${this._baseUrl}/api/Kontrolor/ValidateTicket?ticketID=${ticketID}`, { withCredentials: true });
+    return this._http.get(`${this._baseUrl}/api/Kontrolor/ValidateTicket?ticketID=${ticketID}`, {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});
   }
 
   public getUsers(){
-    return this._http.get(`${this._baseUrl}/api/Kontrolor/GetUsers`);
+    return this._http.get(`${this._baseUrl}/api/Kontrolor/GetUsers`, {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});
   }
 
   public getDocument(email:string){
-    return this._http.get(`${this._baseUrl}/api/Kontrolor/GetImage?userEmail=${email}`);
+    return this._http.get(`${this._baseUrl}/api/Kontrolor/GetImage?userEmail=${email}`, {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});
   }
  
   public validateDocument(email:string, result:boolean){
-    return this._http.post(`${this._baseUrl}/api/Kontrolor/ValidateDocument?userEmail=${email}&result=${result}`, email);
+    return this._http.post(`${this._baseUrl}/api/Kontrolor/ValidateDocument?userEmail=${email}&result=${result}`, email, {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});
   }
   }
   

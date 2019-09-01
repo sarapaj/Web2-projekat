@@ -14,6 +14,7 @@ using WebApp.Persistence.UnitOfWork;
 
 namespace WebApp.Controllers
 {
+	[Authorize]
 	[RoutePrefix("api/Line")]
 	public class LineController : ApiController
     {
@@ -27,6 +28,7 @@ namespace WebApp.Controllers
 			_context = context;
 		}
 
+		[AllowAnonymous]
 		[Route("GetAll")]
 		[ResponseType(typeof(List<Line>))]
 		[HttpGet]
@@ -42,6 +44,7 @@ namespace WebApp.Controllers
 			}
 		}
 
+		[AllowAnonymous]
 		[Route("GetLineNames")] 
 		[ResponseType(typeof(List<string>))]
 		[HttpGet]
@@ -71,7 +74,7 @@ namespace WebApp.Controllers
 			return NotFound();
 		}
 
-
+		[AllowAnonymous]
 		[Route("GetDepartures")]
 		[ResponseType(typeof(IEnumerable<string>))]
 		[HttpGet]
@@ -118,6 +121,7 @@ namespace WebApp.Controllers
 		}
 
 
+		[Authorize(Roles = "Admin")]
 		[Route("EditDepartures")]
 		[ResponseType(typeof(void))]
 		[HttpPut]
@@ -168,6 +172,7 @@ namespace WebApp.Controllers
 		}
 
 		// GET: api/Line/5
+		[AllowAnonymous]
 		[Route("GetLineByName")]
 		[ResponseType(typeof(Line))]
 		[HttpGet]
@@ -202,6 +207,7 @@ namespace WebApp.Controllers
 
 
 		// POST: api/Line
+		[Authorize(Roles = "Admin")]
 		[Route("AddLine")]
 		[ResponseType(typeof(Line))]
 		[HttpPost]
@@ -230,6 +236,7 @@ namespace WebApp.Controllers
 			return Ok(line);
 		}
 
+		[Authorize(Roles = "Admin")]
 		[ResponseType(typeof(void))]
 		[Route("AddDeparture")]
 		[HttpPost]
@@ -271,6 +278,7 @@ namespace WebApp.Controllers
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 
+		[Authorize(Roles = "Admin")]
 		[ResponseType(typeof(void))]
 		[Route("DeleteDepartures")]
 		[HttpPost]
@@ -309,8 +317,8 @@ namespace WebApp.Controllers
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 
-		
 
+		[Authorize(Roles = "Admin")]
 		[ResponseType(typeof(void))]
 		[Route("EditLine")]
 		[HttpPut]
@@ -356,7 +364,7 @@ namespace WebApp.Controllers
 			return Ok();
 		}
 
-
+		[Authorize(Roles = "Admin")]
 		[Route("DeleteLine")]
 		[ResponseType(typeof(Line))]
 		[HttpDelete]
