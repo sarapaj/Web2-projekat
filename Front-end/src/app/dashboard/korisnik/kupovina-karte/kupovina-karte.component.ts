@@ -6,6 +6,7 @@ import { TipKarte } from 'src/app/shared/constants';
 import { DropdownElement } from 'src/models/classes';
 import { NgForm } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
+import { User } from 'src/models/korisnik';
 
 @Component({
   selector: 'app-kupovina-karte',
@@ -22,6 +23,7 @@ export class KupovinaKarteComponent implements OnInit {
   tipKarte: string;
   isDocumentValid;
   documentStatus;
+  user;
 
   ngOnInit() {
     this.resetForm();
@@ -29,7 +31,7 @@ export class KupovinaKarteComponent implements OnInit {
     this.checkDocument(); //true ili false da li je valid
     this.getDocumentStatusMessage(); //poruka o statusu obrade dokumenta
     this.getMyTickets();
-
+    this.getUserInfo();
 
     this.dropdownToPassTicket = {label:"Tip karte", value: TipKarte};
   }
@@ -38,6 +40,12 @@ export class KupovinaKarteComponent implements OnInit {
     this._karteServis.getAllTickets(this.username).subscribe(data => {
       this.karte = data;
     });
+  }
+
+  getUserInfo(){
+    this._userService.getAllUserInfo().subscribe(data =>{
+      this.user = data;
+    })
   }
 
   checkDocument()
