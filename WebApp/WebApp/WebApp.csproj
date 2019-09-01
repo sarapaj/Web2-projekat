@@ -259,25 +259,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201908311817342_Izmena koordinata.cs" />
-    <Compile Include="Migrations\201908311817342_Izmena koordinata.Designer.cs">
-      <DependentUpon>201908311817342_Izmena koordinata.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909011314071_proba.cs" />
-    <Compile Include="Migrations\201909011314071_proba.Designer.cs">
-      <DependentUpon>201909011314071_proba.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909011316217_opet.cs" />
-    <Compile Include="Migrations\201909011316217_opet.Designer.cs">
-      <DependentUpon>201909011316217_opet.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909011319276_Popust izmena.cs" />
-    <Compile Include="Migrations\201909011319276_Popust izmena.Designer.cs">
-      <DependentUpon>201909011319276_Popust izmena.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909011320501_izmenjen tip popusta.cs" />
-    <Compile Include="Migrations\201909011320501_izmenjen tip popusta.Designer.cs">
-      <DependentUpon>201909011320501_izmenjen tip popusta.cs</DependentUpon>
+    <Compile Include="Migrations\201909012107119_Migracijaa.cs" />
+    <Compile Include="Migrations\201909012107119_Migracijaa.Designer.cs">
+      <DependentUpon>201909012107119_Migracijaa.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -422,20 +406,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201908311817342_Izmena koordinata.resx">
-      <DependentUpon>201908311817342_Izmena koordinata.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909011314071_proba.resx">
-      <DependentUpon>201909011314071_proba.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909011316217_opet.resx">
-      <DependentUpon>201909011316217_opet.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909011319276_Popust izmena.resx">
-      <DependentUpon>201909011319276_Popust izmena.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909011320501_izmenjen tip popusta.resx">
-      <DependentUpon>201909011320501_izmenjen tip popusta.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201909012107119_Migracijaa.resx">
+      <DependentUpon>201909012107119_Migracijaa.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

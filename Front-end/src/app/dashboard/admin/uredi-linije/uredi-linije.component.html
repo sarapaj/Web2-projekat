@@ -16,7 +16,8 @@
       <div class="form-group">
           <label>Region</label>
           <div class="form-label-group">
-              <select class="dropdown no-arrow dropdown-toggle" id="userDropdown" [(ngModel)]="newLineRegion" name="regionDropdownName">
+              <select class="dropdown no-arrow dropdown-toggle" id="userDropdown" 
+              [(ngModel)]="newLineRegion" name="regionDropdownName" required>
                 <option value="0">gradski</option>
                 <option value="1">prigradski</option>
               </select>
@@ -50,9 +51,8 @@
     <i class="fas fa-table"></i>Detalji linije
   </div>
 
-  
-  <form #chosenLineForm="ngForm" >
   <div class="card-body">
+  <form #chosenLineForm="ngForm" >
     <div class="table-responsive">
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
@@ -80,7 +80,50 @@
       <button (click)="deleteLine()" [disabled]="chosenLineForm.form.invalid">Obrisi</button>
       <button (click)="changeLine()" [disabled]="chosenLineForm.form.is-invalid">Izmeni</button>
     </div>
+  </form> 
+  </div>
+
+</div>
+
+<div class="card mb-3" *ngIf="lineDetails">
+  <div class="card-header">
+    <i class="fas fa-table"></i>Stanice odabrane linije
   </div>
   
-</form> 
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Naziv</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let station of belongingStationsNames">
+            <td>{{station}}</td>
+            <td>
+              <button (click)="removeStationFromLine(station)">Ukloni stanicu</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br>
+    <form #addStationToLineForm="ngForm">
+      <div class="form-group">
+          <label>Stanice</label>
+          <div class="form-label-group">
+              <select class="dropdown no-arrow dropdown-toggle" id="userDropdown" 
+              [(ngModel)]="stationToAdd" name="existingStations" required
+              #StationsHash="ngModel">
+                <option *ngFor="let st of allStations">{{st}}</option>
+              </select>
+          </div>
+      </div>
+      &nbsp;
+      <button (click)="addStationToLine()" [disabled]="addStationToLineForm.form.invalid">OK</button>
+    </form>
+  </div>
 </div>
+  

@@ -259,53 +259,6 @@ namespace WebApp.Controllers
 		}
 
 		[Authorize(Roles = "Admin")]
-		[Route("AddStationToLine")]
-		[ResponseType(typeof(LineStationConnection))]
-		[HttpPost]
-		public IHttpActionResult AddExistingStationToLine(string lineName, string stationName, int redniBroj)
-		{
-			if (!ModelState.IsValid)
-			{
-				return BadRequest(ModelState);
-			}
-
-			LineStationConnection conn = new LineStationConnection();
-
-			try
-			{
-				var lines = _unitOfWork.Lines.Find(x => x.Name.ToString() == lineName);
-				var stations = _unitOfWork.Stations.Find(x => x.Name.ToString() == stationName);
-
-
-				foreach (var line in lines)
-				{
-					conn.Line = line;
-					conn.Line_Id = line.Id;
-
-				}
-
-				foreach (var station in stations)
-				{
-					conn.Station = station;
-					conn.Station_Id = station.Id;
-				}
-
-				conn.RedniBroj = redniBroj;
-
-				_unitOfWork.LineStationConnections.Add(conn);
-				_unitOfWork.Complete();
-
-			}
-			catch (DbUpdateConcurrencyException)
-			{
-				return NotFound();
-			}
-
-			return Ok(conn);
-		}
-
-
-		[Authorize(Roles = "Admin")]
 		[Route("AddCoordinate")]
         [ResponseType(typeof(Coordinate))]
         [HttpPost]

@@ -3,6 +3,7 @@ import { DropdownElement } from 'src/models/classes';
 import { LinijePrivremeno, TipRedaVoznje } from 'src/app/shared/constants';
 import { LinijeService } from 'src/app/services/linije.service';
 import { Linija } from 'src/models/linija';
+import { StaniceService } from 'src/app/services/stanice.service';
 
 @Component({
   selector: 'app-uredi-linije',
@@ -22,8 +23,11 @@ export class UrediLinijeComponent implements OnInit {
   selectedRegion: number;
   updatedLine: Linija;
   lineDetails = false;
+  belongingStationsNames: any;
+  stationToAdd: string;
+  allStations: any;
 
-  constructor(private _http: LinijeService) { }
+  constructor(private _http: LinijeService, private _stationService: StaniceService) { }
 
   ngOnInit() {
     this.dropdownToPassLine = 
@@ -72,6 +76,15 @@ export class UrediLinijeComponent implements OnInit {
       this.selectedId = res.Id;
 
       this.lineDetails = true;
+
+      this.getBelongingStations(this.selectedId);
+      this.getAllStations();
+    })
+  }
+
+  getBelongingStations(lineId: number){
+    this._http.getBelongingStations(lineId).subscribe((res: any) => {
+      this.belongingStationsNames = res;
     })
   }
 
@@ -94,15 +107,16 @@ export class UrediLinijeComponent implements OnInit {
 
     this._http.deleteLine(this.selectedName).subscribe(res =>
     {
-        this.selectedId = null;
-        this.selectedName = null;
-        this.selectedRegion = null;
-        this.chosenLineName = null;
+      this.selectedId = null;
+      this.selectedName = null;
+      this.selectedRegion = null;
+      this.chosenLineName = null;
+      this.lineDetails = false;
 
-        alert("Line is successfully deleted");
-        this.showLineNames();
-    })
-  }
+
+      alert("Line is successfully deleted");
+      this.showLineNames();
+  })}
 
   changeLine(){
     if(this.selectedId == null || this.selectedName == null || this.selectedRegion == null){
@@ -117,12 +131,14 @@ export class UrediLinijeComponent implements OnInit {
     {
       this.chosenLineName = null;
       alert("Line is successfully edited");
+      
+      this.selectedId = null;
+      this.selectedName = null;
+      this.selectedRegion = null;
+      this.chosenLineName = null;
+      this.lineDetails = false;
       this.showLineNames();
     })
-  }
-
-  refreshPage(){
-    window.location.reload();
   }
 
   toggleForm() {
@@ -143,4 +159,30 @@ export class UrediLinijeComponent implements OnInit {
     });
   }
   
+  removeStationFromLine(station: string){
+    console.log(station)
+    this._http.removeStationFromLine(station, this.selectedId).subscribe((res: any) => {
+      alert("Station is removed successfully");
+      this.getBelongingStations(this.selectedId);
+    })
+  }
+
+  addStationToLine(){
+    if(this.belongingStationsNames.includes(this.stationToAdd)){
+      alert("Line already contains this station");
+      return;
+    }
+
+    this._http.addStationToLine(this.selectedId, this.stationToAdd).subscribe((res: any) => {
+      alert("Station is successfully added to line");
+      this.getBelongingStations(this.selectedId);
+    })
+  }
+
+  getAllStations(){
+    this._stationService.getStationNames().subscribe((res: any) =>
+    {
+      this.allStations = res;
+    })
+  }
 }

@@ -46,4 +46,21 @@ export class LinijeService {
     return this._http.get(`${this._baseUrl}/api/Line/GetLineByName?name=${this.nameToPass}`);
   }
 
+  public getBelongingStations(lineId: number){
+    return this._http.get(`${this._baseUrl}/api/Line/GetBelongingStations?lineId=${lineId}`);
+  }
+
+  public removeStationFromLine(stationName: string, lineId: number){
+    let fd = new FormData;
+    fd.append("StationName", stationName);
+    fd.append("LineId", lineId.toString());
+    return this._http.put(`${this._baseUrl}/api/Line/RemoveStationFromLine`, fd);
+  }
+
+  public addStationToLine(lineId: number, stationName: string){
+    let fd = new FormData;
+    fd.append("LineId", lineId.toString());
+    fd.append("StationName", stationName);
+    return this._http.post(`${this._baseUrl}/api/Line/AddStationToLine`, fd);    
+  }
 }

@@ -10930,3 +10930,6 @@
     }
   }
   
+  .sidebar {
+    height: 100% !important;
+  }

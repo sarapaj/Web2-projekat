@@ -44,8 +44,117 @@ namespace WebApp.Controllers
 			}
 		}
 
-		[AllowAnonymous]
-		[Route("GetLineNames")] 
+        [AllowAnonymous]
+        [Route("GetBelongingStations")]
+        [ResponseType(typeof(List<string>))]
+        [HttpGet]
+        public IHttpActionResult GetBelongingStations(int lineId)
+        {
+            try
+            {
+                List<string> stations = new List<string>();
+                var line = _unitOfWork.Lines.Get(lineId);
+
+                if (line != null)
+                {
+                    foreach(var item in line.LineStationConnections)
+                    {
+                        stations.Add(item.Station.Name);
+                    }
+
+                    return Ok(stations);
+                }
+
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound();
+            }
+
+            return NotFound();
+        }
+
+        [AllowAnonymous]
+        [Route("AddStationToLine")]
+        [ResponseType(typeof(LineStationConnection))]
+        [HttpPost]
+        public IHttpActionResult AddExistingStationToLine()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var httpRequest = HttpContext.Current.Request;
+            var stationName = httpRequest.Form["StationName"];
+            var lineId = Int32.Parse(httpRequest.Form["LineId"]);
+
+            LineStationConnection conn = new LineStationConnection();
+
+            try
+            {
+                var line = _unitOfWork.Lines.Find(x => x.Id == lineId).FirstOrDefault();
+                var station = _unitOfWork.Stations.Find(x => x.Name.ToString() == stationName).FirstOrDefault();
+
+                conn.Line = line;
+                conn.Line_Id = line.Id;
+
+                conn.Station = station;
+                conn.Station_Id = station.Id;
+
+
+                conn.RedniBroj = line.LineStationConnections.Count() + 1;
+
+                _unitOfWork.LineStationConnections.Add(conn);
+                _unitOfWork.Complete();
+
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound();
+            }
+
+            return Ok(conn);
+        }
+
+        [AllowAnonymous]
+        [Route("RemoveStationFromLine")]
+        [ResponseType(typeof(void))]
+        [HttpPut]
+        public IHttpActionResult AddStationToLine()  //izmena polazaka za admina
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var httpRequest = HttpContext.Current.Request;
+            var stationName = httpRequest.Form["StationName"];
+            var lineId = Int32.Parse(httpRequest.Form["LineId"]);
+
+            try
+            {
+
+                var station = _unitOfWork.Stations.Find(x => x.Name == stationName).FirstOrDefault();
+                var LineStationEntity = _unitOfWork.LineStationConnections.Find(x => x.Line_Id == lineId && x.Station_Id == station.Id).FirstOrDefault();
+
+                if (LineStationEntity != null)
+                {
+                    _unitOfWork.LineStationConnections.Remove(LineStationEntity);
+                }
+
+                _unitOfWork.Complete();
+
+                return Ok();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound();
+            }
+        }
+
+        [AllowAnonymous]
+        [Route("GetLineNames")]
 		[ResponseType(typeof(List<string>))]
 		[HttpGet]
 		public IHttpActionResult GetLineNames()  //vraca imena svih linija za dropdown meni  
@@ -119,59 +228,50 @@ namespace WebApp.Controllers
 			}
 
 		}
+        
+        [Authorize(Roles = "Admin")]
+        [Route("EditDepartures")]
+        [ResponseType(typeof(void))]
+        [HttpPut]
+        public IHttpActionResult EditDepartures()  //izmena polazaka za admina
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var httpRequest = HttpContext.Current.Request;
+            var day = httpRequest.Form["Day"];
+            var lineName = httpRequest.Form["Line"];
+            var newDepartures = httpRequest.Form["NewDeparture"];
 
-
-		[Authorize(Roles = "Admin")]
-		[Route("EditDepartures")]
-		[ResponseType(typeof(void))]
-		[HttpPut]
-		public IHttpActionResult EditDepartures(string day, string lineName, string newDepartures, string oldDepartures)  //izmena polazaka za admina
-		{
-
-			if (!ModelState.IsValid)
-			{
-				return BadRequest(ModelState);
-			}
-
-			try
-			{
-				Days dayEnum = ParseEnum<Days>(day);
-				var lines = _unitOfWork.Lines.Find(x => x.Name == lineName);
-
-
-				if (lines != null)
-				{
-
-					foreach (var line in lines)
-					{
-
-						Departure temp = line.Departures.FirstOrDefault(x => x.TimeOfDeparture == oldDepartures && x.Day == dayEnum);
-
-						if (temp != null)
-						{
-							line.Departures.Remove(temp);
-
-							temp.TimeOfDeparture = newDepartures;
-							_unitOfWork.Departures.Update(temp);
-
-
-							line.Departures.Add(temp);
-							_unitOfWork.Lines.Update(line);
-						}
-					}
-					_unitOfWork.Complete();
-					return Ok();
-				}
-			}
-			catch (DbUpdateConcurrencyException)
-			{
-				return NotFound();
-			}
-
-			return NotFound();
-		}
-
-		// GET: api/Line/5
+            try
+            {
+                Days dayEnum = ParseEnum<Days>(day);
+                var lines = _unitOfWork.Lines.Find(x => x.Name == lineName);
+                if (lines != null)
+                {
+                    foreach (var temp in lines)
+                    {
+                        foreach (var item in temp.Departures)
+                        {
+                            if (item.Day == dayEnum)
+                            {
+                                item.TimeOfDeparture = newDepartures;
+                                _unitOfWork.Lines.Update(temp);
+                            }
+                        }
+                    }
+                    _unitOfWork.Complete();
+                    return Ok();
+                }
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound();
+            }
+            return NotFound();
+        }
+        
 		[AllowAnonymous]
 		[Route("GetLineByName")]
 		[ResponseType(typeof(Line))]
@@ -235,12 +335,12 @@ namespace WebApp.Controllers
 
 			return Ok(line);
 		}
-
+        
 		[Authorize(Roles = "Admin")]
 		[ResponseType(typeof(void))]
 		[Route("AddDeparture")]
 		[HttpPost]
-		public IHttpActionResult AddDeparture(string lineName, string departures, string day) //radni, neradni, praznik...iz enum Days
+		public IHttpActionResult AddDeparture()
 		{
 
 			if (!ModelState.IsValid)
@@ -248,7 +348,12 @@ namespace WebApp.Controllers
 				return BadRequest(ModelState);
 			}
 
-			try
+            var httpRequest = HttpContext.Current.Request;
+            var day = httpRequest.Form["Day"];
+            var lineName = httpRequest.Form["Line"];
+            var departures = httpRequest.Form["NewDeparture"];
+
+            try
 			{
 				var lines = _unitOfWork.Lines.Find(x => x.Name.ToString() == lineName);
 
@@ -257,7 +362,7 @@ namespace WebApp.Controllers
 					Departure departure = new Departure();
 					departure.TimeOfDeparture = departures;
 					Days tempDay; 
-					Enum.TryParse("Active", out tempDay);
+					Enum.TryParse(day, out tempDay);
 					departure.Day = tempDay;
 					departure.Lines.Add(line);
 
@@ -277,12 +382,12 @@ namespace WebApp.Controllers
 
 			return StatusCode(HttpStatusCode.NoContent);
 		}
-
+        
 		[Authorize(Roles = "Admin")]
-		[ResponseType(typeof(void))]
+        [ResponseType(typeof(void))]
 		[Route("DeleteDepartures")]
-		[HttpPost]
-		public IHttpActionResult DeleteDepartures(string lineName, string departures, string day) //radni, neradni, praznik...iz enum Days
+		[HttpDelete]
+		public IHttpActionResult DeleteDepartures(string lineName, string day) //radni, neradni, praznik...iz enum Days
 		{
 
 			if (!ModelState.IsValid)
@@ -290,13 +395,16 @@ namespace WebApp.Controllers
 				return BadRequest(ModelState);
 			}
 
-			try
+            Days tempDay;
+            Enum.TryParse(day, out tempDay);
+
+            try
 			{
 				var lines = _unitOfWork.Lines.Find(x => x.Name.ToString() == lineName);
 
 				foreach (var line in lines)
 				{
-					Departure temp = line.Departures.FirstOrDefault(x => x.TimeOfDeparture == departures);
+					Departure temp = line.Departures.FirstOrDefault(x => x.Day == tempDay);
 
 					if (temp != null)
 					{
@@ -377,19 +485,18 @@ namespace WebApp.Controllers
 
 			try
 			{
-				var line = _unitOfWork.Lines.Find(x => x.Name == name);
+				var lines = _unitOfWork.Lines.Find(x => x.Name == name);
 
-				if (line != null)
+				if (lines != null)
 				{
-					foreach (var item in line)
-					{
-                        _unitOfWork.Lines.Remove(item);
+					foreach (var line in lines)
+                    {
+                        _unitOfWork.Lines.Remove(line);
 					}
-
 
 					_unitOfWork.Complete();
 
-					return Ok(line);
+					return Ok();
 				}
 			}
 			catch (DbUpdateConcurrencyException)
@@ -401,7 +508,9 @@ namespace WebApp.Controllers
 
 		}
 
-		private bool LinesItemExists(int id)
+        
+
+        private bool LinesItemExists(int id)
 		{
 			return _unitOfWork.Lines.Get(id) != null;
 		}

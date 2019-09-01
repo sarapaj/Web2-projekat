@@ -22,12 +22,12 @@
 
 <hr>
 
-<div>
+<div *ngIf="canChange">
   <button type="button" class="btn btn-primary"
     (click) = "toggleEditForm()">
     {{showForm ? "Odustani" : "Izmeni red voznje"}}
   </button>
-  <br/><br/>
+  <br/><br>
   <div *ngIf="showForm"> 
     <form #changeDepartureForm="ngForm">
       <div class="form-group">
@@ -45,7 +45,34 @@
   <hr>
 </div>
 
-<hr>
+
+<div *ngIf="canChange"> 
+  <button (click)="deleteDeparture()">Obrisi red voznje</button>
+  <hr>
+</div>
+
+<div *ngIf="!canChange">
+  <button type="button" class="btn btn-primary"
+    (click) = "toggleNewDepForm()">
+    {{showNewDepForm ? "Odustani" : "Dodaj red voznje"}}
+  </button>
+  <br/><br/>
+  <div *ngIf="showNewDepForm"> 
+    <form #addDepartureForm="ngForm">
+      <div class="form-group">
+        <div class="form-label-group">
+          <input type="text" id="newDeparture" class="form-control" placeholder="Polasci" required name="newDeparture"
+          [(ngModel)] = "newLinesDeparture" [class.is-invalid]="newDepartureHash.invalid && newDepartureHash.touched"
+           #newDepartureHash="ngModel">
+          <label for="newDeparture">Polasci</label>  
+        </div>
+      </div>
+      &nbsp;
+      <button (click)="addDeparture()" [disabled]="addDepartureForm.form.invalid">OK</button>
+    </form> 
+  </div>
+  <hr>
+</div>
 
 <div class="card mb-3">
   <div class="card-header">
