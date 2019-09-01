@@ -57,9 +57,6 @@ namespace WebApp.Controllers
 			}
 		}
 
-		
-
-	
 
 		[Route("GetDocument")]
 		[ResponseType(typeof(string))]
@@ -282,7 +279,6 @@ namespace WebApp.Controllers
 		}
 
 
-
 		[Route("ValidateDocument")]
 		[ResponseType(typeof(bool))]
 		[HttpPost]
@@ -348,7 +344,7 @@ namespace WebApp.Controllers
 
 			msg.Subject = "Rezultat validacije dokumenta";
 			msg.IsBodyHtml = true;
-			msg.Body = string.Format("Zahtev je + " +  status);
+			msg.Body = string.Format("Zahtev je " +  status);
 
 			try
 			{

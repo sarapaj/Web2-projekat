@@ -9,6 +9,6 @@ namespace WebApp.Models
 	{
 		public int Id { get; set; }
 		public string Type { get; set; }
-		public int Percent { get; set; }
+		public double Percent { get; set; }
 	}
 }

@@ -11,7 +11,7 @@ export class KontrolorService {
   constructor(private _http: HttpClient) { }
 
   public validateTicket(ticketID:number){
-    return this._http.get(`${this._baseUrl}/api/Kontrolor/ValidateTicket?ticketID=${ticketID}`);
+    return this._http.get(`${this._baseUrl}/api/Kontrolor/ValidateTicket?ticketID=${ticketID}`, { withCredentials: true });
   }
 
   public getUsers(){
