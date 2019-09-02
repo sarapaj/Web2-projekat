@@ -86,21 +86,20 @@
     <div class="card card-register mx-auto mt-5">
       <div class="card-header">Change user information</div>
       <div class="card-body">
-        <form #userPassChange="ngForm" (ngSubmit)="PassworrdChange(userPassChange)">
-
+        <form #userPassChange="ngForm" (ngSubmit)="PassworrdChange()">
           <div class="form-group">
             <div class="form-row">
               <div class="col-md-6">
                 <show-hide-password btnStyle="primary">
                   <div class="form-label-group">
-                    <input type="password" #Password="ngModel" id="inputPassword" class="form-control" #PasswordH="ngModel" 
-                    [(ngModel)]="currentUser.Password" name="Password" required 
-                    [class.is-invalid]="PasswordH.invalid && PasswordH.touched" placeholder="Password"
-                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{1,}$" minlength="6">
-                    <label for="inputPassword">Password</label>
+                      <input type="password" id="inputPassword" class="form-control" #PasswordH="ngModel" 
+                      [(ngModel)]="currentPass" name="Password" required 
+                      [class.is-invalid]="PasswordH.invalid && PasswordH.touched" placeholder="Password"
+                      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{1,}$" minlength="6">
+                      <label for="inputPassword">Current password</label>
                   </div>
-                </show-hide-password>              
-                <div *ngIf="PasswordH.errors && (PasswordH.invalid || PasswordH.touched)">
+                </show-hide-password>
+                <div *ngIf="PasswordH.errors && (PasswordH.invalid || NewPasswordHPassH.touched)">
                     <small class="text-danger" *ngIf="PasswordH.errors.required">
                     Required field! </small> 
                     <small class="text-danger" *ngIf="PasswordH.errors.minlength">
@@ -109,19 +108,42 @@
                       Password must contain at least 1 number, 1 big and small letter and 1 special character! </small>
                 </div>
               </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-6">
+                <show-hide-password btnStyle="primary">
+                  <div class="form-label-group">
+                    <input type="password" #NewPassH="ngModel" id="newPass" class="form-control"
+                    [(ngModel)]="newPassword" name="newPass" required 
+                    [class.is-invalid]="NewPassH.invalid && NewPassH.touched" placeholder="Password"
+                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{1,}$" minlength="6">
+                    <label for="newPass">New password</label>
+                  </div>
+                </show-hide-password>              
+                <div *ngIf="NewPassH.errors && (NewPassH.invalid || NewPassH.touched)">
+                    <small class="text-danger" *ngIf="NewPassH.errors.required">
+                    Required field! </small> 
+                    <small class="text-danger" *ngIf="NewPassH.errors.minlength">
+                      Password must have at least 6 characters! </small> 
+                    <small class="text-danger" *ngIf="NewPassH.errors.pattern">
+                      Password must contain at least 1 number, 1 big and small letter and 1 special character! </small>
+                </div>
+              </div>
               <div class="col-md-6">
                   <show-hide-password btnStyle="primary">
                       <div class="form-label-group">
                         <input type="password" id="confirmPassword" class="form-control" #ConfirmPasswordH="ngModel" 
-                        [(ngModel)]="currentUser.ConfirmPassword" name="ConfirmPassword" placeholder="Confirm password" 
+                        [(ngModel)]="confirmNewPassword" name="ConfirmPassword" placeholder="Confirm password" 
                         required [class.is-invalid]="ConfirmPasswordH.invalid && ConfirmPasswordH.touched" 
-                        ng-pattern="currentUser.Password">
-                        <label for="confirmPassword">Confirm password</label>
+                        ng-pattern="newPassword">
+                        <label for="confirmPassword">Confirm new password</label>
                       </div>
                   </show-hide-password>
                 <small class="text-danger" [class.d-none]="ConfirmPasswordH.valid || ConfirmPasswordH.untouched">
                   Required field! </small> 
-                <small class="text-danger" [class.d-none]="ConfirmPasswordH.untouched || currentUser.Password == currentUser.ConfirmPassword">
+                <small class="text-danger" [class.d-none]="ConfirmPasswordH.untouched || newPassword == confirmNewPassword">
                   &nbsp;Passwords doesn't match!</small>
               </div>
             </div>

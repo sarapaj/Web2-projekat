@@ -4,6 +4,7 @@ import { TipPutnika } from '../constants';
 import { UserService } from 'src/app/services/user.service';
 import { NgForm } from '@angular/forms';
 import { User } from 'src/models/korisnik';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-profil',
@@ -16,6 +17,9 @@ export class ProfilComponent implements OnInit {
   username: string;
   dropdownToPass: DropdownElement[];
   currentUser: User;
+  newPassword: string = null;
+  confirmNewPassword: string = null;
+  currentPass: string = null;
 
   constructor(private userService: UserService) { }
 
@@ -52,7 +56,7 @@ export class ProfilComponent implements OnInit {
       this.currentUser.Surname = (user as any).Surname;
       this.currentUser.Address = (user as any).Address;
       this.currentUser.PassengerType = (user as any).PassengerType;
-      
+      this.currentUser.Password = (user as any).Password;
     })
   }
 
@@ -79,8 +83,21 @@ export class ProfilComponent implements OnInit {
     ];   
   }
 
-  PassworrdChange(form: NgForm){
-
+  PassworrdChange(){
+    this.userService.changePassword(this.currentPass, this.newPassword, this.confirmNewPassword)
+    .subscribe((res: any) => {
+      alert("Password is successfully changed");
+      this.currentPass = null;
+      this.newPassword = null;
+      this.confirmNewPassword = null;
+    },
+    (err: HttpErrorResponse) => {
+      alert("Password change went wrong. Try again")
+      this.currentPass = null;
+      this.newPassword = null;
+      this.confirmNewPassword = null;
+    }
+    )
   }
 }
 

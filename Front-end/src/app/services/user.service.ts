@@ -106,6 +106,13 @@ export class UserService {
     return this._http.post(this._baseUrl + '/api/Account/ChangeUserInfo', fd, {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});
   }
 
-
+  public changePassword(oldPassword: string, newPassword: string, confirmPassword: string){
+    var data = {
+      OldPassword: oldPassword,  
+      NewPassword: newPassword,
+      ConfirmPassword: confirmPassword
+    }
+    return this._http.post(this._baseUrl + '/api/Account/ChangePassword', data, {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});    
+  }
 
 }
