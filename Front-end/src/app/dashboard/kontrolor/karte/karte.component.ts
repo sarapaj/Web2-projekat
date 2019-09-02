@@ -21,11 +21,8 @@ export class KarteComponent implements OnInit {
 
   OnSubmit()
   {
-    console.log("ID karte: " + this.ID);
-    
     this.kontrolorService.validateTicket(this.ID).subscribe((res: any) => {
       this.vrednostKarte = res;
-      console.log("vrednost karte" + this.vrednostKarte);
 
       if(this.vrednostKarte == true){
         this.validnostKarte = "validna";
@@ -33,13 +30,10 @@ export class KarteComponent implements OnInit {
         else{
           this.validnostKarte = "nevalidna";
         }
-        
-   })  
-
-  
-
+   },
+   (err) => {
+     this.ID = null;
+     alert("Nepostojeca vrednost ID-a");
+   })
   }
-
-  
-
 }

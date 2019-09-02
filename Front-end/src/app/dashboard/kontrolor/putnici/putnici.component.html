@@ -9,7 +9,8 @@
             <div class="form-label-group">
                 <div class="my-div">  
                   <label>Validacija dokumenta &nbsp;</label>
-                  <select [(ngModel)]="result" name="result" (change)="selectDocumentStatus($event)"  class="dropdown no-arrow dropdown-toggle">
+                  <select [(ngModel)]="result" name="result" (change)="selectDocumentStatus($event)" 
+                  required class="dropdown no-arrow dropdown-toggle">
                       <option>Validan</option>
                       <option>Nevalidan</option>
                   </select>    
@@ -19,7 +20,7 @@
             
         </div>
         &nbsp;&nbsp;
-        <button type="submit">Posalji</button>
+        <button type="submit" [disabled]="dokumentForm.form.invalid">Posalji</button>
     </form>
   </div>
 </div>

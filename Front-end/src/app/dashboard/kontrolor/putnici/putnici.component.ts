@@ -41,21 +41,17 @@ export class PutniciComponent implements OnInit {
   getUsers(){
     this.kontrolorService.getUsers().subscribe(data => {
       this.users = data;
-      console.log(this.users);
     });
   }
 
-  mystring;
   getDocument(){
     this.kontrolorService.getDocument(this.email).subscribe((data:string) => {
-      let objectURL = `data:image/jpeg;base64,${data}`
-      // objectURL = data.slice(1,data.length);
+      let objectURL = `data:image/jpeg;base64,${data}`;
       this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL);
     });
   }
 
   OnSubmit(form: NgForm) {
-    console.log("submit forme: " + this.result);
     if (this.result == "Validan")
     {
       this.status = true;
@@ -65,22 +61,15 @@ export class PutniciComponent implements OnInit {
       this.status = false;
     }
 
-    this.kontrolorService.validateDocument(this.email, this.status).subscribe();
-    this.getUsers();
+    this.kontrolorService.validateDocument(this.email, this.status).subscribe(() => {
+      alert("Dokument je prihvacen");
+      this.getUsers();
+    });
   }
 
-    
-     
-
   toggle(email:string) {
-    //this.show = !this.show;
     this.show = true;
-    console.log(email);
     this.email = email;
     this.getDocument();
-    // if(this.show)  
-    //   this.buttonName = "Hide image";
-    // else
-    //   this.buttonName = "Show image";
   }
 }

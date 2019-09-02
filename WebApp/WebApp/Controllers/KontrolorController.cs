@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebApp.Models;
@@ -47,9 +48,9 @@ namespace WebApp.Controllers
 				foreach (var user in users)
 				{
 					image = user.Document;
-				}
+				}                
 
-				Byte[] b = System.IO.File.ReadAllBytes(@"D:\WEB2GIT\Web2-projekat\WebApp\WebApp\App_Data\uploads\slikaa.jpg");   // You can use your own method over here.         
+                Byte[] b = System.IO.File.ReadAllBytes(image);   // You can use your own method over here.         
 
 				return Ok(b);
 			}
@@ -58,9 +59,7 @@ namespace WebApp.Controllers
 				return BadRequest();
 			}
 		}
-
-
-
+        
 
 		[AllowAnonymous]
 		[Route("GetDocument")]
