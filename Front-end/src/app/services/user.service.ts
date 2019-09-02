@@ -92,7 +92,7 @@ export class UserService {
     fd.append("User", username);
     fd.append("Document", fileToSend);
     fd.append("ImageName", imageName);
-    return this._http.post(this._baseUrl + '/api/Account/PostFile', fd);
+    return this._http.post(this._baseUrl + '/api/Account/PostFile', fd, {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});
   }
 
   changeUserInfo(updatedUser: User){
@@ -103,7 +103,7 @@ export class UserService {
     fd.append("Address", updatedUser.Address);
     fd.append("PassengerType", updatedUser.PassengerType);
 
-    return this._http.post(this._baseUrl + '/api/Account/ChangeUserInfo', fd);
+    return this._http.post(this._baseUrl + '/api/Account/ChangeUserInfo', fd, {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});
   }
 
 

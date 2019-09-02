@@ -74,8 +74,8 @@ namespace WebApp.Controllers
             return NotFound();
         }
 
-        [AllowAnonymous]
-        [Route("AddStationToLine")]
+		[Authorize(Roles = "Admin")]
+		[Route("AddStationToLine")]
         [ResponseType(typeof(LineStationConnection))]
         [HttpPost]
         public IHttpActionResult AddExistingStationToLine()
@@ -117,8 +117,8 @@ namespace WebApp.Controllers
             return Ok(conn);
         }
 
-        [AllowAnonymous]
-        [Route("RemoveStationFromLine")]
+		[Authorize(Roles = "Admin")]
+		[Route("RemoveStationFromLine")]
         [ResponseType(typeof(void))]
         [HttpPut]
         public IHttpActionResult AddStationToLine()  //izmena polazaka za admina

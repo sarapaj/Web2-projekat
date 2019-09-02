@@ -54,13 +54,13 @@ export class LinijeService {
     let fd = new FormData;
     fd.append("StationName", stationName);
     fd.append("LineId", lineId.toString());
-    return this._http.put(`${this._baseUrl}/api/Line/RemoveStationFromLine`, fd);
+    return this._http.put(`${this._baseUrl}/api/Line/RemoveStationFromLine`, fd, {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});
   }
 
   public addStationToLine(lineId: number, stationName: string){
     let fd = new FormData;
     fd.append("LineId", lineId.toString());
     fd.append("StationName", stationName);
-    return this._http.post(`${this._baseUrl}/api/Line/AddStationToLine`, fd);    
+    return this._http.post(`${this._baseUrl}/api/Line/AddStationToLine`, fd, {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});    
   }
 }
