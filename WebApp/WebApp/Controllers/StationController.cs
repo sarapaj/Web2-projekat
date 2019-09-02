@@ -280,8 +280,8 @@ namespace WebApp.Controllers
                 return BadRequest();
             }
 
-            int y = Int32.Parse(yStr);
-            int x = Int32.Parse(xStr);
+            double y = Double.Parse(yStr);
+            double x = Int32.Parse(xStr);
 
             coord.x = x;
             coord.y = y;

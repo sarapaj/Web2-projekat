@@ -367,7 +367,7 @@ namespace WebApp.Controllers
             }
 
             int Id = Int32.Parse(idString);
-            int Percent = Int32.Parse(percentString);
+            double Percent = Double.Parse(percentString);
 
             try
             {

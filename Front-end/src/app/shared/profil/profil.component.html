@@ -67,7 +67,7 @@
                   <div *ngFor = "let element of dropdownToPass" class="my-div">
                       <label>{{element.label}} &nbsp;</label>
                       <select class="dropdown no-arrow dropdown-toggle" id="userDropdown" name="PassengerType" 
-                      [(ngModel)] = "currentUser.PassengerType">
+                      [(ngModel)]="currentUser.PassengerType" required>
                           <option  *ngFor = "let item of element.value" [value]="item.value">{{item.name}}</option>
                       </select>
                       &nbsp;&nbsp;&nbsp;
@@ -87,7 +87,7 @@
       <div class="card-header">Change user information</div>
       <div class="card-body">
         <form #userPassChange="ngForm" (ngSubmit)="PassworrdChange(userPassChange)">
-          <!-- PASS -->
+
           <div class="form-group">
             <div class="form-row">
               <div class="col-md-6">
@@ -132,6 +132,7 @@
       </div>
     </div>
   </div>
+  
 
   <div class="container">
     <div class="card card-register mx-auto mt-5">

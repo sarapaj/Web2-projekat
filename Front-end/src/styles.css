@@ -2171,6 +2171,10 @@
     margin-top: 0.25rem;
   }
   
+  /* .form-row input {
+    width: auto !important;
+  } */
+  
   .form-row {
     display: -webkit-box;
     display: -ms-flexbox;

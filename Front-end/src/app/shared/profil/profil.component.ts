@@ -52,6 +52,7 @@ export class ProfilComponent implements OnInit {
       this.currentUser.Surname = (user as any).Surname;
       this.currentUser.Address = (user as any).Address;
       this.currentUser.PassengerType = (user as any).PassengerType;
+      
     })
   }
 

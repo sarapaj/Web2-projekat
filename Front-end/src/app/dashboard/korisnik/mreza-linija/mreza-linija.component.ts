@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { DropdownElement } from 'src/models/classes';
 import { LinijePrivremeno } from 'src/app/shared/constants';
 import { LinijeService } from 'src/app/services/linije.service';
@@ -11,7 +11,7 @@ declare var L:any;
   styleUrls: ['./mreza-linija.component.css']
 })
 
-export class MrezaLinijaComponent implements OnInit {
+export class MrezaLinijaComponent implements OnInit, AfterViewInit, OnDestroy {
   
   dropdownToPass: DropdownElement;
   selectedLine: string;
@@ -27,6 +27,22 @@ export class MrezaLinijaComponent implements OnInit {
     this.showLineNames();
       
     this.loadMap();
+  }
+
+  ngAfterViewInit(){
+    var link2 = document.getElementById('id22')
+    if(link2){
+      return;
+    }
+    var link = document.createElement('link');
+    link.id = 'id2';
+    link.rel = 'stylesheet';
+    link.href = 'https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css';
+    document.head.appendChild(link);
+  }
+
+  ngOnDestroy(){
+    document.styleSheets[document.styleSheets.length-1].disabled = true;
   }
 
   showLineNames(){
