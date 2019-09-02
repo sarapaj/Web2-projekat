@@ -19,6 +19,7 @@ export class RegistrationComponent implements OnInit {
   poljeIndex: boolean;
   poljePenzija: boolean;
   imageName: string = "";
+  showDate: any = null;
 
   constructor(private router: Router, private route: ActivatedRoute, private userService: UserService) { }
 
@@ -35,6 +36,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   OnSubmit(form: NgForm) {
+    this.user.Birthday = new Date(this.showDate);
     this.userService.registerUser(this.user, this.imageName)
       .subscribe((data: any) => {
         alert("Registracija uspesna!");
@@ -81,7 +83,7 @@ export class RegistrationComponent implements OnInit {
       Name: '',
       Surname: '',
       Address: '',
-      // Birthday: null,
+      Birthday: null,
       PassengerType: "2",
       Document: null
     }

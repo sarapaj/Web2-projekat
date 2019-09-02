@@ -359,7 +359,8 @@ namespace WebApp.Controllers
                 Name = appUser.Name,
                 Surname = appUser.Lastname,
                 Address = appUser.Address,
-                PassengerType = userTypeNumber.ToString()
+                PassengerType = userTypeNumber.ToString(),
+                Birthday = appUser.Birthday
             };
         }
 
@@ -375,6 +376,7 @@ namespace WebApp.Controllers
             var surname = httpRequest.Form["Surname"];
             var address = httpRequest.Form["Address"];
             var passengerType = httpRequest.Form["PassengerType"];
+            var birthday = httpRequest.Form["Birthday"];
 
 
             Task<ApplicationUser> user = UserManager.FindByEmailAsync(email);
@@ -385,6 +387,7 @@ namespace WebApp.Controllers
             updateUser.Name = name;
             updateUser.Lastname = surname;
             updateUser.Address = address;
+            updateUser.Birthday = DateTime.Parse(birthday);
             if(passengerType == "0")
             {
                 updateUser.Type = PassengerType.djak;
@@ -489,8 +492,9 @@ namespace WebApp.Controllers
             var passengerType = httpRequest.Form["PassengerType"];
             int type = Int32.Parse(passengerType);
             var imageName = httpRequest.Form["ImageName"];
+            var birthday = httpRequest.Form["Birthday"];
 
-			var user = new ApplicationUser()
+            var user = new ApplicationUser()
 			{
 				UserName = email,
 				Email = email,
@@ -499,8 +503,8 @@ namespace WebApp.Controllers
 				Lastname = surname,
 				Address = address,
 				Type = (PassengerType)type,
-				Birthday = DateTime.Now,
-				validDocument = ValidacijaDokumenta.procesiranje
+				Birthday = DateTime.Parse(birthday),
+                validDocument = ValidacijaDokumenta.procesiranje
 			};
 
             if (httpRequest.Files["Document"] != null)

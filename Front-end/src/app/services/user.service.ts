@@ -77,6 +77,7 @@ export class UserService {
     fd.append("Surname", user.Surname);
     fd.append("Address", user.Address);
     fd.append("PassengerType", user.PassengerType);
+    fd.append("Birthday", user.Birthday.toDateString());
     
     if(user.Document != null){
       fd.append("Document", user.Document);
@@ -102,6 +103,7 @@ export class UserService {
     fd.append("Surname", updatedUser.Surname);
     fd.append("Address", updatedUser.Address);
     fd.append("PassengerType", updatedUser.PassengerType);
+    fd.append("Birthday", updatedUser.Birthday.toDateString());
 
     return this._http.post(this._baseUrl + '/api/Account/ChangeUserInfo', fd, {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});
   }

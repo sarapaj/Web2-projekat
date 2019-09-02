@@ -5,6 +5,8 @@ import { UserService } from 'src/app/services/user.service';
 import { NgForm } from '@angular/forms';
 import { User } from 'src/models/korisnik';
 import { HttpErrorResponse } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-profil',
@@ -20,10 +22,12 @@ export class ProfilComponent implements OnInit {
   newPassword: string = null;
   confirmNewPassword: string = null;
   currentPass: string = null;
+  showDate: any = null;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private datePipe: DatePipe) { }
 
   OnSubmit(form: NgForm) {
+    this.currentUser.Birthday = new Date(this.showDate);
     this.userService.changeUserInfo(this.currentUser).subscribe(() =>
     {
       alert("Your profile is successfully changed");
@@ -57,6 +61,9 @@ export class ProfilComponent implements OnInit {
       this.currentUser.Address = (user as any).Address;
       this.currentUser.PassengerType = (user as any).PassengerType;
       this.currentUser.Password = (user as any).Password;
+      this.currentUser.Birthday = (user as any).Birthday;
+      this.showDate = this.datePipe.transform(this.currentUser.Birthday, 'yyyy-MM-dd');
+    
     })
   }
 
@@ -68,7 +75,7 @@ export class ProfilComponent implements OnInit {
       Name: '',
       Surname: '',
       Address: '',
-      // Birthday: null,
+      Birthday: null,
       PassengerType: "2",
       Document: null
     }

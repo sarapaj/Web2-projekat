@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 import { ShowHidePasswordModule } from 'ngx-show-hide-password';
 import { AppRoutingModule } from './app-routing.module';
@@ -58,7 +59,7 @@ import { UrediRedVoznjeComponent } from './dashboard/admin/uredi-red-voznje/ured
     HttpClientModule,
     RouterModule.forRoot([])
   ],
-  providers: [UserService, RedVoznjeService, AuthGuard],
+  providers: [UserService, RedVoznjeService, AuthGuard, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

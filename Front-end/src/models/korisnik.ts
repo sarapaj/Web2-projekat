@@ -5,7 +5,7 @@ export class User{
     Name: string;
     Surname: string;
     Address: string;
-    // Birthday: Date;
+    Birthday: Date;
     PassengerType: string;
     Document: any;
 }
