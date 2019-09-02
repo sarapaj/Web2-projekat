@@ -74,8 +74,38 @@ namespace WebApp.Controllers
             return NotFound();
         }
 
-		[Authorize(Roles = "Admin")]
-		[Route("AddStationToLine")]
+        [AllowAnonymous]
+        [Route("GetLineStations")]
+        [ResponseType(typeof(List<Station>))]
+        [HttpGet]
+        public IHttpActionResult GetLineStations(string lineName)
+        {
+            try
+            {
+                List<Station> stations = new List<Station>();
+                var line = _unitOfWork.Lines.Find(x => x.Name == lineName).FirstOrDefault();
+
+                if (line != null)
+                {
+                    foreach (var item in line.LineStationConnections)
+                    {
+                        stations.Add(item.Station);
+                    }
+
+                    return Ok(stations);
+                }
+
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound();
+            }
+
+            return NotFound();
+        }
+
+        [AllowAnonymous]
+        [Route("AddStationToLine")]
         [ResponseType(typeof(LineStationConnection))]
         [HttpPost]
         public IHttpActionResult AddExistingStationToLine()
@@ -117,8 +147,8 @@ namespace WebApp.Controllers
             return Ok(conn);
         }
 
-		[Authorize(Roles = "Admin")]
-		[Route("RemoveStationFromLine")]
+        [AllowAnonymous]
+        [Route("RemoveStationFromLine")]
         [ResponseType(typeof(void))]
         [HttpPut]
         public IHttpActionResult AddStationToLine()  //izmena polazaka za admina

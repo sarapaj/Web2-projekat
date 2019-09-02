@@ -1,24 +1,20 @@
-<form>
+<form #displayLineForm="ngForm">
     <div class="form-group my-div">
         <div class="form-label-group">
-            <div *ngFor = "let element of dropdownToPass" class="my-div">
-                <label>{{element.label}} &nbsp;</label>
-                <select class="dropdown no-arrow dropdown-toggle" id="userDropdown">
-                  <option  *ngFor = "let item of element.value">{{item}}</option>
+            <div class="my-div">
+                <label>{{dropdownToPass.label}} &nbsp;</label>
+                <select class="dropdown no-arrow dropdown-toggle" id="userDropdown" required 
+                [(ngModel)]="selectedLine" name="lineToDisplay" #LineToDisplayHash="ngModel">
+                  <option *ngFor="let item of dropdownToPass.value">{{item}}</option>
                 </select>
                 &nbsp;&nbsp;&nbsp;
             </div>
-            <!-- <app-my-dropdown [dropdownElement] = "dropdownToPass"></app-my-dropdown>        -->
         </div>
     </div>
     &nbsp;&nbsp;
-    <button type="submit">Prikazi</button>
+    <button (click)="displayLineStations()" [disabled]="displayLineForm.form.invalid">Prikazi</button>
 </form>
 
 <hr>
 
-<div>
-  <p>
-    Ovde ce se ucitavati Google mapa za iscrtavanje linija
-  </p>
-</div>
+<div id="map" style="width: 100%; height: 80%;"></div>
