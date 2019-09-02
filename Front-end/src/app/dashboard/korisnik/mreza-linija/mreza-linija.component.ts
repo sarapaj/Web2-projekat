@@ -73,7 +73,10 @@ export class MrezaLinijaComponent implements OnInit, AfterViewInit, OnDestroy {
       })
 
       L.mapquest.directions().route({
-        locations: stations
+        locations: stations,
+        options: {
+          maxRoutes: 1
+        }
       });
     })
     

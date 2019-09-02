@@ -1,18 +1,18 @@
 
-<div *ngIf='user.PassengerType == 0 || user.PassengerType == 1'>
+<div *ngIf="user.PassengerType == 0 || user.PassengerType == 1">
   <p>Status validacije dokumenta: {{documentStatus}}</p>
-  <p *ngIf='!isDocumentValid'>Kupovina karte ce biti omogucena nakon uspesne validacije</p>
+  <p *ngIf="!isDocumentValid">Kupovina karte ce biti omogucena nakon uspesne validacije</p>
 </div>
 
 
-<div *ngIf=' user.PassengerType == 2 || isDocumentValid'>
+<div *ngIf="user.PassengerType == 2 || isDocumentValid">
   <form #kupovinaKarte="ngForm" (ngSubmit)="OnSubmit(kupovinaKarte)">
       <div class="form-group my-div">
           <div class="form-label-group">
               <div class="my-div">  
                 <label>Tip karte &nbsp;</label>
                 <select (change)="selectTicketTypeChangeHandler($event)"  class="dropdown no-arrow dropdown-toggle" id="userDropdown">
-                    <option  *ngFor = "let item of this.dropdownToPassTicket.value">{{item}}</option>
+                    <option *ngFor = "let item of this.dropdownToPassTicket.value">{{item}}</option>
                 </select>    
               </div> 
           </div>
@@ -39,7 +39,6 @@
                   <th>ID</th>
                   <th>Tip karte</th>
                   <th>Datum kupovine</th>
-                  <th>Datum aktivacije</th>
                 </tr>
               </thead>
               <tbody>
@@ -47,7 +46,6 @@
                       <td>{{k.id}}</td>
                       <td>{{k.ticketType}}</td>
                       <td>{{k.datePurchase}}</td>
-                      <td>{{k.checkInDate}}</td>
                   </tr>
               </tbody>
             </table>

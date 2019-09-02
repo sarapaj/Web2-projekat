@@ -23,7 +23,7 @@ export class KupovinaKarteComponent implements OnInit {
   tipKarte: string;
   isDocumentValid;
   documentStatus;
-  user;
+  user = new User;
 
   ngOnInit() {
     this.resetForm();
@@ -43,8 +43,9 @@ export class KupovinaKarteComponent implements OnInit {
   }
 
   getUserInfo(){
-    this._userService.getAllUserInfo().subscribe(data =>{
+    this._userService.getAllUserInfo().subscribe((data: User) =>{
       this.user = data;
+      console.log(this.user.PassengerType)
     })
   }
 
@@ -66,9 +67,9 @@ export class KupovinaKarteComponent implements OnInit {
   {
 
   }
+
   selectTicketTypeChangeHandler(event:any){
     this.tipKarte = event.target.value;
-    console.log("tip karte: " + this.tipKarte);
   }
 
   OnSubmit(form: NgForm) {

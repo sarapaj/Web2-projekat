@@ -25,7 +25,6 @@ export class RedVoznjeComponent implements OnInit {
     private _linijeServis: LinijeService) {}
 
   ngOnInit() {
-    this.resetForm();
 
     this.dropdownToPassDay = {
       label:"Dani", 
@@ -56,21 +55,17 @@ export class RedVoznjeComponent implements OnInit {
     })
   }
 
-  resetForm(form?: NgForm) {
-    if (form != null)
-      form.reset();
-    this.redVoznjeForma = {
-      day: TipDana[0],
-      lineName: LinijePrivremeno[0]
-    }
-  }
-
   showLineNames(){
     this._linijeServis.getLineNames().subscribe((res: any) =>
     {
       this.dropdownToPassLine = {
         label: "Linije",
         value: res
+      }
+
+      this.redVoznjeForma = {
+        day: TipDana[0],
+        lineName: res[0]
       }
     })
   }
