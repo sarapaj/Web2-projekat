@@ -56,14 +56,15 @@
           <!-- BIRTHDAY -->
           <div class="form-group">
             <div class="form-label-group">
-              <input data-format="yyyy-MM-dd" type="date" id="Birthday" class="form-control" 
+              <input  min="1014-05-11" max="2014-05-20"
+              type="date" id="Birthday" class="form-control" 
               #Birthday="ngModel" [(ngModel)]="showDate" name="Birthday" required/>
               <label for="Birthday">Datum rodjenja</label>
             </div>
           </div>
           
           <!-- tip putnika -->
-          <div class="form-group my-div">
+          <div *ngIf="this.userRole==0" class="form-group my-div">
               <div class="form-label-group">
                   <div *ngFor = "let element of dropdownToPass" class="my-div">
                       <label>{{element.label}} &nbsp;</label>
@@ -157,22 +158,26 @@
   </div>
   
 
-  <div class="container">
-    <div class="card card-register mx-auto mt-5">
-      <div class="card-header">Evidence</div>
-      <div class="card-body">
-        <form #uploadImageForm="ngForm" (ngSubmit)="uploadFile(uploadImageForm)">
-          <div class="form-group my-div">
-            <div class="form-label-group">
-              <input type="file" class="form-control" name="dokaz"
-              (change)="handleFileInput($event)" accept="image/png, image/jpeg"/>
-              <label for="dokaz">User type evidence</label>
-            </div>
+  <div *ngIf="this.userRole==0">
+    <div class="container">
+        <div class="card card-register mx-auto mt-5">
+          <div class="card-header">Evidence</div>
+          <div class="card-body">
+            <label *ngIf="!this.isDocumentAttached" class="text-danger">!!!<br></label>
+            <label>{{this.documentStatus}}</label>
+            <form #uploadImageForm="ngForm" (ngSubmit)="uploadFile(uploadImageForm)">
+              <div class="form-group my-div">
+                <div class="form-label-group">
+                  <input type="file" class="form-control" name="dokaz"
+                  (change)="handleFileInput($event)" accept="image/png, image/jpeg"/>
+                  <label for="dokaz">User type evidence</label>
+                </div>
+              </div>
+    
+              <button class="btn btn-primary btn-block" type="submit"
+              [disabled]="uploadImageForm.form.invalid">Upload image</button>
+            </form>
           </div>
-
-          <button class="btn btn-primary btn-block" type="submit"
-          [disabled]="uploadImageForm.form.invalid">Upload image</button>
-        </form>
+        </div>
       </div>
-    </div>
   </div>

@@ -23,49 +23,11 @@ export class ProfilComponent implements OnInit {
   confirmNewPassword: string = null;
   currentPass: string = null;
   showDate: any = null;
+  documentStatus:string;
+  isDocumentAttached:boolean;
+  userRole;
 
-  constructor(private userService: UserService, private datePipe: DatePipe) { }
-
-  OnSubmit(form: NgForm) {
-    this.currentUser.Birthday = new Date(this.showDate);
-    this.userService.changeUserInfo(this.currentUser).subscribe(() =>
-    {
-      alert("Your profile is successfully changed");
-    })
-  }
-
-  handleFileInput(event: any) {
-
-    if(event.target.files[0].size > 4194304){
-      console.log(event)
-      event.target.value = "";  
-      alert("File is too big!");
-    }
-    else{
-      const file = event.target.files[0];
-      this.uploadedFile = file;
-    }
-  }
-
-  uploadFile(){
-    this.userService.postFile(this.uploadedFile, this.uploadedFile.name, this.currentUser.Email).subscribe((data:any) => {
-      alert("Image uploaded successfully");
-    })
-  }
-
-  getUserInfo(){
-    this.userService.getAllUserInfo().subscribe((user: any) => {
-      this.currentUser.Email = (user as any).Email;
-      this.currentUser.Name = (user as any).Name;
-      this.currentUser.Surname = (user as any).Surname;
-      this.currentUser.Address = (user as any).Address;
-      this.currentUser.PassengerType = (user as any).PassengerType;
-      this.currentUser.Password = (user as any).Password;
-      this.currentUser.Birthday = (user as any).Birthday;
-      this.showDate = this.datePipe.transform(this.currentUser.Birthday, 'yyyy-MM-dd');
-    
-    })
-  }
+  constructor(private _userService: UserService, private datePipe: DatePipe) { }
 
   ngOnInit() {
     this.currentUser = {
@@ -80,6 +42,9 @@ export class ProfilComponent implements OnInit {
       Document: null
     }
 
+    
+    this.userRole = localStorage.getItem('role'); // admin i kontrolor su 1 i 2
+
     this.getUserInfo();
     
     this.dropdownToPass = [
@@ -90,8 +55,31 @@ export class ProfilComponent implements OnInit {
     ];   
   }
 
+  checkDocument()
+  {
+    this._userService.checkIsDocumentValid(this.currentUser.Email).subscribe(data =>{
+
+      this.isDocumentAttached = true;
+      if(data == "Prihvacen"){
+        this.documentStatus = "Prilozeni dokument je prihvacen";
+      }
+      else if(data == "Procesiranje"){
+        this.documentStatus = "Prilozeni dokument se procesuira";
+
+      }
+      else if(data == "Odbijen"){
+        this.documentStatus = "Prilozeni dokument je odbijen";
+
+      }
+      else{
+        this.documentStatus = "Dokument nije prilozen";
+        this.isDocumentAttached = false;
+      }
+    })
+  }
+
   PassworrdChange(){
-    this.userService.changePassword(this.currentPass, this.newPassword, this.confirmNewPassword)
+    this._userService.changePassword(this.currentPass, this.newPassword, this.confirmNewPassword)
     .subscribe((res: any) => {
       alert("Password is successfully changed");
       this.currentPass = null;
@@ -103,8 +91,54 @@ export class ProfilComponent implements OnInit {
       this.currentPass = null;
       this.newPassword = null;
       this.confirmNewPassword = null;
-    }
-    )
+    })
   }
+
+  
+  OnSubmit(form: NgForm) {
+    this.currentUser.Birthday = new Date(this.showDate);
+    this._userService.changeUserInfo(this.currentUser).subscribe(() =>
+    {
+      alert("Your profile is successfully changed");
+      this.checkDocument();
+    })
+  }
+
+  handleFileInput(event: any) {
+
+    if(event.target.files[0].size > 4194304){
+      event.target.value = "";  
+      alert("File is too big!");
+    }
+    else{
+      const file = event.target.files[0];
+      this.uploadedFile = file;
+    }
+  }
+
+  uploadFile(){
+    this._userService.postFile(this.uploadedFile, this.uploadedFile.name, this.currentUser.Email).subscribe((data:any) => {
+      alert("Image uploaded successfully");
+      this.isDocumentAttached = true;
+    })
+  }
+
+  getUserInfo(){
+    this._userService.getAllUserInfo().subscribe((user: any) => {
+      this.currentUser.Email = (user as any).Email;
+      this.currentUser.Name = (user as any).Name;
+      this.currentUser.Surname = (user as any).Surname;
+      this.currentUser.Address = (user as any).Address;
+      this.currentUser.PassengerType = (user as any).PassengerType;
+      this.currentUser.Password = (user as any).Password;
+      this.currentUser.Birthday = (user as any).Birthday;
+      this.showDate = this.datePipe.transform(this.currentUser.Birthday, 'yyyy-MM-dd');
+
+      if(this.userRole == 0){
+        this.checkDocument();
+      }
+    })
+  }
+
 }
 

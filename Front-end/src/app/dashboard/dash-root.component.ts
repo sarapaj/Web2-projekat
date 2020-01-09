@@ -11,10 +11,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class DashRootComponent implements OnInit {
 
-  public userRole = "4";
+  public userRole = "3";
  
   sidebarElements = [];
   headerElements = [];
+  username:string;
   
   constructor(private route: ActivatedRoute, private _userService: UserService) {
   }
@@ -25,22 +26,22 @@ export class DashRootComponent implements OnInit {
   }
 
   private determineUserRole() {
-    if(this.userRole == "1"){
+    if(this.userRole == "0"){
       this.sidebarElements = UserSidebarElements;
       this.headerElements = LogedUserHeaderElements;
     }
-    else if(this.userRole == "2"){
+    else if(this.userRole == "1"){
       this.sidebarElements = AdminSidebarElements;
       this.headerElements = LogedUserHeaderElements;
     }
-    else if(this.userRole == "3"){
+    else if(this.userRole == "2"){
       this.sidebarElements = KontrolerSidebarElements;
       this.headerElements = LogedUserHeaderElements;
     }
     else{
       this.sidebarElements = NotLoggedUserSidebarElements; // neregistrovani korisnik
       this.headerElements = NotLogedUserHeaderElements;
-      localStorage.setItem('role','4');
+      localStorage.setItem('role','3');
     }
   }
 }

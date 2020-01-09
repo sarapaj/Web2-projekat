@@ -160,7 +160,6 @@ export class UrediLinijeComponent implements OnInit {
   }
   
   removeStationFromLine(station: string){
-    console.log(station)
     this._http.removeStationFromLine(station, this.selectedId).subscribe((res: any) => {
       alert("Station is removed successfully");
       this.getBelongingStations(this.selectedId);

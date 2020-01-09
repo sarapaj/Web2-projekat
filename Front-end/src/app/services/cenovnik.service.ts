@@ -30,8 +30,6 @@ export class CenovnikService {
 
   public getTicketPrice(cenovnikForma:CenovnikForma){
     return this._http.get(`${this._baseUrl}/api/Ticket/GetTicketPrice?TicketType=${cenovnikForma.tipKarte}&PassengerType=${cenovnikForma.tipPutnika}`);
-
-    // this._http.get(this._baseUrl + '/api/Ticket/GetTicketPrice?TicketType=' +cenovnikForma.tipKarte + '&PassengerType=' + cenovnikForma.tipPutnika).toPromise().then(res => this.cena = res as string);
   }
 
   public getAllTicketTypes(){

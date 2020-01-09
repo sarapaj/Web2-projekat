@@ -12,13 +12,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class PutniciComponent implements OnInit {
 
-
-  tableHeader: string[];
   users;
   show:boolean=false;
   buttonName:string;
   imageSrc;
-  dropdownToPassDocument: DropdownElement;
   documentStatus;
   email:string;
   status:boolean;
@@ -28,9 +25,7 @@ export class PutniciComponent implements OnInit {
   constructor(private kontrolorService:KontrolorService, private sanitizer:DomSanitizer) { }
 
   ngOnInit() {
-    this.tableHeader = ["Dokaz", "Tip putnika", "Ime", "Prezime", "Datum rodjenja", "Adresa", " ", " "];
     this.getUsers();
-    this.buttonName = "Show image";
     this.imageSrc = "http://wiki.tripwireinteractive.com/images/4/47/Placeholder.png";
   }
 
@@ -62,12 +57,29 @@ export class PutniciComponent implements OnInit {
     }
 
     this.kontrolorService.validateDocument(this.email, this.status).subscribe(() => {
-      alert("Dokument je prihvacen");
+      if(this.status == true){
+        alert("Dokument je prihvacen");
+      }
+      else{
+        alert("Dokument je odbijen");
+      }
+      
       this.getUsers();
+    },
+    () => {
+      alert("Neuspesna validacija dokumenta");
     });
+
+    this.resetVariables();
   }
 
-  toggle(email:string) {
+  resetVariables(){
+    this.show = false;
+    this.email = null;
+    this.status = null;
+  }
+
+  showDocument(email:string) {
     this.show = true;
     this.email = email;
     this.getDocument();

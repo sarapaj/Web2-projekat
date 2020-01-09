@@ -281,7 +281,7 @@ namespace WebApp.Controllers
             }
 
             double y = Double.Parse(yStr);
-            double x = Int32.Parse(xStr);
+            double x = Double.Parse(xStr);
 
             coord.x = x;
             coord.y = y;

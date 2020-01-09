@@ -82,7 +82,6 @@ export class UrediStaniceComponent implements OnInit {
     //dobavljanje izabrane koordinate
     for(var i = 0; i < this.coordinatesDropdown.value.length; i++){
       if(this.coordinatesDropdown.value[i] == this.chosenCoordAddToStation){
-        console.log(this.allCoord[i].Id); // chosen coordinate's ID
         this.newChosenCoordinateId = this.allCoord[i].Id.toString();
         return;
       }
@@ -132,7 +131,6 @@ export class UrediStaniceComponent implements OnInit {
 
 
   showStationDetails(){
-    console.log("showStationDetails " + this.chosenStationName);
     
     if(this.chosenStationName == null){
       return;

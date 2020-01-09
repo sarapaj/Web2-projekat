@@ -26,7 +26,7 @@ export class RedVoznjeService {
     // fd.append("Day", day);
     // fd.append("Line", line);
     // fd.append("Departure", departure);
-    return this._http.delete(`${this._baseUrl}/api/Line/DeleteDepartures?lineName=${line}&day=${day}`);
+    return this._http.delete(`${this._baseUrl}/api/Line/DeleteDepartures?lineName=${line}&day=${day}`, {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});
   }
 
   public editRedVoznje(day: string, line: string, newDeparture: string){
@@ -42,6 +42,6 @@ export class RedVoznjeService {
     fd.append("Day", day);
     fd.append("Line", line);
     fd.append("NewDeparture", newDeparture);
-    return this._http.post(`${this._baseUrl}/api/Line/AddDeparture`, fd);
+    return this._http.post(`${this._baseUrl}/api/Line/AddDeparture`, fd, {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});
   }
 }

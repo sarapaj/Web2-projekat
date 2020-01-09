@@ -9,7 +9,7 @@ export class RoleControllerGuard implements CanActivate {
   
   constructor(public router: Router) {}
   canActivate(): boolean {
-    if (localStorage.getItem('role') != "3"){  //nije kontroler
+    if (localStorage.getItem('role') != "2"){  //nije kontroler
       this.router.navigate(['login']);
       return false;
     }

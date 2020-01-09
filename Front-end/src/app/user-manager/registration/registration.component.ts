@@ -45,7 +45,6 @@ export class RegistrationComponent implements OnInit {
   }
   
   selectPassengerChangeHandler(event:any){
-    console.log(this.user.PassengerType)
     if(this.user.PassengerType == "0"){
       this.poljePenzija = false;
       this.poljeIndex = true;
@@ -69,7 +68,6 @@ export class RegistrationComponent implements OnInit {
       const file = event.target.files[0];
       this.user.Document = file;
       this.imageName = this.user.Document.name;
-      console.log(this.imageName);
     }
   }
 

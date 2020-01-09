@@ -61,7 +61,6 @@ namespace WebApp.Controllers
         {
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
 
-
             return new UserInfoViewModel
             {
                 Email = User.Identity.GetUserName(),
@@ -388,20 +387,26 @@ namespace WebApp.Controllers
             updateUser.Lastname = surname;
             updateUser.Address = address;
             updateUser.Birthday = DateTime.Parse(birthday);
-            if(passengerType == "0")
-            {
-                updateUser.Type = PassengerType.djak;
 
-            }
-            else if (passengerType == "1")
+            if((int)updateUser.Type != Int32.Parse(passengerType))
             {
-                updateUser.Type = PassengerType.penzioner;
-            }
-            else
-            {
-                updateUser.Type = PassengerType.regularni;
-            }
+                if (passengerType == "0")
+                {
+                    updateUser.Type = PassengerType.djak;
 
+                }
+                else if (passengerType == "1")
+                {
+                    updateUser.Type = PassengerType.penzioner;
+                }
+                else
+                {
+                    updateUser.Type = PassengerType.regularni;
+                }
+
+                updateUser.validDocument = ValidacijaDokumenta.nedefinisan;
+                updateUser.Document = "";
+            }
 
             Task<IdentityResult> result = UserManager.UpdateAsync(updateUser);
             result.Wait();
@@ -438,6 +443,7 @@ namespace WebApp.Controllers
                 user.Wait();
                 var updatedUser = user.Result;
                 updatedUser.Document = filePath;
+                updatedUser.validDocument = ValidacijaDokumenta.procesiranje;
 
                 Task<IdentityResult> result = UserManager.UpdateAsync(updatedUser);
                 result.Wait();
@@ -504,7 +510,7 @@ namespace WebApp.Controllers
 				Address = address,
 				Type = (PassengerType)type,
 				Birthday = DateTime.Parse(birthday),
-                validDocument = ValidacijaDokumenta.procesiranje
+                validDocument = ValidacijaDokumenta.nedefinisan
 			};
 
             if (httpRequest.Files["Document"] != null)
@@ -517,6 +523,7 @@ namespace WebApp.Controllers
                 // ---------------
 
                 user.Document = filePath;
+                user.validDocument = ValidacijaDokumenta.procesiranje;
             }
 
             IdentityResult result = await UserManager.CreateAsync(user, pass);

@@ -43,11 +43,6 @@ export class UserService {
     return this._http.get(`${this._baseUrl}/api/Kontrolor/IsDocumentValid?userEmail=${email}`);
   }
 
-  checkDocumentStatus(email:string)
-  {
-    return this._http.get(`${this._baseUrl}/api/Kontrolor/CheckDocumentStatus?userEmail=${email}`);
-  }
-
   getUserRole() {
     return this.userRole;
   }
@@ -84,7 +79,6 @@ export class UserService {
       fd.append("ImageName", imageName);
     }
     
-    console.log(user);
     return this._http.post(this._baseUrl + '/api/Account/Register', fd);
   }  
 

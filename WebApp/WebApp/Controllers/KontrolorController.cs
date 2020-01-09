@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MimeKit;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -91,10 +92,10 @@ namespace WebApp.Controllers
 		}
 
 		[Authorize(Roles = "Controller")]
-		[Route("GetUsers")]
+		[Route("GetUsersToValidate")]
 		[ResponseType(typeof(List<UserInfoViewModel>))]
 		[HttpGet]
-		public IHttpActionResult GetUsers()
+		public IHttpActionResult GetUsersToValidate()
 		{
 			if (!ModelState.IsValid)
 			{
@@ -106,22 +107,20 @@ namespace WebApp.Controllers
 				var users = _unitOfWork.ApplicationUsers.GetAll();
 
 				List<UserViewModel> userList = new List<UserViewModel>();
-				//Uri relativeUri = uri2.MakeRelativeUri(uri1);
 
-
-				foreach (var item in users)
+				foreach (var user in users)
 				{
-					if (item.Document != null)
+					if (user.Document != null && user.validDocument == ValidacijaDokumenta.procesiranje)
 					{
 						userList.Add(new UserViewModel()
 						{
-							Document = item.Document,
-							documentStatus = Enum.GetName(item.validDocument.GetType(), item.validDocument),
-							Type = Enum.GetName(item.Type.GetType(), item.Type),
-							Name = item.Name,
-							LastName = item.Lastname,
-							Email = item.Email,
-							id = item.Id
+							Document = user.Document,
+							documentStatus = Enum.GetName(user.validDocument.GetType(), user.validDocument),
+							Type = Enum.GetName(user.Type.GetType(), user.Type),
+							Name = user.Name,
+							LastName = user.Lastname,
+							Email = user.Email,
+							id = user.Id
 						});
 					}
 				}
@@ -136,45 +135,9 @@ namespace WebApp.Controllers
 
 		[AllowAnonymous]
 		[Route("IsDocumentValid")]
-		[ResponseType(typeof(bool))]
-		[HttpGet]
-		public IHttpActionResult IsDocumentValid(string userEmail)
-		{
-			if (!ModelState.IsValid)
-			{
-				return BadRequest(ModelState);
-			}
-
-			try
-			{
-				var users = _unitOfWork.ApplicationUsers.Find(x => x.Email.ToString() == userEmail);
-
-				bool rez = false;
-				foreach (var user in users)
-				{
-					if (user.validDocument == ValidacijaDokumenta.prihvacen) // 0 procesiranje, 1 prihvacen, 2 odbijen
-					{
-						rez = true;
-					}
-					else
-					{
-						rez = false;
-					}
-				}
-
-				return Ok(rez);
-			}
-			catch (DbUpdateConcurrencyException)
-			{
-				return NotFound();
-			}
-		}
-
-		[AllowAnonymous]
-		[Route("CheckDocumentStatus")]
 		[ResponseType(typeof(string))]
 		[HttpGet]
-		public IHttpActionResult CheckDocumentStatus(string userEmail)
+		public IHttpActionResult IsDocumentValid(string userEmail)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -188,19 +151,23 @@ namespace WebApp.Controllers
 				string rez = "";
 				foreach (var user in users)
 				{
-					if (user.validDocument == ValidacijaDokumenta.procesiranje) // 0 procesiranje, 1 prihvacen, 2 odbijen
+					if (user.validDocument == ValidacijaDokumenta.prihvacen) // 0 procesiranje, 1 prihvacen, 2 odbijen
 					{
-						rez = "Procesiranje dokumenta je u toku";
-					}
-					else if (user.validDocument == ValidacijaDokumenta.prihvacen)
-					{
-						rez = "Dokument je validan";
+						rez = "Prihvacen";
 					}
 					else if (user.validDocument == ValidacijaDokumenta.odbijen)
-					{
-						rez = "Dokument nije validan";
+                    {
+						rez = "Odbijen";
 					}
-				}
+                    else if (user.validDocument == ValidacijaDokumenta.procesiranje)
+                    {
+                        rez = "Procesiranje";
+                    }
+                    else
+                    {
+                        rez = "Nedefinisan";
+                    }
+                }
 
 				return Ok(rez);
 			}
@@ -209,6 +176,46 @@ namespace WebApp.Controllers
 				return NotFound();
 			}
 		}
+
+		//[AllowAnonymous]
+		//[Route("CheckDocumentStatus")]
+		//[ResponseType(typeof(string))]
+		//[HttpGet]
+		//public IHttpActionResult CheckDocumentStatus(string userEmail)
+		//{
+		//	if (!ModelState.IsValid)
+		//	{
+		//		return BadRequest(ModelState);
+		//	}
+
+		//	try
+		//	{
+		//		var users = _unitOfWork.ApplicationUsers.Find(x => x.Email.ToString() == userEmail);
+
+		//		string rez = "";
+		//		foreach (var user in users)
+		//		{
+		//			if (user.validDocument == ValidacijaDokumenta.procesiranje) // 0 procesiranje, 1 prihvacen, 2 odbijen
+		//			{
+		//				rez = "Procesiranje dokumenta je u toku";
+		//			}
+		//			else if (user.validDocument == ValidacijaDokumenta.prihvacen)
+		//			{
+		//				rez = "Dokument je validan";
+		//			}
+		//			else if (user.validDocument == ValidacijaDokumenta.odbijen)
+		//			{
+		//				rez = "Dokument nije validan";
+		//			}
+		//		}
+
+		//		return Ok(rez);
+		//	}
+		//	catch (DbUpdateConcurrencyException)
+		//	{
+		//		return NotFound();
+		//	}
+		//}
 
 		[Authorize(Roles = "Controller")]
 		[Route("ValidateTicket")]
@@ -307,19 +314,19 @@ namespace WebApp.Controllers
 					if (result)
 					{
 						user.validDocument = ValidacijaDokumenta.prihvacen;
-						if (!SendEmail(userEmail, "prihvacen"))
-						{
-							return InternalServerError();
-						}
-					}
+                        if (!SendEmail(userEmail, "prihvacen"))
+                        {
+                            return InternalServerError();
+                        }
+                    }
 					else
 					{
 						user.validDocument = ValidacijaDokumenta.odbijen;
-						if (!SendEmail(userEmail, "odbijen"))
-						{
-							return InternalServerError();
-						}
-					}
+                        if (!SendEmail(userEmail, "odbijen"))
+                        {
+                            return InternalServerError();
+                        }
+                    }
 
 					_unitOfWork.ApplicationUsers.Update(user);
 				}
@@ -335,38 +342,36 @@ namespace WebApp.Controllers
 
 		public bool SendEmail(string userEmail, string status)
 		{
-			SmtpClient client = new SmtpClient();
-			client.DeliveryMethod = SmtpDeliveryMethod.Network;
-			client.EnableSsl = true;
-			client.Host = "smtp.gmail.com";
-			client.Port = 587;
+            SmtpClient client = new SmtpClient();
+            //client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.Host = "smtp.gmail.com";
+            client.Port = 587;
+            client.EnableSsl = true;
 
-			// setup Smtp authentication
-			System.Net.NetworkCredential credentials =
-				new System.Net.NetworkCredential("web2projekat@gmail.com", "web2projekat1234");
-			client.UseDefaultCredentials = false;
-			client.Credentials = credentials;
+            //// setup Smtp authentication
+            System.Net.NetworkCredential credentials =
+                new System.Net.NetworkCredential("web2projekat@gmail.com", "web2projekat1234");
+            client.UseDefaultCredentials = true;
+            client.Credentials = credentials;
 
-			MailMessage msg = new MailMessage();
-			msg.From = new MailAddress("web2projekat@gmail.com");
-			msg.To.Add(new MailAddress(userEmail)); 
+            MailMessage msg = new MailMessage();
+            msg.From = new MailAddress("web2projekat@gmail.com");
+            msg.To.Add(new MailAddress(userEmail));
 
-			msg.Subject = "Rezultat validacije dokumenta";
-			msg.IsBodyHtml = true;
-			msg.Body = string.Format("Zahtev je " +  status);
+            msg.Subject = "Rezultat validacije dokumenta";
+            msg.Body = string.Format("Zahtev je " + status);
+            msg.IsBodyHtml = false;
 
-			try
-			{
-				client.Send(msg);
-				return true;
-			}
-			catch (Exception ex)
-			{
-				return false;
-			}
-
-		}
-
-
-	}
+            try
+            {
+                client.Send(msg);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+             
+        }
+    }
 }

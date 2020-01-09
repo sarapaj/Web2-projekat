@@ -15,7 +15,7 @@ export class KontrolorService {
   }
 
   public getUsers(){
-    return this._http.get(`${this._baseUrl}/api/Kontrolor/GetUsers`, {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});
+    return this._http.get(`${this._baseUrl}/api/Kontrolor/GetUsersToValidate`, {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});
   }
 
   public getDocument(email:string){
@@ -25,5 +25,5 @@ export class KontrolorService {
   public validateDocument(email:string, result:boolean){
     return this._http.post(`${this._baseUrl}/api/Kontrolor/ValidateDocument?userEmail=${email}&result=${result}`, email, {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});
   }
-  }
+}
   

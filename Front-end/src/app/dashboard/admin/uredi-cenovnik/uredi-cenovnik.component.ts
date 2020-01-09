@@ -106,7 +106,6 @@ export class UrediCenovnikComponent implements OnInit {
   }
 
   ticketTypeChanged(event: any){
-    console.log("ticket type changed");
 
     for(var i = 0; i < this.ticketTypesDropdown.value.length; i++){
       if(this.ticketTypesDropdown.value[i] == this.selectedTicketType){
@@ -118,7 +117,6 @@ export class UrediCenovnikComponent implements OnInit {
   }
 
   passengerTypeChanged(event: any){
-    console.log("passenger type changed");
 
     for(var i = 0; i < this.passengerTypesDropdown.value.length; i++){
       if(this.passengerTypesDropdown.value[i] == this.selectedPassengerType){

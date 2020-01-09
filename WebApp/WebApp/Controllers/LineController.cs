@@ -18,7 +18,6 @@ namespace WebApp.Controllers
 	[RoutePrefix("api/Line")]
 	public class LineController : ApiController
     {
-
 		IUnitOfWork _unitOfWork;
 		private DbContext _context;
 

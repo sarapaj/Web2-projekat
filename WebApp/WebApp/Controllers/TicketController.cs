@@ -129,11 +129,11 @@ namespace WebApp.Controllers
                     foreach (var user in users)
                     {
                         if (user.Role.ToString() == "admin")
-                            return Ok(2);
-                        else if (user.Role.ToString() == "korisnik")
                             return Ok(1);
+                        else if (user.Role.ToString() == "korisnik")
+                            return Ok(0);
                         else if (user.Role.ToString() == "kontrolor")
-                            return Ok(3);
+                            return Ok(2);
 
                     }
                 }

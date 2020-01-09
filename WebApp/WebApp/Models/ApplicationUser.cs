@@ -15,7 +15,7 @@ namespace WebApp.Models
 	public enum PassengerType { djak, penzioner, regularni};
 	public enum UserRole { korisnik, admin, kontrolor };
 
-	public enum ValidacijaDokumenta { procesiranje, prihvacen, odbijen};
+	public enum ValidacijaDokumenta { procesiranje, prihvacen, odbijen, nedefinisan};
 
 	// You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
 	public class ApplicationUser : IdentityUser

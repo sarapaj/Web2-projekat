@@ -24,8 +24,6 @@ export class KarteService {
   }
 
   public getAllTickets(username: string): Observable<Karta[]>{
-
-    console.log("usao");
     return this._http.get<Karta[]>(`${this._baseUrl}/api/Ticket/GetAllTickets?email=${username}`);
   }
   // metoda validateTicket

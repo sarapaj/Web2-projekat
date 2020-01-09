@@ -1,7 +1,9 @@
 <div *ngIf="show">
+  <button
+    (click) = "resetVariables()">Odustani
+  </button>
   <div style="margin: 0 auto;text-align: left;">
       <div>
-          <label>Document</label>
           <div><img [src]="imageUrl" alt="document" height="250" width="220"></div>
       </div>
       <form #dokumentForm="ngForm" (ngSubmit)="OnSubmit(dokumentForm)">
@@ -29,32 +31,31 @@
 <div class="card mb-3">
         <div class="card-header">
           <i class="fas fa-table"></i>
-          Data Table Example</div>
+          Tabela putnika za validiranje dokumenata</div>
         <div class="card-body">
           <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>
                 <tr>
-                  <th>Dokaz</th>
+                  <!-- <th>Dokaz</th> -->
                   <th>Tip putnika</th>
                   <th>Ime</th>
                   <th>Prezime</th>
                   <th>Email</th>
                   <th>Status</th>
                   <th></th>
-                  <th></th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor='let user of users'>
-                    <td><img src={{user.Document}} height="25" width="20"/>                    </td>
+                    <!-- <td><img src={{user.Document}} height="25" width="20"/></td> -->
                     <td>{{user.Type}}</td>
                     <td>{{user.Name}}</td>
                     <td>{{user.LastName}}</td>
                     <td>{{user.Email}}</td>
                     <td>{{user.documentStatus}}</td>
-                    <td><button (click)="toggle(user.Email)" id="bt">
-                      {{buttonName}}
+                    <td><button (click)="showDocument(user.Email)" id="bt">
+                      Show image
                   </button></td>
                 </tr>
             </tbody>

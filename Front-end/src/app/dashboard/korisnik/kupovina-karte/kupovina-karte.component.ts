@@ -28,8 +28,7 @@ export class KupovinaKarteComponent implements OnInit {
   ngOnInit() {
     this.resetForm();
     this.username = localStorage.getItem("email");
-    this.checkDocument(); //true ili false da li je valid
-    this.getDocumentStatusMessage(); //poruka o statusu obrade dokumenta
+    this.checkDocument();
     this.getMyTickets();
     this.getUserInfo();
 
@@ -45,27 +44,20 @@ export class KupovinaKarteComponent implements OnInit {
   getUserInfo(){
     this._userService.getAllUserInfo().subscribe((data: User) =>{
       this.user = data;
-      console.log(this.user.PassengerType)
     })
   }
 
   checkDocument()
   {
     this._userService.checkIsDocumentValid(this.username).subscribe(data =>{
-      this.isDocumentValid = data;
-    })
-  }
-
-  getDocumentStatusMessage()
-  {
-    this._userService.checkDocumentStatus(this.username).subscribe(data =>{
       this.documentStatus = data;
+      if(data == "Prihvacen"){
+        this.isDocumentValid = true;
+      }
+      else{
+        this.isDocumentValid = false;
+      }
     })
-  }
-
-  getDocumentStatus()
-  {
-
   }
 
   selectTicketTypeChangeHandler(event:any){
