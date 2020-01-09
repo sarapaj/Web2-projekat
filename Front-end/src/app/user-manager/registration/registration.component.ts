@@ -15,17 +15,16 @@ export class RegistrationComponent implements OnInit {
 
   user: User;
   dropdownToPass: DropdownElement[];
-  // registrationForma: RegistrationForm;
-  poljeIndex: boolean;
-  poljePenzija: boolean;
+  indexField: boolean;
+  pensionField: boolean;
   imageName: string = "";
   showDate: any = null;
 
-  constructor(private router: Router, private route: ActivatedRoute, private userService: UserService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private _userService: UserService) { }
 
   ngOnInit() {
-    this.poljeIndex = false;
-    this.poljePenzija = false;
+    this.indexField = false;
+    this.pensionField = false;
     this.resetForm();
     this.dropdownToPass = [
       {
@@ -37,7 +36,7 @@ export class RegistrationComponent implements OnInit {
 
   OnSubmit(form: NgForm) {
     this.user.Birthday = new Date(this.showDate);
-    this.userService.registerUser(this.user, this.imageName)
+    this._userService.registerUser(this.user, this.imageName)
       .subscribe((data: any) => {
         alert("Registracija uspesna!");
         this.router.navigate(['/login']);
@@ -46,16 +45,16 @@ export class RegistrationComponent implements OnInit {
   
   selectPassengerChangeHandler(event:any){
     if(this.user.PassengerType == "0"){
-      this.poljePenzija = false;
-      this.poljeIndex = true;
+      this.pensionField = false;
+      this.indexField = true;
     }
     else if(this.user.PassengerType == "1"){
-      this.poljeIndex = false;
-      this.poljePenzija = true;
+      this.indexField = false;
+      this.pensionField = true;
     }
     else{
-      this.poljeIndex = false;
-      this.poljePenzija = false;
+      this.indexField = false;
+      this.pensionField = false;
     }
   }
 

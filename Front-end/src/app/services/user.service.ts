@@ -3,7 +3,6 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from 'src/models/korisnik';
 import { UserClaims } from 'src/models/user-claims';
-import { stringify } from '@angular/compiler/src/util';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -31,7 +30,7 @@ export class UserService {
 
   setRole(role) {
     this.userRole = role;
-    localStorage.setItem('role', this.userRole); //cuvamo ulogu u local storage chrome
+    localStorage.setItem('role', this.userRole);
   }
 
   fetchUserRole(claim) {
@@ -40,7 +39,7 @@ export class UserService {
 
   checkIsDocumentValid(email:string)
   {
-    return this._http.get(`${this._baseUrl}/api/Kontrolor/IsDocumentValid?userEmail=${email}`);
+    return this._http.get(`${this._baseUrl}/api/Controller/IsDocumentValid?userEmail=${email}`);
   }
 
   getUserRole() {

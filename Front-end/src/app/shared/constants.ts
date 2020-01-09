@@ -2,72 +2,72 @@
 export const UserSidebarElements = [
     {
         label: "Red voznje",
-        route: "red-voznje"
+        route: "timetable"
     },
     {
         label: "Mreza linija",
-        route: "mreza-linija"
+        route: "network"
     },
     {
         label: "Trenutna lokacija",
-        route: "trenutna-lokacija"
+        route: "current-location"
     },
     {
         label: "Cenovnik",
-        route: "cenovnik"
+        route: "pricelist"
     },
     {
         label: "Karte",
-        route: "kupovina-karte"
+        route: "ticket-buy"
     }
 ];
 
 export const NotLoggedUserSidebarElements = [
     {
         label: "Red voznje",
-        route: "red-voznje"
+        route: "timetable"
     },
     {
         label: "Mreza linija",
-        route: "mreza-linija"
+        route: "network"
     },
     {
         label: "Trenutna lokacija",
-        route: "trenutna-lokacija"
+        route: "current-location"
     },
     {
         label: "Cenovnik",
-        route: "cenovnik"
+        route: "pricelist"
     }
 ];
 
 export const AdminSidebarElements = [
     {
         label: "Uredi red voznje",
-        route: "uredi-red-voznje"
+        route: "edit-timetable"
     },
     {
         label: "Uredi cenovnik",
-        route: "uredi-cenovnik"
+        route: "edit-pricelist"
     },
     {
         label: "Uredi linije",
-        route: "uredi-linije"
+        route: "edit-lines"
     },
     {
         label: "Uredi stanice",
-        route: "uredi-stanice"
+        route: "edit-stations"
     }
 ];
 
 export const KontrolerSidebarElements = [
     {
         label: "Validacija karata",
-        route: "validiraj-karte"
+        route: "validate-tickets"
     },
     {
         label: "Verifikacija putnika",
-        route: "verifikuj-putnike"
+        route: "verify-passengers"
     }
 ];
 

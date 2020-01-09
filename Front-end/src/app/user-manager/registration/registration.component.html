@@ -125,14 +125,14 @@
         </div>
     
         <!-- dokaz -->
-        <div class="form-group my-div" *ngIf="poljeIndex">
+        <div class="form-group my-div" *ngIf="indexField">
           <div class="form-label-group">
             <input type="file" class="form-control" name="dokazIndeks" (change)="handleFileInput($event)"
             accept="image/png, image/jpeg"/>
             <label for="dokazIndeks">Slika indeksa</label>
           </div>
         </div>
-        <div class="form-group my-div" *ngIf="poljePenzija">
+        <div class="form-group my-div" *ngIf="pensionField">
             <div class="form-label-group">
               <input type="file" class="form-control" name="dokazPenzija" (change)="handleFileInput($event)"
               accept="image/png, image/jpeg"/>

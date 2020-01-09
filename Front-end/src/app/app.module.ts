@@ -10,24 +10,24 @@ import { RegistrationComponent } from './user-manager/registration/registration.
 import { LoginComponent } from './user-manager/login/login.component';
 import { RouterModule } from '@angular/router';
 import { DashRootComponent } from './dashboard/dash-root.component';
-import { MrezaLinijaComponent } from './dashboard/korisnik/mreza-linija/mreza-linija.component';
-import { RedVoznjeComponent } from './dashboard/korisnik/red-voznje/red-voznje.component';
-import { CenovnikComponent } from './dashboard/korisnik/cenovnik/cenovnik.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
-import { TrenutnaLokacijaComponent } from './dashboard/korisnik/trenutna-lokacija/trenutna-lokacija.component';
-import { ProfilComponent } from './shared/profil/profil.component';
-import { UrediLinijeComponent } from './dashboard/admin/uredi-linije/uredi-linije.component';
-import { UrediStaniceComponent } from './dashboard/admin/uredi-stanice/uredi-stanice.component';
-import { KarteComponent } from './dashboard/kontrolor/karte/karte.component';
-import { PutniciComponent } from './dashboard/kontrolor/putnici/putnici.component';
 import { UserService } from './services/user.service';
 import { HttpClientModule } from '@angular/common/http';
-import { RedVoznjeService } from './services/red-voznje.service';
+import { TimetableService } from './services/timetable.service';
 import { AuthGuard } from './auth/auth.guard';
-import { KupovinaKarteComponent } from './dashboard/korisnik/kupovina-karte/kupovina-karte.component';
-import { UrediCenovnikComponent } from './dashboard/admin/uredi-cenovnik/uredi-cenovnik.component';
-import { UrediRedVoznjeComponent } from './dashboard/admin/uredi-red-voznje/uredi-red-voznje.component';
+import { EditLinesComponent } from './dashboard/admin/edit-lines/edit-lines.component';
+import { EditStationsComponent } from './dashboard/admin/edit-stations/edit-stations.component';
+import { EditPricelistComponent } from './dashboard/admin/edit-pricelist/edit-pricelist.component';
+import { EditTimetableComponent } from './dashboard/admin/edit-timetable/edit-timetable.component';
+import { TicketsComponent } from './dashboard/controller/tickets/tickets.component';
+import { PassengersComponent } from './dashboard/controller/passengers/passengers.component';
+import { CurrentLocationComponent } from './dashboard/user/current-location/current-location.component';
+import { PricelistComponent } from './dashboard/user/pricelist/pricelist.component';
+import { TicketBuyComponent } from './dashboard/user/ticket-buy/ticket-buy.component';
+import { TimetableComponent } from './dashboard/user/timetable/timetable.component';
+import { NetworkComponent } from './dashboard/user/network/network.component';
+import { ProfileComponent } from './shared/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -37,18 +37,18 @@ import { UrediRedVoznjeComponent } from './dashboard/admin/uredi-red-voznje/ured
     DashRootComponent,
     SidebarComponent,
     HeaderComponent,
-    MrezaLinijaComponent,
-    RedVoznjeComponent,
-    CenovnikComponent,
-    TrenutnaLokacijaComponent,
-    ProfilComponent,
-    UrediLinijeComponent,
-    UrediStaniceComponent,
-    KarteComponent,
-    PutniciComponent,
-    KupovinaKarteComponent,
-    UrediCenovnikComponent,
-    UrediRedVoznjeComponent,
+    ProfileComponent, // shared
+    NetworkComponent,
+    TimetableComponent,
+    PricelistComponent,
+    CurrentLocationComponent,
+    TicketBuyComponent, // passenger
+    TicketsComponent,
+    PassengersComponent, // controller
+    EditPricelistComponent,
+    EditTimetableComponent,
+    EditLinesComponent,
+    EditStationsComponent, // admin
   ],
   imports: [
     BrowserModule,
@@ -59,7 +59,7 @@ import { UrediRedVoznjeComponent } from './dashboard/admin/uredi-red-voznje/ured
     HttpClientModule,
     RouterModule.forRoot([])
   ],
-  providers: [UserService, RedVoznjeService, AuthGuard, DatePipe],
+  providers: [UserService, TimetableService, AuthGuard, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

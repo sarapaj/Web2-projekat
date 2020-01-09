@@ -1,0 +1,17 @@
+<form #karteForm="ngForm" (ngSubmit)="OnSubmit()">
+  <div class="form-group my-div">
+        <div class="form-label-group">
+          <input type="text" class="form-control" [(ngModel)]="ID" name="ID" 
+          placeholder="ID" required id="ticketId">
+          <label for="ticketId">ID karte:</label>
+        </div>
+    </div>
+    &nbsp;&nbsp;
+    <button type="submit" [disabled]="karteForm.form.invalid">Proveri</button>
+</form>
+
+<hr>
+
+<div>
+  <p>Karta je: {{validnostKarte}}</p>
+</div>

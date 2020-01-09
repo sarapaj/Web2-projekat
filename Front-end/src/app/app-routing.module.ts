@@ -3,21 +3,21 @@ import { Routes, RouterModule } from '@angular/router';
 import { RegistrationComponent } from './user-manager/registration/registration.component';
 import { LoginComponent } from './user-manager/login/login.component';
 import { DashRootComponent } from './dashboard/dash-root.component';
-import { RedVoznjeComponent } from './dashboard/korisnik/red-voznje/red-voznje.component';
-import { MrezaLinijaComponent } from './dashboard/korisnik/mreza-linija/mreza-linija.component';
-import { TrenutnaLokacijaComponent } from './dashboard/korisnik/trenutna-lokacija/trenutna-lokacija.component';
-import { CenovnikComponent } from './dashboard/korisnik/cenovnik/cenovnik.component';
-import { ProfilComponent } from './shared/profil/profil.component';
-import { UrediLinijeComponent } from './dashboard/admin/uredi-linije/uredi-linije.component';
-import { UrediStaniceComponent } from './dashboard/admin/uredi-stanice/uredi-stanice.component';
-import { KarteComponent } from './dashboard/kontrolor/karte/karte.component';
-import { PutniciComponent } from './dashboard/kontrolor/putnici/putnici.component';
+import { EditLinesComponent } from './dashboard/admin/edit-lines/edit-lines.component';
+import { EditStationsComponent } from './dashboard/admin/edit-stations/edit-stations.component';
 import { AuthGuard } from './auth/auth.guard';
-import { KupovinaKarteComponent } from './dashboard/korisnik/kupovina-karte/kupovina-karte.component';
 import { RoleAdminGuard } from './auth/auth.roleAdmin.guard';
 import { RoleControllerGuard } from './auth/auth.roleController.guard';
-import { UrediCenovnikComponent } from './dashboard/admin/uredi-cenovnik/uredi-cenovnik.component';
-import { UrediRedVoznjeComponent } from './dashboard/admin/uredi-red-voznje/uredi-red-voznje.component';
+import { EditPricelistComponent } from './dashboard/admin/edit-pricelist/edit-pricelist.component';
+import { EditTimetableComponent } from './dashboard/admin/edit-timetable/edit-timetable.component';
+import { TicketsComponent } from './dashboard/controller/tickets/tickets.component';
+import { PassengersComponent } from './dashboard/controller/passengers/passengers.component';
+import { CurrentLocationComponent } from './dashboard/user/current-location/current-location.component';
+import { PricelistComponent } from './dashboard/user/pricelist/pricelist.component';
+import { TicketBuyComponent } from './dashboard/user/ticket-buy/ticket-buy.component';
+import { TimetableComponent } from './dashboard/user/timetable/timetable.component';
+import { NetworkComponent } from './dashboard/user/network/network.component';
+import { ProfileComponent } from './shared/profile/profile.component';
 
 const routes: Routes = [
     {
@@ -39,59 +39,59 @@ const routes: Routes = [
       component: DashRootComponent,
       children: [
         {
-          path: "red-voznje",
-          component: RedVoznjeComponent
+          path: "timetable",
+          component: TimetableComponent
         },
         {
-          path: "mreza-linija",
-          component: MrezaLinijaComponent
+          path: "network",
+          component: NetworkComponent
         },
         {
-          path: "kupovina-karte",
-          component: KupovinaKarteComponent,
+          path: "ticket-buy",
+          component: TicketBuyComponent,
           canActivate:[AuthGuard]
         },
         {
-          path: "trenutna-lokacija",
-          component: TrenutnaLokacijaComponent
+          path: "current-location",
+          component: CurrentLocationComponent
         },
         {
-          path: "cenovnik",
-          component: CenovnikComponent
+          path: "pricelist",
+          component: PricelistComponent
         },
         {
           path: "profile",
-          component: ProfilComponent,
+          component: ProfileComponent,
           canActivate:[AuthGuard]
         },
         {
-          path: "uredi-linije",
-          component: UrediLinijeComponent,
+          path: "edit-lines",
+          component: EditLinesComponent,
           canActivate: [RoleAdminGuard],
         },
         {
-          path: "uredi-red-voznje",
-          component: UrediRedVoznjeComponent,
+          path: "edit-timetable",
+          component: EditTimetableComponent,
           canActivate: [RoleAdminGuard],
         },
         {
-          path: "uredi-stanice",
-          component: UrediStaniceComponent,
+          path: "edit-stations",
+          component: EditStationsComponent,
           canActivate: [RoleAdminGuard],
         },
         {
-          path: "uredi-cenovnik",
-          component: UrediCenovnikComponent,
+          path: "edit-pricelist",
+          component: EditPricelistComponent,
           canActivate: [RoleAdminGuard],
         },
         {
-          path: "validiraj-karte",
-          component: KarteComponent,
+          path: "validate-tickets",
+          component: TicketsComponent,
           canActivate:[RoleControllerGuard]
         },
         {
-          path: "verifikuj-putnike",
-          component: PutniciComponent,
+          path: "verify-passengers",
+          component: PassengersComponent,
           canActivate:[RoleControllerGuard]
         }
       ]
