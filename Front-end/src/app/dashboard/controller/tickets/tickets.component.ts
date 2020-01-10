@@ -24,15 +24,15 @@ export class TicketsComponent implements OnInit {
       this.ticketValue = res;
 
       if(this.ticketValue == true){
-        this.ticketStatus = "validna";
-        }
-        else{
-          this.ticketStatus = "nevalidna";
-        }
+        this.ticketStatus = "valid";
+      }
+      else{
+        this.ticketStatus = "invalid";
+      }
    },
    (err) => {
      this.ID = null;
-     alert("Nepostojeca vrednost ID-a");
+     alert("Undefined ID value");
    })
   }
 }

@@ -1,55 +1,51 @@
 
 <div *ngIf="user.PassengerType == 0 || user.PassengerType == 1">
-  <p>Status validacije dokumenta: {{documentStatus}}</p>
-  <p *ngIf="!isDocumentValid">Kupovina karte ce biti omogucena nakon uspesne validacije</p>
+  <p> Document status: {{documentStatus}}</p>
+  <p *ngIf="!isDocumentValid">Purchasing the ticket will be enabled after successful ticket validation</p>
 </div>
-
 
 <div *ngIf="user.PassengerType == 2 || isDocumentValid">
-  <form #kupovinaKarte="ngForm" (ngSubmit)="OnSubmit(kupovinaKarte)">
+  <form #ticketPurchasingForm="ngForm" (ngSubmit)="OnSubmit(ticketPurchasingForm)">
       <div class="form-group my-div">
-          <div class="form-label-group">
-              <div class="my-div">  
-                <label>Tip karte &nbsp;</label>
-                <select (change)="selectTicketTypeChangeHandler($event)"  class="dropdown no-arrow dropdown-toggle" id="userDropdown">
-                    <option *ngFor = "let item of this.dropdownToPassTicket.value">{{item}}</option>
-                </select>    
-              </div> 
-          </div>
-          
+        <div class="form-label-group">
+          <div class="my-div">  
+            <label>Ticket type &nbsp;</label>
+            <select (change)="selectTicketTypeChangeHandler($event)"  class="dropdown no-arrow dropdown-toggle" id="userDropdown">
+                <option *ngFor = "let item of this.dropdownToPassTicket.value">{{item}}</option>
+            </select>    
+          </div> 
+        </div>
       </div>
       &nbsp;&nbsp;
-      <button type="submit">Kupi</button>
+      <button type="submit">Purchase</button>
   </form>
 </div>
-
-
 
 <hr>
 
 <div class="card mb-3">
-        <div class="card-header">
-          <i class="fas fa-table"></i>
-          Moje karte</div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Tip karte</th>
-                  <th>Datum kupovine</th>
-                </tr>
-              </thead>
-              <tbody>
-                  <tr *ngFor='let k of tickets'>
-                      <td>{{k.id}}</td>
-                      <td>{{k.ticketType}}</td>
-                      <td>{{k.datePurchase}}</td>
-                  </tr>
-              </tbody>
-            </table>
-            </div>
-          </div>
+  <div class="card-header">
+    <i class="fas fa-table"></i>
+    My tickets</div>
+  <div class="card-body">
+  <div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Ticket type</th>
+          <th>Purchasing date</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor='let k of tickets'>
+              <td>{{k.id}}</td>
+              <td>{{k.ticketType}}</td>
+              <td>{{k.datePurchase}}</td>
+          </tr>
+      </tbody>
+    </table>
     </div>
+  </div>
+</div>
     

@@ -1,7 +1,7 @@
 <div>
   <button type="button" class="btn btn-primary"
     (click) = "toggleForm()">
-    {{showForm ? "Odustani" : "Dodaj stanicu"}}
+    {{showForm ? "Cancel" : "Add station"}}
   </button>
   <br/><br/>
   <div *ngIf="showForm"> 
@@ -11,7 +11,7 @@
         <div class="form-label-group">
           <input type="text" id="StationName" name="StationName" class="form-control" placeholder="Station name" [(ngModel)]="newStationName" 
           [class.is-invalid]="NewStationNameHash.invalid && NewStationNameHash.touched" #NewStationNameHash="ngModel" required> 
-          <label for="StationName">Ime stanice</label>  
+          <label for="StationName">Station name</label>  
         </div>
       </div>
       <!-- Address -->
@@ -20,13 +20,13 @@
           <input type="text" id="StationAddress" class="form-control" placeholder="Station address" 
           required [(ngModel)] = "newStationAddress" name="StationAddress"
           [class.is-invalid]="NewStationAddressHash.invalid && NewStationAddressHash.touched" #NewStationAddressHash="ngModel">
-          <label for="StationAddress">Adresa stanice</label>  
+          <label for="StationAddress">Station address</label>  
         </div>
       </div>
       <!-- All coordinates -->
       <div class="form-group">
         <div class="form-label-group">
-          <label>Koordinate</label><br><br>
+          <label>Coordinates</label><br><br>
           <select name="chooseCoord" class="dropdown no-arrow dropdown-toggle" id="userDropdown" 
           [(ngModel)]="chosenCoordAddToStation" required>
               <option *ngFor = "let item of coordinatesDropdown.value">{{item}}</option>
@@ -44,25 +44,41 @@
 <div>
     <button type="button" class="btn btn-primary"
     (click) = "toggleCoordForm()">
-    {{showCoordForm ? "Odustani" : "Dodaj koordinate"}}
+    {{showCoordForm ? "Cancel" : "Add coordinates"}}
   </button>
   <br/><br/>
   <div *ngIf="showCoordForm"> 
     <form #addCoordForm="ngForm">
-      <!-- X -->
+      <!-- X longitude-->
       <div class="form-group">
         <div class="form-label-group">
-          <input type="text" id="newXcoord" class="form-control" placeholder="X koordinata" name="newXcoord"
-          required [(ngModel)] = "newXcoord" [class.is-invalid]="xCoordHash.invalid && xCoordHash.touched" #xCoordHash="ngModel">
-          <label for="newXcoord">X koordinata</label>  
+          <input type="text" id="newXcoord" class="form-control" placeholder="X coordinate" name="newXcoord"
+          required [(ngModel)] = "newXcoord" 
+          pattern="^(\-?(([0-9]{1,2},(\d{1,6}))|(1[0-7][0-9],(\d{1,6}))|(180,(0{1,6}))))$"
+          [class.is-invalid]="xCoordHash.invalid && xCoordHash.touched" #xCoordHash="ngModel">
+          <label for="newXcoord">X coordinate</label>  
+        </div>
+        <div *ngIf="xCoordHash.errors && (xCoordHash.invalid || xCoordHash.touched)">
+          <small class="text-danger" *ngIf="xCoordHash.errors.required">
+            Required field! </small> 
+          <small class="text-danger" *ngIf="xCoordHash.errors.pattern">
+            aa,bbbbbb [-180,180]</small>
         </div>
       </div>
-      <!-- Y -->
+      <!-- Y latitude -->
       <div class="form-group">
         <div class="form-label-group">
-          <input type="text" id="newYcoord" class="form-control" placeholder="Y koordinata" name="newYcoord"
-          required [(ngModel)] = "newYcoord" [class.is-invalid]="yCoordHash.invalid && yCoordHash.touched" #yCoordHash="ngModel">
-          <label for="newYcoord">Y koordinata</label>  
+          <input type="text" id="newYcoord" class="form-control" placeholder="Y coordinate" name="newYcoord"
+          required [(ngModel)] = "newYcoord" 
+          pattern="^((\-?([0-9]{1},(\d{1,6}))|([1-8][0-9],(\d{1,6}))|(90,(0{1,6}))))$"
+          [class.is-invalid]="yCoordHash.invalid && yCoordHash.touched" #yCoordHash="ngModel">
+          <label for="newYcoord">Y coordinate</label>  
+        </div>
+        <div *ngIf="yCoordHash.errors && (yCoordHash.invalid || yCoordHash.touched)">
+          <small class="text-danger" *ngIf="yCoordHash.errors.required">
+            Required field! </small> 
+          <small class="text-danger" *ngIf="yCoordHash.errors.pattern">
+            aa,bbbbbb [-90,90]</small>
         </div>
       </div>
       <button (click)="addNewCoord()" [disabled]="addCoordForm.form.invalid">OK</button>
@@ -75,7 +91,7 @@
 <div class="form-group my-div">
   <div class="form-label-group">
       <div class="my-div">
-          <label>Stanica &nbsp;</label>
+          <label>Station &nbsp;</label>
           <select class="dropdown no-arrow dropdown-toggle" id="userDropdown" [(ngModel)]="chosenStationName" name="stationDropdownName">
               <option *ngFor = "let item of dropdownToPassStation.value">{{item}}</option>
           </select>
@@ -84,13 +100,13 @@
   </div>
 </div>
 &nbsp;&nbsp;
-<button (click)="showStationDetails()">Prikazi</button>
+<button (click)="showStationDetails()">Show</button>
 <hr>
 
 <div class="card mb-3" *ngIf="stationDetails">
   <div class="card-header">
     <i class="fas fa-table"></i>
-    Detalji stanice
+    Station details
   </div>
   <form  #chosenLineForm="ngForm">
     <div class="card-body">
@@ -98,10 +114,10 @@
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-              <th>Naziv</th>
-              <th>Adresa</th>
-              <th>X koordinata</th>
-              <th>Y koordinata</th>
+              <th>Name</th>
+              <th>Address</th>
+              <th>X coordinate</th>
+              <th>Y coordinate</th>
             </tr>
           </thead>
           <tbody>
@@ -129,8 +145,8 @@
             </tr>
           </tbody>
         </table>
-        <button (click)="deleteStation()" [disabled]="chosenLineForm.form.invalid">Obrisi</button>
-        <button (click)="changeStation()" [disabled]="chosenLineForm.form.invalid">Izmeni</button>
+        <button (click)="deleteStation()" [disabled]="chosenLineForm.form.invalid">Delete</button>
+        <button (click)="changeStation()" [disabled]="chosenLineForm.form.invalid">Edit</button>
       </div>
     </div>
   </form>

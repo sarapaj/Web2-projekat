@@ -58,16 +58,16 @@ export class PassengersComponent implements OnInit {
 
     this._controllerService.validateDocument(this.email, this.status).subscribe(() => {
       if(this.status == true){
-        alert("Dokument je prihvacen");
+        alert("Document is accepted");
       }
       else{
-        alert("Dokument je odbijen");
+        alert("Document is rejected");
       }
       
       this.getUsers();
     },
     () => {
-      alert("Neuspesna validacija dokumenta");
+      alert("Unsuccessful document validation");
     });
 
     this.resetVariables();

@@ -53,7 +53,7 @@ export class EditStationsComponent implements OnInit {
     this._stationService.getStationNames().subscribe((res: any) =>
     {
       this.dropdownToPassStation = {
-        label: "Stanice",
+        label: "Stations",
         value: res
       }
       this.chosenStationName = null;
@@ -70,7 +70,7 @@ export class EditStationsComponent implements OnInit {
       })
       
       this.coordinatesDropdown = {
-        label: "Koordinate",
+        label: "Coordinates",
         value: coordToPrint
       }
       this.chosenCoordAddToStation = null;
@@ -78,7 +78,7 @@ export class EditStationsComponent implements OnInit {
   }
 
   getCoordinateId(){
-    //dobavljanje izabrane koordinate
+    // get chosen coordinate
     for(var i = 0; i < this.coordinatesDropdown.value.length; i++){
       if(this.coordinatesDropdown.value[i] == this.chosenCoordAddToStation){
         this.newChosenCoordinateId = this.allCoord[i].Id.toString();

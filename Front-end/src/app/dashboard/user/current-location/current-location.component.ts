@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DropdownElement } from 'src/models/classes';
-import { LinijePrivremeno } from 'src/app/shared/constants';
+import { TemporarelyLines } from 'src/app/shared/constants';
 
 @Component({
   selector: 'app-current-location',
@@ -16,8 +16,8 @@ export class CurrentLocationComponent implements OnInit {
   ngOnInit() {
     this.dropdownToPass = [
       {
-        label: "Linije",
-        value: LinijePrivremeno
+        label: "Lines",
+        value: TemporarelyLines
       }
     ];
   }

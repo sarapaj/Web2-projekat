@@ -3,9 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { LinesService } from 'src/app/services/lines.service';
 import { TimetableService } from 'src/app/services/timetable.service';
 import { DropdownElement } from 'src/models/classes';
-import { TipDana } from 'src/app/shared/constants';
-import { NgForm } from '@angular/forms';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { DayType } from 'src/app/shared/constants';
 
 @Component({
   selector: 'app-edit-timetable',
@@ -30,8 +28,8 @@ export class EditTimetableComponent implements OnInit {
 
   ngOnInit() {
     this.dropdownToPassDay = {
-      label:"Dani", 
-      value: TipDana
+      label:"Days", 
+      value: DayType
     };
 
     this.dropdownToPassLine = 
@@ -47,7 +45,7 @@ export class EditTimetableComponent implements OnInit {
     this._linesService.getLineNames().subscribe((res: any) =>
     {
       this.dropdownToPassLine = {
-        label: "Linije",
+        label: "Lines",
         value: res
       }
       this.selectedLine = null;
@@ -55,7 +53,7 @@ export class EditTimetableComponent implements OnInit {
     })
   }
 
-  prikaziRedVoznje() {
+  showTimetable() {
     if(this.selectedDay == null || this.selectedLine == null){
       this.canChange = false;
       return;

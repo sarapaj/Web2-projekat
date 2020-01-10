@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DropdownElement } from 'src/models/classes';
-import { TipRedaVoznje, TipDana, LinijePrivremeno } from 'src/app/shared/constants';
 import { TimetableService } from 'src/app/services/timetable.service';
 import { RedVoznjeForma } from 'src/models/red-voznje-forma';
 import { NgForm } from '@angular/forms';
 import { LinesService } from 'src/app/services/lines.service';
+import { DayType } from 'src/app/shared/constants';
 
 @Component({
   selector: 'app-timetable',
@@ -27,8 +27,8 @@ export class TimetableComponent implements OnInit {
   ngOnInit() {
 
     this.dropdownToPassDay = {
-      label:"Dani", 
-      value: TipDana
+      label:"Days", 
+      value: DayType
     };
 
     this.dropdownToPassLine = 
@@ -59,12 +59,12 @@ export class TimetableComponent implements OnInit {
     this._linijeServis.getLineNames().subscribe((res: any) =>
     {
       this.dropdownToPassLine = {
-        label: "Linije",
+        label: "Lines",
         value: res
       }
 
       this.timetableForm = {
-        day: TipDana[0],
+        day: DayType[0],
         lineName: res[0]
       }
     })

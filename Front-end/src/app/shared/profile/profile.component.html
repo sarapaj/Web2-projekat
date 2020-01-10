@@ -1,6 +1,6 @@
 <div class="container">
     <div class="card card-register mx-auto mt-5">
-      <div class="card-header">Change user information</div>
+      <div class="card-header">Change information</div>
       <div class="card-body">
         <form #userUpdateForm="ngForm" (ngSubmit)="OnSubmit(userUpdateForm)">
           <!-- EMAIL -->
@@ -59,7 +59,7 @@
               <input  min="1014-05-11" max="2014-05-20"
               type="date" id="Birthday" class="form-control" 
               #Birthday="ngModel" [(ngModel)]="showDate" name="Birthday" required/>
-              <label for="Birthday">Datum rodjenja</label>
+              <label for="Birthday">Birthday</label>
             </div>
           </div>
           
@@ -86,7 +86,7 @@
 
   <div class="container">
     <div class="card card-register mx-auto mt-5">
-      <div class="card-header">Change user information</div>
+      <div class="card-header">Change password</div>
       <div class="card-body">
         <form #userPassChange="ngForm" (ngSubmit)="PassworrdChange()">
           <div class="form-group">

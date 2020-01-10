@@ -1,6 +1,6 @@
 <div *ngIf="show">
   <button
-    (click) = "resetVariables()">Odustani
+    (click) = "resetVariables()">Cancel
   </button>
   <div style="margin: 0 auto;text-align: left;">
       <div>
@@ -10,7 +10,7 @@
         <div class="form-group my-div">
             <div class="form-label-group">
                 <div class="my-div">  
-                  <label>Validacija dokumenta &nbsp;</label>
+                  <label>Document validation &nbsp;</label>
                   <select [(ngModel)]="result" name="result" (change)="selectDocumentStatus($event)" 
                   required class="dropdown no-arrow dropdown-toggle">
                       <option>Validan</option>
@@ -22,7 +22,7 @@
             
         </div>
         &nbsp;&nbsp;
-        <button type="submit" [disabled]="dokumentForm.form.invalid">Posalji</button>
+        <button type="submit" [disabled]="dokumentForm.form.invalid">Send</button>
     </form>
   </div>
 </div>
@@ -31,16 +31,16 @@
 <div class="card mb-3">
         <div class="card-header">
           <i class="fas fa-table"></i>
-          Tabela putnika za validiranje dokumenata</div>
+          *</div>
         <div class="card-body">
           <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>
                 <tr>
                   <!-- <th>Dokaz</th> -->
-                  <th>Tip putnika</th>
-                  <th>Ime</th>
-                  <th>Prezime</th>
+                  <th>Passenger type</th>
+                  <th>Name</th>
+                  <th>Surname</th>
                   <th>Email</th>
                   <th>Status</th>
                   <th></th>

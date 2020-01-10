@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { DropdownElement } from 'src/models/classes';
-import { LinijePrivremeno, TipRedaVoznje } from 'src/app/shared/constants';
 import { LinesService } from 'src/app/services/lines.service';
 import { Linija } from 'src/models/linija';
 import { StationsService } from 'src/app/services/stations.service';
+import { TimetableType } from 'src/app/shared/constants';
 
 @Component({
   selector: 'app-edit-lines',
@@ -25,7 +25,8 @@ export class EditLinesComponent implements OnInit {
   lineDetails = false;
   belongingStationsNames: any;
   stationToAdd: string;
-  allStations: any;
+  // allStations: any;
+  notBelongingStations: any;
 
   constructor(private _linesService: LinesService, private _stationService: StationsService) { }
 
@@ -41,11 +42,11 @@ export class EditLinesComponent implements OnInit {
         label: "",
         value: [
           {
-            name: TipRedaVoznje[0],
+            name: TimetableType[0],
             value: 0        
           },
           {
-            name: TipRedaVoznje[1],
+            name: TimetableType[1],
             value: 1
           }
         ]
@@ -78,13 +79,20 @@ export class EditLinesComponent implements OnInit {
       this.lineDetails = true;
 
       this.getBelongingStations(this.selectedId);
-      this.getAllStations();
+      this.getNotBelongingStations(this.selectedId);
     })
   }
 
   getBelongingStations(lineId: number){
     this._linesService.getBelongingStations(lineId).subscribe((res: any) => {
       this.belongingStationsNames = res;
+    })
+  }
+
+  getNotBelongingStations(lineId: number){
+    this._linesService.getNotBelongingStations(lineId).subscribe((res: any) => {
+      console.log(res)
+      this.notBelongingStations = res;
     })
   }
 
@@ -163,6 +171,7 @@ export class EditLinesComponent implements OnInit {
     this._linesService.removeStationFromLine(station, this.selectedId).subscribe((res: any) => {
       alert("Station is removed successfully");
       this.getBelongingStations(this.selectedId);
+      this.getNotBelongingStations(this.selectedId);
     })
   }
 
@@ -175,13 +184,8 @@ export class EditLinesComponent implements OnInit {
     this._linesService.addStationToLine(this.selectedId, this.stationToAdd).subscribe((res: any) => {
       alert("Station is successfully added to line");
       this.getBelongingStations(this.selectedId);
+      this.getNotBelongingStations(this.selectedId);
     })
-  }
 
-  getAllStations(){
-    this._stationService.getStationNames().subscribe((res: any) =>
-    {
-      this.allStations = res;
-    })
   }
 }

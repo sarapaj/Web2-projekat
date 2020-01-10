@@ -1,16 +1,16 @@
 <div>
   <button type="button" class="btn btn-primary"
     (click) = "toggleForm()">
-    {{showForm ? "Odustani" : "Dodaj liniju"}}
+    {{showForm ? "Cancel" : "Add new line"}}
   </button>
   <br/><br/>
   <div *ngIf="showForm"> 
     <form #addLineForm="ngForm">
       <div class="form-group">
         <div class="form-label-group">
-          <input type="text" id="LineName" class="form-control" placeholder="Naziv Linije" required name="LineName"
+          <input type="text" id="LineName" class="form-control" placeholder="Line name" required name="LineName"
           [(ngModel)] = "newLineName" [class.is-invalid]="LineNameHash.invalid && LineNameHash.touched" #LineNameHash="ngModel">
-          <label for="LineName">Naziv linije</label>  
+          <label for="LineName">Line name</label>  
         </div>
       </div>
       <div class="form-group">
@@ -33,7 +33,7 @@
 <div class="form-group my-div">
     <div class="form-label-group">
         <div class="my-div">
-            <label>Linija &nbsp;</label>
+            <label>Lines &nbsp;</label>
             <select class="dropdown no-arrow dropdown-toggle" id="userDropdown" [(ngModel)]="chosenLineName" name="lineDropdownName">
                 <option *ngFor="let item of dropdownToPassLine.value">{{item}}</option>
             </select>   
@@ -42,13 +42,13 @@
     </div>
 </div>
 &nbsp;&nbsp;
-<button (click)="showLineDetails()">Prikazi</button>
+<button (click)="showLineDetails()">Show</button>
 
 <hr>
 
 <div class="card mb-3" *ngIf="lineDetails">
   <div class="card-header">
-    <i class="fas fa-table"></i>Detalji linije
+    <i class="fas fa-table"></i>Line details
   </div>
 
   <div class="card-body">
@@ -57,7 +57,7 @@
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
           <tr>
-            <th>Naziv</th>
+            <th>Name</th>
             <th>Region</th>
           </tr>
         </thead>
@@ -65,10 +65,12 @@
           <tr>
             <td>
               <input type="text" name="lineName" required [(ngModel)]="selectedName" 
-              [class.is-invalid]="SelectedNameHash.invalid && SelectedNameHash.touched" #SelectedNameHash="ngModel">
+              [class.is-invalid]="SelectedNameHash.invalid && SelectedNameHash.touched" 
+              #SelectedNameHash="ngModel">
             </td>
             <td>
-                <select class="dropdown no-arrow dropdown-toggle" name="lineRegion" name="chosenRegionDropdownName"
+                <select class="dropdown no-arrow dropdown-toggle" name="lineRegion" 
+                name="chosenRegionDropdownName"
                 [(ngModel)] = "selectedRegion" required>
                     <option *ngFor="let item of regionsDropdown.value" [value]="item.value">{{item.name}}</option>
                 </select>
@@ -77,8 +79,8 @@
 
         </tbody>
       </table>
-      <button (click)="deleteLine()" [disabled]="chosenLineForm.form.invalid">Obrisi</button>
-      <button (click)="changeLine()" [disabled]="chosenLineForm.form.is-invalid">Izmeni</button>
+      <button (click)="deleteLine()" [disabled]="chosenLineForm.form.invalid">Delete</button>
+      <button (click)="changeLine()" [disabled]="chosenLineForm.form.is-invalid">Edit</button>
     </div>
   </form> 
   </div>
@@ -87,7 +89,7 @@
 
 <div class="card mb-3" *ngIf="lineDetails">
   <div class="card-header">
-    <i class="fas fa-table"></i>Stanice odabrane linije
+    <i class="fas fa-table"></i>Stations of the chosen line
   </div>
   
   <div class="card-body">
@@ -95,7 +97,7 @@
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
           <tr>
-            <th>Naziv</th>
+            <th>Name</th>
             <th></th>
           </tr>
         </thead>
@@ -103,7 +105,7 @@
           <tr *ngFor="let station of belongingStationsNames">
             <td>{{station}}</td>
             <td>
-              <button (click)="removeStationFromLine(station)">Ukloni stanicu</button>
+              <button (click)="removeStationFromLine(station)">Delete station</button>
             </td>
           </tr>
         </tbody>
@@ -112,12 +114,12 @@
     <br>
     <form #addStationToLineForm="ngForm">
       <div class="form-group">
-          <label>Stanice</label>
+          <label>Add new station in line</label>
           <div class="form-label-group">
               <select class="dropdown no-arrow dropdown-toggle" id="userDropdown" 
               [(ngModel)]="stationToAdd" name="existingStations" required
               #StationsHash="ngModel">
-                <option *ngFor="let st of allStations">{{st}}</option>
+                <option *ngFor="let st of notBelongingStations">{{st.Name}}</option>
               </select>
           </div>
       </div>

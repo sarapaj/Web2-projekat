@@ -55,7 +55,7 @@ export class EditPricelistComponent implements OnInit {
       this.allPassengerTypes = res;
 
       this.passengerTypesDropdown = {
-        label: "Tip putnika",
+        label: "Passenger type",
         value: typesToPrint
       }
 
@@ -73,7 +73,7 @@ export class EditPricelistComponent implements OnInit {
       this.allTicketTypes = res;
 
       this.ticketTypesDropdown = {
-        label: "Tip karte",
+        label: "Ticket type",
         value: typesToPrint
       }
 

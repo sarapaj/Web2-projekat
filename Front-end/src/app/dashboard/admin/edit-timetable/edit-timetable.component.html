@@ -1,4 +1,4 @@
-<form (ngSubmit)="prikaziRedVoznje()">
+<form (ngSubmit)="showTimetable()">
   <div class="form-group my-div">
     <div class="form-label-group">
       <div class="my-div">
@@ -8,7 +8,7 @@
           <option *ngFor = "let item of this.dropdownToPassDay.value">{{item}}</option>
         </select>   
         &nbsp;&nbsp;&nbsp;
-        <label>Linija &nbsp;</label>
+        <label>Line &nbsp;</label>
         <select class="dropdown no-arrow dropdown-toggle" id="userDropdown" name="selectedLine"
         [(ngModel)]="selectedLine">
           <option *ngFor = "let item of this.dropdownToPassLine.value">{{item}}</option>
@@ -17,7 +17,7 @@
     </div>
   </div>
   &nbsp;&nbsp;
-  <button type="submit">Prikazi</button>
+  <button type="submit">Show</button>
 </form>
 
 <hr>
@@ -25,21 +25,22 @@
 <div *ngIf="canChange">
   <button type="button" class="btn btn-primary"
     (click) = "toggleEditForm()">
-    {{showForm ? "Odustani" : "Izmeni red voznje"}}
+    {{showForm ? "Cancel" : "Edit timetable"}}
   </button>
   <br/><br>
   <div *ngIf="showForm"> 
     <form #changeDepartureForm="ngForm">
       <div class="form-group">
         <div class="form-label-group">
-          <input type="text" id="Departure" class="form-control" placeholder="Polasci" required name="Departure"
+          <input type="text" id="Departure" class="form-control" placeholder="Departures" required name="Departure"
           [(ngModel)] = "selectedDeparture" [class.is-invalid]="DepartureHash.invalid && DepartureHash.touched"
            #DepartureHash="ngModel">
-          <label for="Departure">Polasci</label>  
+          <label for="Departure">Departures</label>  
         </div>
       </div>
       &nbsp;
-      <button (click)="changeDeparture()" [disabled]="changeDepartureForm.form.invalid">OK</button>
+      <button (click)="changeDeparture()" [disabled]="changeDepartureForm.form.invalid">
+      OK</button>
     </form> 
   </div>
   <hr>
@@ -47,24 +48,24 @@
 
 
 <div *ngIf="canChange"> 
-  <button (click)="deleteDeparture()">Obrisi red voznje</button>
+  <button (click)="deleteDeparture()">Delete timetable</button>
   <hr>
 </div>
 
 <div *ngIf="!canChange">
   <button type="button" class="btn btn-primary"
     (click) = "toggleNewDepForm()">
-    {{showNewDepForm ? "Odustani" : "Dodaj red voznje"}}
+    {{showNewDepForm ? "Cancel" : "Add timetable"}}
   </button>
   <br/><br/>
   <div *ngIf="showNewDepForm"> 
     <form #addDepartureForm="ngForm">
       <div class="form-group">
         <div class="form-label-group">
-          <input type="text" id="newDeparture" class="form-control" placeholder="Polasci" required name="newDeparture"
+          <input type="text" id="newDeparture" class="form-control" placeholder="Departures" required name="newDeparture"
           [(ngModel)] = "newLinesDeparture" [class.is-invalid]="newDepartureHash.invalid && newDepartureHash.touched"
            #newDepartureHash="ngModel">
-          <label for="newDeparture">Polasci</label>  
+          <label for="newDeparture">Departures</label>  
         </div>
       </div>
       &nbsp;
@@ -77,13 +78,13 @@
 <div class="card mb-3">
   <div class="card-header">
     <i class="fas fa-table"></i>
-    Data Table Example</div>
+    *</div>
   <div class="card-body">
     <div class="table-responsive">
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
           <tr>
-            <th>Polasci</th>
+            <th>Departures</th>
           </tr>
         </thead>
         <tbody>

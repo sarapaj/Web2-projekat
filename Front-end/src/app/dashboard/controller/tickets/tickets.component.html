@@ -1,17 +1,17 @@
-<form #karteForm="ngForm" (ngSubmit)="OnSubmit()">
+<form #ticketsForm="ngForm" (ngSubmit)="OnSubmit()">
   <div class="form-group my-div">
         <div class="form-label-group">
           <input type="text" class="form-control" [(ngModel)]="ID" name="ID" 
           placeholder="ID" required id="ticketId">
-          <label for="ticketId">ID karte:</label>
+          <label for="ticketId">Ticket ID:</label>
         </div>
     </div>
     &nbsp;&nbsp;
-    <button type="submit" [disabled]="karteForm.form.invalid">Proveri</button>
+    <button type="submit" [disabled]="ticketsForm.form.invalid">Check</button>
 </form>
 
 <hr>
 
 <div>
-  <p>Karta je: {{validnostKarte}}</p>
+  <p>Ticket is: {{ticketStatus}}</p>
 </div>

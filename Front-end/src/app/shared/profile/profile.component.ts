@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { DropdownElement } from '../../../models/classes';
-import { TipPutnika } from '../constants';
 import { UserService } from 'src/app/services/user.service';
 import { NgForm } from '@angular/forms';
 import { User } from 'src/models/korisnik';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { PassengerType } from '../constants';
 
 
 @Component({
@@ -49,8 +49,8 @@ export class ProfileComponent implements OnInit {
     
     this.dropdownToPass = [
       {
-        label: "Tip putnika",
-        value: TipPutnika
+        label: "Passenger type",
+        value: PassengerType
       }
     ];   
   }
@@ -61,18 +61,18 @@ export class ProfileComponent implements OnInit {
 
       this.isDocumentAttached = true;
       if(data == "Prihvacen"){
-        this.documentStatus = "Prilozeni dokument je prihvacen";
+        this.documentStatus = "Uploaded document is accepted";
       }
       else if(data == "Procesiranje"){
-        this.documentStatus = "Prilozeni dokument se procesuira";
+        this.documentStatus = "Uploaded document is processing";
 
       }
       else if(data == "Odbijen"){
-        this.documentStatus = "Prilozeni dokument je odbijen";
+        this.documentStatus = "Uploaded document is rejected";
 
       }
       else{
-        this.documentStatus = "Dokument nije prilozen";
+        this.documentStatus = "Document not attached";
         this.isDocumentAttached = false;
       }
     })

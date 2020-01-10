@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DropdownElement } from 'src/models/classes';
-import { TipKarte, TipPutnika } from 'src/app/shared/constants';
 import { CenovnikForma } from 'src/models/cenovnik-forma';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { PricelistService } from 'src/app/services/pricelist.service';
 import { UserService } from 'src/app/services/user.service';
+import { PassengerType, TicketType } from 'src/app/shared/constants';
 
 @Component({
   selector: 'app-pricelist',
@@ -30,11 +30,8 @@ export class PricelistComponent implements OnInit {
   ngOnInit() {
     if(this.userRole != 2) { // korisnik
       this.resetForm();
-      this.dropDownToPassPassenger = {label: "Tip putnika",value: TipPutnika};
-      this.dropdownToPassTicket = {label:"Tip karte", value: TipKarte};
-    
-      this.tableHeader = ["Cena"];
-      this.tableBody = [""];
+      this.dropDownToPassPassenger = {label: "Tip putnika",value: PassengerType};
+      this.dropdownToPassTicket = {label:"Tip karte", value: TicketType};
     }
     else { // admin
       this.getDiscounts();
@@ -80,8 +77,8 @@ export class PricelistComponent implements OnInit {
     if (form != null)
       form.reset();
     this.pricelistForm = {
-      tipKarte: TipKarte[0],
-      tipPutnika: TipPutnika[0].name
+      tipKarte: TicketType[0],
+      tipPutnika: PassengerType[0].name
     }
   }
   

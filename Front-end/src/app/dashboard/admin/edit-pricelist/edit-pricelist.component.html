@@ -1,12 +1,12 @@
 
 <div class="card mb-3">
   <div class="card-header">
-    <i class="fas fa-table"></i>Izmena cene tipa karte
+    <i class="fas fa-table"></i>Edit ticket price
   </div>
   <div class="card-body">
     <form #ticketTypeForm="ngForm">
       <div class="form-group">
-          <label for="ticketType">Tip karte</label>
+          <label for="ticketType">Ticket type</label>
           <div class="form-label-group">
               <select class="dropdown no-arrow dropdown-toggle" id="userDropdown" name="ticketType" 
               [(ngModel)]="selectedTicketType" (change)="ticketTypeChanged(event)">
@@ -16,13 +16,13 @@
         </div>
         <div class="form-group">
           <div class="form-label-group">
-            <input type="text" id="ticketTypePrice" class="form-control" placeholder="Naziv Linije" required name="ticketTypePrice"
+            <input type="text" id="ticketTypePrice" class="form-control" placeholder="Ticket price" required name="ticketTypePrice"
             [(ngModel)] = "selectedTicketTypePrice" [class.is-invalid]="TicketTypePriceHash.invalid && TicketTypePriceHash.touched" 
             #TicketTypePriceHash="ngModel">
-            <label for="ticketTypePrice">Cena karte</label>  
+            <label for="ticketTypePrice">Ticket price</label>  
           </div>
         </div>
-        <button (click)="changeTicketTypePrice()" [disabled]="ticketTypeForm.form.invalid">Izmeni</button>
+        <button (click)="changeTicketTypePrice()" [disabled]="ticketTypeForm.form.invalid">Edit</button>
       </form>
   </div>
 </div>
@@ -30,12 +30,12 @@
 
 <div class="card mb-3">
     <div class="card-header">
-      <i class="fas fa-table"></i>Izmena popusta za odredjene korisnike
+      <i class="fas fa-table"></i>Edit user discount
     </div>
     <div class="card-body">
       <form #passengerDiscountForm="ngForm">
         <div class="form-group">
-          <label for="passengerType">Vrsta putnika</label>
+          <label for="passengerType">Passenger type</label>
           <div class="form-label-group">
             <select class="dropdown no-arrow dropdown-toggle" id="userDropdown" name="passengerType" 
             [(ngModel)]="selectedPassengerType" (change)="passengerTypeChanged()">
@@ -46,13 +46,13 @@
         </div>
         <div class="form-group">
           <div class="form-label-group">
-            <input type="text" id="discountPrice" class="form-control" placeholder="Naziv Linije" required name="discountPrice"
+            <input type="text" id="discountPrice" class="form-control" placeholder="Discount price" required name="discountPrice"
             [(ngModel)] = "selectedDiscount" [class.is-invalid]="DiscountPriceHash.invalid && DiscountPriceHash.touched" 
             #DiscountPriceHash="ngModel">
-            <label for="discountPrice">Popust</label>  
+            <label for="discountPrice">Discount</label>  
           </div>
         </div>
-        <button (click)="changeDiscount()" [disabled]="passengerDiscountForm.form.invalid">Izmeni</button>
+        <button (click)="changeDiscount()" [disabled]="passengerDiscountForm.form.invalid">Edit</button>
       </form> 
     </div>
   </div>

@@ -1,72 +1,72 @@
 // SIDEBAR
 export const UserSidebarElements = [
     {
-        label: "Red voznje",
+        label: "Timetable",
         route: "timetable"
     },
     {
-        label: "Mreza linija",
+        label: "Network",
         route: "network"
     },
     {
-        label: "Trenutna lokacija",
+        label: "Current location",
         route: "current-location"
     },
     {
-        label: "Cenovnik",
+        label: "Pricelist",
         route: "pricelist"
     },
     {
-        label: "Karte",
+        label: "Tickets",
         route: "ticket-buy"
     }
 ];
 
 export const NotLoggedUserSidebarElements = [
     {
-        label: "Red voznje",
+        label: "Timetable",
         route: "timetable"
     },
     {
-        label: "Mreza linija",
+        label: "Network",
         route: "network"
     },
     {
-        label: "Trenutna lokacija",
+        label: "Current location",
         route: "current-location"
     },
     {
-        label: "Cenovnik",
+        label: "Pricelist",
         route: "pricelist"
     }
 ];
 
 export const AdminSidebarElements = [
     {
-        label: "Uredi red voznje",
+        label: "Edit timetable",
         route: "edit-timetable"
     },
     {
-        label: "Uredi cenovnik",
+        label: "Edit pricelist",
         route: "edit-pricelist"
     },
     {
-        label: "Uredi linije",
+        label: "Edit lines",
         route: "edit-lines"
     },
     {
-        label: "Uredi stanice",
+        label: "Edit stations",
         route: "edit-stations"
     }
 ];
 
 export const KontrolerSidebarElements = [
     {
-        label: "Validacija karata",
+        label: "Tickets validation",
         route: "validate-tickets"
     },
     {
-        label: "Verifikacija putnika",
+        label: "Passengers verification",
         route: "verify-passengers"
     }
 ];
@@ -76,7 +76,7 @@ export const KontrolerSidebarElements = [
 // HEADER
 export const LogedUserHeaderElements = [
     {
-        name: "Profil",
+        name: "Profile",
         route: "profile"
     },
 ];
@@ -92,20 +92,7 @@ export const NotLogedUserHeaderElements = [
     }
 ];
 
-
-// tipovi
-export const validacijaDokumenta = [
-    {
-        name: "Validan",
-        value: 0
-    },
-    {
-        name: "Nevalidan",
-        value: 1
-    }
-];
-
-export const TipPutnika = [ 
+export const PassengerType = [ 
     {
         name: "djak",
         value: 0
@@ -120,26 +107,26 @@ export const TipPutnika = [
     }
 ];
 
-export const TipKarte = [ 
+export const TicketType = [ 
     "vremenska",
     "dnevna",
     "mesecna",
     "godisnja"
 ];
 
-export const TipRedaVoznje = [ 
+export const TimetableType = [ 
     "gradski",
     "prigradski"
 ];
 
-export const TipDana = [ 
+export const DayType = [ 
     "radni",
     "subota",
     "nedelja",
     "praznik"
 ];
 
-export const LinijePrivremeno = [ 
+export const TemporarelyLines = [ 
     "15",
     "20",
     "7a",

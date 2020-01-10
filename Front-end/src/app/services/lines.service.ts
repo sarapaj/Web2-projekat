@@ -46,10 +46,13 @@ export class LinesService {
   public getBelongingStations(lineId: number){
     return this._http.get(`${this._baseUrl}/api/Line/GetBelongingStations?lineId=${lineId}`);
   }
+
+  public getNotBelongingStations(lineId: number){
+    return this._http.get(`${this._baseUrl}/api/Line/GetNotBelongingStations?lineId=${lineId}`);
+  }
   
   public getLineStations(lineName: string){
     return this._http.get(`${this._baseUrl}/api/Line/GetLineStations?lineName=${lineName}`);
-
   }
 
   public removeStationFromLine(stationName: string, lineId: number){

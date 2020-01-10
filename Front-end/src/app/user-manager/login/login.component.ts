@@ -23,6 +23,14 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.Password= '';
     this.Email = '';
+
+    if(localStorage.getItem('userToken') != null){
+      localStorage.removeItem('userToken');
+      localStorage.removeItem('role');
+      localStorage.removeItem('email');
+
+      console.log("Previous user is now logged out")
+    }
   }
 
 

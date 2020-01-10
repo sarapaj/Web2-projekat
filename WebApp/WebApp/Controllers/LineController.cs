@@ -74,6 +74,45 @@ namespace WebApp.Controllers
         }
 
         [AllowAnonymous]
+        [Route("GetNotBelongingStations")]
+        [ResponseType(typeof(List<Station>))]
+        [HttpGet]
+        public IHttpActionResult GetNotBelongingStations(int lineId)
+        {
+            try
+            {
+                List<Station> notBelongingStations = new List<Station>();
+                var line = _unitOfWork.Lines.Get(lineId);
+                List<int> belongingStationsIds = new List<int>();
+
+                if (line != null)
+                {
+                    foreach (var linesStation in line.LineStationConnections)
+                    {
+                        belongingStationsIds.Add(linesStation.Station.Id);
+                    }
+                    
+                    foreach (var station in _unitOfWork.Stations.GetAll())
+                    {
+                        if (!belongingStationsIds.Contains(station.Id))
+                        {
+                            notBelongingStations.Add(station);
+                        }
+                    }
+
+                    return Ok(notBelongingStations);
+                }
+
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return BadRequest("GetNotBelongingStations not working");
+            }
+
+            return NotFound();
+        }
+
+        [AllowAnonymous]
         [Route("GetLineStations")]
         [ResponseType(typeof(List<Station>))]
         [HttpGet]

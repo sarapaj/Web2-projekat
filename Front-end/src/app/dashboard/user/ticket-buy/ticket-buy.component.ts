@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TicketsService } from 'src/app/services/tickets.service';
 import { Karta } from 'src/models/karta';
-import { TipKarte } from 'src/app/shared/constants';
 import { DropdownElement } from 'src/models/classes';
 import { NgForm } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/models/korisnik';
+import { TicketType } from 'src/app/shared/constants';
 
 @Component({
   selector: 'app-ticket-buy',
@@ -20,7 +20,7 @@ export class TicketBuyComponent implements OnInit {
   username: string;
   tickets: Karta[];
   dropdownToPassTicket: DropdownElement;
-  tipKarte: string;
+  ticketType: string;
   isDocumentValid;
   documentStatus;
   user = new User;
@@ -32,7 +32,7 @@ export class TicketBuyComponent implements OnInit {
     this.getMyTickets();
     this.getUserInfo();
 
-    this.dropdownToPassTicket = {label:"Tip karte", value: TipKarte};
+    this.dropdownToPassTicket = {label:"Ticket type", value: TicketType};
   }
 
   getMyTickets(){
@@ -61,11 +61,11 @@ export class TicketBuyComponent implements OnInit {
   }
 
   selectTicketTypeChangeHandler(event:any){
-    this.tipKarte = event.target.value;
+    this.ticketType = event.target.value;
   }
 
   OnSubmit(form: NgForm) {
-    this._ticketsService.buyTicket(this.username, this.tipKarte).subscribe(() => {
+    this._ticketsService.buyTicket(this.username, this.ticketType).subscribe(() => {
       this.getMyTickets();
     })
   }
@@ -73,7 +73,7 @@ export class TicketBuyComponent implements OnInit {
   resetForm(form?: NgForm) {
     if (form != null)
       form.reset();
-      this.tipKarte = TipKarte[0];
+      this.ticketType = TicketType[0];
     }
 
 }

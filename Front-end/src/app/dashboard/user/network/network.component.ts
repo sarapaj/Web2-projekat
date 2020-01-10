@@ -19,7 +19,7 @@ export class NetworkComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.dropdownToPass = {
-      label: "Linije",
+      label: "Lines",
       value: []
     }
 
@@ -48,7 +48,7 @@ export class NetworkComponent implements OnInit, AfterViewInit, OnDestroy {
     this._linesSErvice.getLineNames().subscribe((res: any) =>
     {
       this.dropdownToPass = {
-        label: "Linije",
+        label: "Lines",
         value: res
       }
 

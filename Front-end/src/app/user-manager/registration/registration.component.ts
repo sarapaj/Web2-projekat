@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DropdownElement } from 'src/models/classes';
-import { TipPutnika } from 'src/app/shared/constants';
 import { User } from 'src/models/korisnik';
 import { NgForm } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
+import { PassengerType } from 'src/app/shared/constants';
 
 @Component({
   selector: 'app-registration',
@@ -28,17 +28,25 @@ export class RegistrationComponent implements OnInit {
     this.resetForm();
     this.dropdownToPass = [
       {
-        label: "Tip putnika",
-        value: TipPutnika
+        label: "Passenger type",
+        value: PassengerType
       }
     ];
+
+    if(localStorage.getItem('userToken') != null){
+      localStorage.removeItem('userToken');
+      localStorage.removeItem('role');
+      localStorage.removeItem('email');
+
+      console.log("Previous user is now logged out")
+    }
   }
 
   OnSubmit(form: NgForm) {
     this.user.Birthday = new Date(this.showDate);
     this._userService.registerUser(this.user, this.imageName)
       .subscribe((data: any) => {
-        alert("Registracija uspesna!");
+        alert("Unsuccessful registration");
         this.router.navigate(['/login']);
       });
   }
