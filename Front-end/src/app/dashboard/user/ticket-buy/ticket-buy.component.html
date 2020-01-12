@@ -1,11 +1,11 @@
 
 <div *ngIf="user.PassengerType == 0 || user.PassengerType == 1">
-  <p> Document status: {{documentStatus}}</p>
+  <p> Document status: {{ documentStatus }}</p>
   <p *ngIf="!isDocumentValid">Purchasing the ticket will be enabled after successful ticket validation</p>
 </div>
 
 <div *ngIf="user.PassengerType == 2 || isDocumentValid">
-  <form #ticketPurchasingForm="ngForm" (ngSubmit)="OnSubmit(ticketPurchasingForm)">
+  <form #ticketPurchasingForm="ngForm">
       <div class="form-group my-div">
         <div class="form-label-group">
           <div class="my-div">  
@@ -17,8 +17,10 @@
         </div>
       </div>
       &nbsp;&nbsp;
-      <button type="submit">Purchase</button>
+      <!-- <button type="submit">Purchase</button> -->
+      <label>Price is {{ billingPrice }}</label>
   </form>
+  <ngx-paypal [config]="payPalConfig"></ngx-paypal>
 </div>
 
 <hr>

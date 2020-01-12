@@ -61,7 +61,6 @@ export class PricelistComponent implements OnInit {
   OnSubmit(form: NgForm) {
     this._pricelistService.getTicketPrice(this.pricelistForm).subscribe((res: any) => {
        this.price = res;
-
     })
   }
 

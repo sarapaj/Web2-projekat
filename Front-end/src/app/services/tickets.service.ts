@@ -22,4 +22,8 @@ export class TicketsService {
   public getAllTickets(username: string): Observable<Karta[]>{
     return this._http.get<Karta[]>(`${this._baseUrl}/api/Ticket/GetAllTickets?email=${username}`);
   }
+
+  public getTicketPrice(ticketType: string, passengerType: string){
+    return this._http.get(`${this._baseUrl}/api/Ticket/GetTicketPrice?TicketType=${ticketType}&PassengerType=${passengerType}`);
+  }
 }

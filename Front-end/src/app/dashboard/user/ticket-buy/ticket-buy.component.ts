@@ -8,6 +8,12 @@ import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/models/korisnik';
 import { TicketType } from 'src/app/shared/constants';
 
+import {
+  IPayPalConfig,
+  ICreateOrderRequest 
+} from 'ngx-paypal';
+import { PricelistService } from 'src/app/services/pricelist.service';
+
 @Component({
   selector: 'app-ticket-buy',
   templateUrl: './ticket-buy.component.html',
@@ -24,15 +30,89 @@ export class TicketBuyComponent implements OnInit {
   isDocumentValid;
   documentStatus;
   user = new User;
+  billingPrice;
+  passengerType;
+  // paypal
+  showSuccess;
+  showError;
+  showCancel;
+
+  public payPalConfig?: IPayPalConfig;
+
 
   ngOnInit() {
-    this.resetForm();
+    this.dropdownToPassTicket = {label:"Ticket type", value: TicketType};
+    this.ticketType = this.dropdownToPassTicket.value[0];
+    this.getUserInfo();
     this.username = localStorage.getItem("email");
     this.checkDocument();
     this.getMyTickets();
-    this.getUserInfo();
+    
+    this.initConfig();
+  }
 
-    this.dropdownToPassTicket = {label:"Ticket type", value: TicketType};
+  private initConfig(): void {
+    this.payPalConfig = {
+      currency: 'USD',
+      clientId: 'sb',
+      createOrderOnClient: (data) => <ICreateOrderRequest>{
+        intent: 'CAPTURE',
+        purchase_units: [
+          {
+            amount: {
+              currency_code: 'USD',
+              value: this.billingPrice,
+              breakdown: {
+                item_total: {
+                  currency_code: 'USD',
+                  value: this.billingPrice
+                }
+              }
+            },
+            items: [
+              {
+                name: this.ticketType,
+                quantity: '1',
+                category: 'DIGITAL_GOODS',
+                unit_amount: {
+                  currency_code: 'USD',
+                  value: this.billingPrice,
+                },
+              }
+            ]
+          }
+        ]
+      },
+      advanced: {
+        commit: 'true'
+      },
+      style: {
+        label: 'paypal',
+        layout: 'vertical'
+      },
+      onApprove: (data, actions) => {
+        console.log('onApprove - transaction was approved, but not authorized', data, actions);
+        actions.order.get().then(details => {
+          console.log('onApprove - you can get full order details inside onApprove: ', details);
+        });
+      },
+      onClientAuthorization: (data) => {
+        console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
+        this.showSuccess = true;
+        this.InformServer();
+        alert("Ticket purchasing went successfully");
+        this.getMyTickets();
+      },
+      onCancel: (data, actions) => {
+        console.log('OnCancel', data, actions);
+      },
+      onError: err => {
+        console.log('OnError', err);
+      },
+      onClick: (data, actions) => {
+        console.log('onClick', data, actions);
+      },
+    };
   }
 
   getMyTickets(){
@@ -42,8 +122,19 @@ export class TicketBuyComponent implements OnInit {
   }
 
   getUserInfo(){
-    this._userService.getAllUserInfo().subscribe((data: User) =>{
+    this._userService.getAllUserInfo().subscribe((data: User) => {
       this.user = data;
+
+      if(this.user.PassengerType == "0"){
+        this.passengerType = "djak";
+      }
+      else if(this.user.PassengerType == "1"){
+        this.passengerType = "penzioner";
+      }
+      else if(this.user.PassengerType == "2"){
+        this.passengerType = "regularni";
+      }
+      this.getTicketPrice();
     })
   }
 
@@ -62,18 +153,19 @@ export class TicketBuyComponent implements OnInit {
 
   selectTicketTypeChangeHandler(event:any){
     this.ticketType = event.target.value;
+    this.getTicketPrice();  
   }
 
-  OnSubmit(form: NgForm) {
+  getTicketPrice(){
+    this._ticketsService.getTicketPrice(this.ticketType, this.passengerType).subscribe((res: any) => {
+      this.billingPrice = res;
+   })
+  }
+
+  InformServer() {
     this._ticketsService.buyTicket(this.username, this.ticketType).subscribe(() => {
       this.getMyTickets();
     })
   }
-
-  resetForm(form?: NgForm) {
-    if (form != null)
-      form.reset();
-      this.ticketType = TicketType[0];
-    }
 
 }

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { NgxPayPalModule } from 'ngx-paypal';
 
 import { ShowHidePasswordModule } from 'ngx-show-hide-password';
 import { AppRoutingModule } from './app-routing.module';
@@ -57,6 +58,7 @@ import { ProfileComponent } from './shared/profile/profile.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgxPayPalModule,
     RouterModule.forRoot([])
   ],
   providers: [UserService, TimetableService, AuthGuard, DatePipe],
