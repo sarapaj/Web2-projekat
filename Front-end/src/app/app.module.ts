@@ -61,7 +61,12 @@ import { ProfileComponent } from './shared/profile/profile.component';
     NgxPayPalModule,
     RouterModule.forRoot([])
   ],
-  providers: [UserService, TimetableService, AuthGuard, DatePipe],
+  providers: [
+    UserService,
+    TimetableService,
+    AuthGuard,
+    DatePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

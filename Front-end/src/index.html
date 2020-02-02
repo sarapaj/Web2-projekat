@@ -8,9 +8,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/signalr@2.4.0/jquery.signalR.min.js"></script>
+  
   <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
   <!-- <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/> -->
-      
+
+  <script src="http://localhost:52295/signalr/hubs"></script>
+  
+  <script>
+    $.connection.hub.url = 'http://localhost:52295/signalr';
+    var hubProxy = $.connection.socketHub;
+    
+    window.hubProxy = hubProxy;
+    window.hubConnection = $.connection;
+  </script>
 </head>
 <body>
   <app-root></app-root>

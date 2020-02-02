@@ -14,8 +14,8 @@ export class NetworkComponent implements OnInit, AfterViewInit, OnDestroy {
   
   dropdownToPass: DropdownElement;
   selectedLine: string;
-  
-  constructor(private _linesSErvice: LinesService) { }
+
+  constructor(private _linesService: LinesService) { }
 
   ngOnInit() {
     this.dropdownToPass = {
@@ -23,8 +23,7 @@ export class NetworkComponent implements OnInit, AfterViewInit, OnDestroy {
       value: []
     }
 
-    this.showLineNames();
-      
+    this.showLineNames(); 
     this.loadMap();
   }
 
@@ -45,7 +44,7 @@ export class NetworkComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   showLineNames(){
-    this._linesSErvice.getLineNames().subscribe((res: any) =>
+    this._linesService.getLineNames().subscribe((res: any) =>
     {
       this.dropdownToPass = {
         label: "Lines",
@@ -57,7 +56,7 @@ export class NetworkComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   
   displayLineStations(){
-    this._linesSErvice.getLineStations(this.selectedLine).subscribe((res: any) => {
+    this._linesService.getLineStations(this.selectedLine).subscribe((res: any) => {
       if(res.length < 2){
         alert("Line must have at least 2 stations");
         return;
@@ -78,7 +77,6 @@ export class NetworkComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       });
     })
-    
   }
 
   loadMap() {
@@ -89,7 +87,5 @@ export class NetworkComponent implements OnInit, AfterViewInit, OnDestroy {
       layers: L.mapquest.tileLayer('map'),
       zoom: 13
     });
-
   }
-
 }

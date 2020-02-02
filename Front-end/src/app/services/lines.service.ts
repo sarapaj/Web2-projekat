@@ -68,4 +68,8 @@ export class LinesService {
     fd.append("StationName", stationName);
     return this._http.post(`${this._baseUrl}/api/Line/AddStationToLine`, fd, {headers: new HttpHeaders({'Authorization':'Bearer '+ localStorage.getItem('userToken')})});    
   }
+
+  public getLineVehicles(lineName: string){
+    return this._http.get(`${this._baseUrl}/api/Line/GetLineVehicles?lineName=${lineName}`);
+  }
 }

@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Http;
-using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using WebApp.Models;
 using WebApp.Persistence.UnitOfWork;
 
 namespace WebApp.Controllers
 {
-	[Authorize]
+    [Authorize]
 	[RoutePrefix("api/Line")]
 	public class LineController : ApiController
     {
@@ -107,36 +108,6 @@ namespace WebApp.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 return BadRequest("GetNotBelongingStations not working");
-            }
-
-            return NotFound();
-        }
-
-        [AllowAnonymous]
-        [Route("GetLineStations")]
-        [ResponseType(typeof(List<Station>))]
-        [HttpGet]
-        public IHttpActionResult GetLineStations(string lineName)
-        {
-            try
-            {
-                List<Station> stations = new List<Station>();
-                var line = _unitOfWork.Lines.Find(x => x.Name == lineName).FirstOrDefault();
-
-                if (line != null)
-                {
-                    foreach (var item in line.LineStationConnections)
-                    {
-                        stations.Add(item.Station);
-                    }
-
-                    return Ok(stations);
-                }
-
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                return NotFound();
             }
 
             return NotFound();
@@ -587,5 +558,101 @@ namespace WebApp.Controllers
 		{
 			return (T)Enum.Parse(typeof(T), value, true);
 		}
-	}
+
+        [AllowAnonymous]
+        [Route("GetLineStations")]
+        [ResponseType(typeof(List<Station>))]
+        [HttpGet]
+        public IHttpActionResult GetLineStations(string lineName)
+        {
+
+            try
+            {
+                List<Station> stations = new List<Station>();
+                var line = _unitOfWork.Lines.Find(x => x.Name == lineName).FirstOrDefault();
+
+                if (line != null)
+                {
+                    foreach (var item in line.LineStationConnections)
+                    {
+                        stations.Add(item.Station);
+                    }
+
+                    return Ok(stations);
+                }
+
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound();
+            }
+
+            return NotFound();
+        }
+
+        [AllowAnonymous]
+        [Route("GetLineVehicles")]
+        [ResponseType(typeof(List<Vehicle>))]
+        [HttpGet]
+        public IHttpActionResult GetLineVehicles(string lineName)
+        {
+            try
+            {
+                List<Vehicle> vehicles = new List<Vehicle>();
+                List<Coordinate> coordinates = new List<Coordinate>();
+
+                var line = _unitOfWork.Lines.Find(x => x.Name == lineName).FirstOrDefault();
+
+                if (line != null)
+                {
+                    foreach (var item in line.Vehicles)
+                    {
+                        vehicles.Add(item);
+                    }
+
+                    foreach (var item in line.LineStationConnections)
+                    {
+                        coordinates.Add(item.Station.Coordinate);
+                    }
+                    // ako ima vozila (i stanica za ovu liniju) onda ih prikazivati na mapi kako se krecu
+                    if (coordinates != null)
+                    {
+                        //socketsCommunication(coordinates);
+                    }
+
+                    return Ok(vehicles);
+                }
+
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound();
+            }
+
+            return NotFound();
+        }
+
+        public List<Coordinate> GetLinesVehicle(string lineName)
+        {
+            try { 
+                List<Coordinate> coordinates = new List<Coordinate>();
+
+                var line = _unitOfWork.Lines.Find(x => x.Name == lineName).FirstOrDefault();
+
+                if (line != null)
+                {
+                    foreach (var item in line.LineStationConnections)
+                    {
+                        coordinates.Add(item.Station.Coordinate);
+                    }
+                    return coordinates;
+                }
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return null;
+            }
+            return null;
+        }
+    }
 }
